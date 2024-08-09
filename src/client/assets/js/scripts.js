@@ -265,4 +265,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial display
     showSlide(currentIndex);
   });
-  
+
+// slider
+const images = ['./assets/img/ad-banner/shoecollection.png', './assets/img/ad-banner/furniturebanner.png', './assets/img/ad-banner/fashion-banner.png']; // Thay đổi tên tệp ảnh của bạn ở đây
+let currentIndex = 0;
+
+function updateImage() {
+    const imgElement = document.getElementById('product-image');
+    imgElement.src = images[currentIndex];
+}
+
+function prevImage() {
+    currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+    updateImage();
+}
+
+function nextImage() {
+    currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+    updateImage();
+}
