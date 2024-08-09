@@ -4,6 +4,8 @@ section {
 
 body {
   line-height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 ol,
@@ -4502,15 +4504,33 @@ html {
   justify-content: flex-end;
   margin-top: 30px;
 }
+.list{
+  max-width: 1200px; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+
+}
+.list h1 {
+  font-size: 25px; 
+  font-weight: bold; 
+  color: #333; 
+  text-align: left; 
+  margin-bottom: 10px;
+  margin-top: 40px;  
+  /* text-transform: uppercase; */
+  letter-spacing: 1.5px;
+  padding-bottom: 10px; 
+  line-height: 1.2;
+}
 .list-category {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
-  gap: 35px;
+  justify-content: space-between; 
   padding: 0;
   margin: 0;
   list-style: none;
-  margin-top: 100px;
+  margin-top: 50px;
   margin-bottom: 100px;
 }
 
@@ -4566,7 +4586,7 @@ html {
   left: 50%;
   bottom: -2px; 
   width: 0;
-  height: 2px; 
+  height: 1.7px; 
   background-color: black; 
   transition: width 0.5s ease, left 0.5s ease;
 }
@@ -4578,14 +4598,15 @@ html {
 
 .ad-banner {
   display: flex;
-  justify-content: space-between; /* Để hai cột cách nhau */
-  padding: 17px; /* Thêm khoảng cách xung quanh banner */
+  justify-content: space-between;
+  padding: 8px; /* Thêm khoảng cách xung quanh banner */
   background-color: #efeeee; /* Màu nền tùy ý */
   max-width: 1200px; /* Giới hạn chiều rộng tối đa của banner */
   margin: 0 auto; /* Căn giữa banner */
   border-radius: 13px;
   margin-top: 50px;
   margin-bottom: 50px;
+
 }
 
 .ad-info {
@@ -4597,6 +4618,8 @@ html {
 
 .ad-info span {
   margin-bottom: 10px; /* Khoảng cách giữa các thẻ span */
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .ad-info a {
@@ -4605,13 +4628,13 @@ html {
 
 .ad-button {
   margin-top: 20px;
+  margin-left: 10px;
   padding: 14px 20px; 
   border: 2px solid #333; 
   color: #000; 
   border-color: #333;
   color: #000000; 
   text-align: center; 
-  
   border-radius: 25px; 
   width: 200px;
   transition: background-color 0.5s ease, color 0.5s; 
@@ -4623,24 +4646,25 @@ html {
 }
 
 .ad-img {
-  flex-basis: 70%; /* Thiết lập độ rộng cố định */
-  max-height: 290px;
-  max-width: 800px; /* Giới hạn chiều rộng tối đa */
+  flex-basis: 70%; 
+  max-height: 269px;
+  max-width: 950px; 
+  object-fit: cover;
   display: flex;
-  justify-content: center; /* Căn giữa hình ảnh trong cột */
+  justify-content: center; 
   
 }
 
 .ad-img img {
-  max-width: 100%; /* Đảm bảo hình ảnh không vượt quá chiều rộng của cột */
-  height: auto; /* Đảm bảo tỷ lệ hình ảnh */
+  max-width: 100%; 
+  height: auto; 
   border-radius: 13px;
   object-fit: cover;
 
 }
 
 .ad-h1 {
-  font-size: 28px;
+  font-size: 38px;
   font-weight: bold;
   color: #333;
   margin-top: 3px;
@@ -4650,5 +4674,40 @@ html {
 .ad-h2 {
   font-size: 18px;
   color: #666;
-  margin-bottom: 30px; /* Khoảng cách dưới */
+  margin-bottom: 30px; 
+}
+
+.slider-container {
+  position: relative;
+  max-width: 1200px; /* Giới hạn chiều rộng của slider */
+  height: auto;
+  margin-top: 45px;
+  margin-left: auto; /* Căn giữa */
+  margin-right: auto; /* Căn giữa */
+}
+.slider-container img{
+    border-radius: 13px;
+    width: 100%;
+    max-height: 386px;
+    display: block;
+    object-fit: cover;
+
+}
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+.left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
 }
