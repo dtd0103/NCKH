@@ -149,7 +149,10 @@ strong {
 }
 
 .col {
+  margin-top: 120px;
+  margin-bottom: 40px;
   flex: 1 0;
+
 }
 
 .row-cols-1 > * {
@@ -2407,6 +2410,11 @@ html {
 .btn--primary {
   color: #d2d1d6;
   background: #171c28;
+  cursor: pointer;
+  transition: opacity 0.3s ease; /* Thêm hiệu ứng mượt */
+}
+.btn--primary:hover {
+  opacity: 0.8; /* Làm mờ khi hover (giảm độ mờ để tăng hoặc giảm hiệu ứng) */
 }
 .btn--outline {
   background: transparent;
@@ -2430,11 +2438,12 @@ html {
 .product-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  max-height: 100%;
   padding: 16px;
   border-radius: 20px;
   background: var(--product-card-bg);
   box-shadow: 0px 20px 60px 10px var(--product-card-shadow);
+  /* margin-top: 70px; */
 }
 .product-card__img-wrap {
   position: relative;
@@ -2454,13 +2463,24 @@ html {
   bottom: 0;
 }
 .product-card__title {
+  font-size: 16px; /* Kích thước font tùy chọn */
+  font-weight: bold;
+  color: #333; /* Màu tùy chọn */
   margin-top: 16px;
+  white-space: nowrap; /* Không cho phép tiêu đề xuống dòng */
+  overflow: hidden; /* Ẩn phần nội dung tràn ra ngoài */
+  text-overflow: ellipsis; /* Thêm dấu ... ở cuối nếu nội dung bị cắt */
+  max-width: 100%; /* Đảm bảo tiêu đề không vượt quá kích thước của phần tử chứa */
+  display: block; /* Đảm bảo rằng nó hoạt động với block elements */
 }
 .product-card__title, .product-card__price, .product-card__score {
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 150%;
+  
+
 }
+
 .product-card__brand {
   margin: 16px 0;
   color: #9e9da8;
@@ -2469,11 +2489,17 @@ html {
 }
 .product-card__row {
   display: flex;
-  align-items: center;
-  margin-top: auto;
+  justify-content: space-between; /* Đẩy giá sang trái và rating sang phải */
+  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
 }
+.product-card__rating {
+  display: flex;
+  align-items: center;
+}
+
 .product-card__star {
-  margin: 0 6px 0 auto;
+  width: 16px; /* Kích thước của icon ngôi sao */
+  margin-right: 4px; /* Khoảng cách giữa các ngôi sao */
 }
 
 .filter-wrap {
@@ -2485,12 +2511,13 @@ html {
   position: absolute;
   right: 0;
   top: 55px;
+  width: 1250px;
   padding: 30px 0;
   border-radius: 20px;
   background: var(--filter-form-bg);
   filter: drop-shadow(0px 40px 90px var(--filter-form-shadow));
   transition: opacity, visibility;
-  transition-duration: 0.2s;
+  transition-duration: 0.5s;
 }
 @media (max-width: 575.98px) {
   .filter {
@@ -2531,8 +2558,16 @@ html {
 .filter__form-slider {
   position: relative;
   width: 100%;
-  height: 2px;
+
   background: #d2d1d6;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #ddd;
+  height: 5px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  
 }
 .filter__form-slider::before, .filter__form-slider::after {
   content: "";
@@ -2552,14 +2587,14 @@ html {
   left: var(--max-value);
 }
 .filter__form-text-input {
-  border-radius: 6px;
+  border-radius: 13px;
   border: 1px solid #d2d1d6;
 }
 .filter__form-text-input {
   display: flex;
   align-items: center;
   width: 334px;
-  height: 44px;
+  height: 36px;
   padding: 0 16px;
   overflow: hidden;
 }
@@ -2661,334 +2696,88 @@ html {
     padding-bottom: 60px;
   }
 }
+/* == */
+.filterrow{
+  display: flex
+}
+.filters {
+  margin: 20px;
+  gap: 20px; /* Space between filters */
+}
+.filters h2{
+  font-size: 1.7rem;
+  margin: 0px 10px 0px 10px;
+}
+.filters h3{
+  font-size: 1.7rem;
+}
 
-.form:has(:invalid) .form__submit-btn {
-  opacity: 0.5;
-  pointer-events: none;
-}
-.form__row {
-  display: flex;
-  gap: 30px;
-}
-@media (max-width: 767.98px) {
-  .form__row {
-    gap: 20px;
-  }
-}
-@media (max-width: 575.98px) {
-  .form__row {
-    flex-direction: column;
-    gap: 0;
-  }
-}
-.form__row > * {
-  flex: 1;
-}
-.form__group {
-  margin-top: 30px;
-}
-@media (max-width: 767.98px) {
-  .form__group {
-    margin-top: 20px;
-  }
-}
-.form__group--inline {
-  display: flex;
-  align-items: center;
-}
-.form__group:has(:invalid):has(.form__input:not(:placeholder-shown)) .form__text-input {
-  border-color: #ed4337;
-  background: rgba(237, 67, 55, 0.1);
-}
-.form__group:has(:invalid):has(.form__input:not(:placeholder-shown)) .form__error,
-.form__group:has(:invalid):has(.form__input:not(:placeholder-shown)) .form__input-icon-error {
-  display: block;
-}
-.form__group:has(:invalid):has(.form__input:not(:placeholder-shown)) .form__input-icon {
-  display: none;
-}
-.form__text-area, .form__text-input {
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  border-radius: 10px;
-  border: 1px solid #d2d1d6;
-}
-.form__text-area:focus-within, .form__text-input:focus-within {
-  border-color: #77dae6;
-}
-.form__text-area {
-  height: 100px;
-  padding: 12px;
-}
-.form__text-area-input {
-  resize: none;
-}
-.form__text-input {
-  position: relative;
-  height: 48px;
-}
-.form__text-input--small {
-  height: 42px;
-}
-@media (max-width: 767.98px) {
-  .form__text-input {
-    height: 48px;
-  }
-}
-.form__input, .form__text-area-input {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  font-size: 1.8rem;
-  font-weight: 500;
-  line-height: 144.444%;
-}
-.form__input::placeholder, .form__text-area-input::placeholder {
-  color: var(--form-placeholder-color);
-}
-@media (max-width: 767.98px) {
-  .form__input, .form__text-area-input {
-    font-size: 1.6rem;
-  }
-}
-.form__input-icon {
-  margin-left: 12px;
-}
-.form__select-dialog {
-  position: absolute;
-  bottom: 44px;
-  left: 10px;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  visibility: hidden;
-  translate: 0 8px;
-  transition: opacity, visibility, translate;
-  transition-duration: 0.2s;
-  min-width: 230px;
-  max-height: 310px;
-  padding-bottom: 10px;
-  border: 1px solid #d2d1d6;
-  border-radius: 10px;
-  box-shadow: 0 0 5px var(--form-select-dialog-shadow);
-  background: var(--form-select-dialog-bg);
-}
-.form__select-dialog.show {
-  opacity: 1;
-  visibility: visible;
-  translate: 0;
-}
-@media (max-width: 575.98px) {
-  .form__select-dialog {
-    position: fixed;
-    max-width: initial;
-    max-height: initial;
-    inset: 0;
-    border-radius: 0;
-  }
-}
-.form__dialog-heading {
-  padding: 20px;
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-align: center;
-}
-.form__close-dialog {
-  font-size: 3rem;
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 12px 18px;
-  opacity: 0.8;
-}
-.form__search {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  height: 38px;
-  padding: 0 20px;
-  border-bottom: 1px solid #d2d1d6;
-}
-.form__search-input {
-  flex: 1;
-  height: 100%;
-  font-size: 1.6rem;
-}
-.form__search-icon {
-  width: 16px;
-  margin-left: 10px;
-}
-@media (max-width: 991.98px) {
-  .form__search {
-    height: 48px;
-  }
-  .form__search-icon {
-    width: 20px;
-  }
-}
-@media (max-width: 575.98px) {
-  .form__search {
-    padding: 0 14px;
-    border: 1px solid #d2d1d6;
-    margin: 10px 30px 0;
-    border-radius: 10px;
-  }
-}
-.form__options-list {
-  flex: 1;
-  margin-top: 10px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-@supports (-webkit-touch-callout: none) {
-  .form__options-list {
-    padding-bottom: 300px;
-  }
-}
-.form__option {
-  padding: 8px 20px;
-  font-size: 1.4rem;
-}
-.form__option--current {
-  font-weight: 500;
-  background: rgba(255, 183, 0, 0.6);
-}
-.form__option:not(.form__option--current):hover {
-  background: var(--form-option-hover-bg);
-  cursor: pointer;
-}
-@media (max-width: 991.98px) {
-  .form__option {
-    padding: 18px 30px;
-    font-size: 1.6rem;
-  }
-}
-.form__error {
-  text-align: left;
-  font-size: 1.4rem;
-  font-weight: 500;
-  margin-top: 10px;
-  color: #ed4337;
-  display: none;
-}
-.form__input-icon-error {
-  display: none;
-  margin-left: 12px;
-  animation: shake 0.5s;
-}
-.form__pull-right {
-  margin-left: auto;
-}
-.form__checkbox {
-  position: relative;
-  display: flex;
-  align-items: center;
-  user-select: none;
-}
-.form__checkbox-label {
-  margin-left: 29px;
-  color: #9e9da8;
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 146.667%;
-}
-@media (max-width: 767.98px) {
-  .form__checkbox-label {
-    font-size: 1.4rem;
-  }
-}
-.form__checkbox::before, .form__checkbox::after {
-  content: "";
-  position: absolute;
-}
-.form__checkbox::before {
-  width: 19px;
-  height: 19px;
-  border-radius: 5px;
-  border: 1px solid #9e9da8;
-}
-.form__checkbox:has(:checked)::before {
-  border-color: #ffb700;
-  background: #ffb700;
-}
-.form__checkbox:has(:checked)::after {
-  width: 15px;
-  height: 8px;
-  border: 3px solid;
-  border-color: transparent transparent #fff #fff;
-  rotate: -45deg;
-  left: 2px;
-  top: 4px;
-}
 .form__label {
-  display: block;
-  font-size: 2.2rem;
-  font-weight: 500;
-  line-height: 145.455%;
-}
-.form__label--medium {
   margin-bottom: 20px;
-  font-size: 1.8rem;
-  font-weight: 500;
-  line-height: 144.444%;
+  display: block;
 }
-.form__label--small {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
-  line-height: 142.857%;
+.filter__col {
+  flex: 1; /* Allow each filter to take up equal space */
+  margin: 0px 10px 0px 10px;
+  outline: none;
+  min-width: 150px; /* Minimum width for each filter */
 }
-.form__select-wrap {
-  display: flex;
-  align-items: center;
-  height: 45px;
-  border-radius: 6px;
-  border: 1px solid #d2d1d6;
-}
+
 .form__select {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-  min-width: var(--width, 108px);
-  height: calc(100% - 10px);
+  width: 160px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px 0px 0px 0px;
+
+}
+
+
+.filters-applied {
+  margin-top: 20px;
+  margin: 0;
+  width: 100%;
+}
+.filters-applied h3{
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.filters-applied ul {
+  list-style: none;
+  padding: 0;
+  display:flex;
+  margin: 0px 10px 0px 10px;
+
+  
+}
+
+.filters-applied ul li {
+  padding: 10px;
+  border-radius: 25px;
+  background-color: #eee;
   font-size: 1.4rem;
-  font-weight: 500;
-  line-height: 142.857%;
-  cursor: pointer;
+  min-width: 80px;
+  margin: 0px 10px 0px 10px;
+  text-align: center; /* Center the text in each item */
 }
-@media (max-width: 1199.98px) {
-  .form__select {
-    flex: 1;
-  }
+.form__tags ul{
+  list-style: none;
+  padding: 0;
+  display:flex;
+  margin: 0px 10px 0px 10px;
+
 }
-.form__select + .form__select {
-  border-left: 1px solid #d2d1d6;
-}
-.form__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 20px;
-}
-@media (max-width: 575.98px) {
-  .form__tags {
-    gap: 10px;
-  }
-}
-.form__tag {
-  padding: 6px 12px;
-  border-radius: 6px;
-  color: #9e9da8;
-  background: var(--form-tag-bg);
+.form__tags ul li{
+  padding: 10px;
+  border-radius: 25px;
+  min-width: 80px;
+  background-color: #eee;
   font-size: 1.4rem;
-  font-weight: 500;
-  line-height: 142.857%;
-  transition: color 0.2s;
+  margin: 0px 10px 0px 10px;
+  text-align: center; /* Center the text in each item */
 }
-.form__tag:hover {
-  color: var(--text-color);
-}
+
 
 .message {
   width: 100%;
@@ -4681,18 +4470,17 @@ html {
   position: relative;
   max-width: 1200px; /* Giới hạn chiều rộng của slider */
   height: auto;
-  margin-top: 45px;
-  margin-left: auto; /* Căn giữa */
-  margin-right: auto; /* Căn giữa */
+  margin: 45px auto 0 auto; /* Căn giữa slider theo chiều ngang và cách trên 45px */
 }
-.slider-container img{
-    border-radius: 13px;
-    width: 100%;
-    max-height: 386px;
-    display: block;
-    object-fit: cover;
 
+.slider-container img {
+  border-radius: 13px;
+  width: 100%;
+  max-height: 386px;
+  display: block;
+  object-fit: cover; /* Đảm bảo ảnh không bị méo khi thay đổi kích thước */
 }
+
 .arrow {
   position: absolute;
   top: 50%;
@@ -4703,11 +4491,20 @@ html {
   padding: 10px;
   cursor: pointer;
   z-index: 1;
+  border-radius: 50%; /* Tạo hình dạng nút mũi tên tròn */
+  width: 40px; /* Kích thước chiều rộng của nút */
+  height: 40px; /* Kích thước chiều cao của nút */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .left-arrow {
-  left: 0;
+  left: 10px; /* Cách mép trái 10px */
 }
 
 .right-arrow {
-  right: 0;
+  right: 10px; /* Cách mép phải 10px */
 }
+
+/* =========slider filter========= */

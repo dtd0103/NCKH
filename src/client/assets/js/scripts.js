@@ -267,20 +267,66 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 // slider
-const images = ['./assets/img/ad-banner/shoecollection.png', './assets/img/ad-banner/furniturebanner.png', './assets/img/ad-banner/fashion-banner.png']; // Thay đổi tên tệp ảnh của bạn ở đây
-let currentIndex = 0;
+const images = [
+    './assets/img/ad-banner/shoecollection.png',
+    './assets/img/ad-banner/furniturebanner.png',
+    './assets/img/ad-banner/fashion-banner.png'
+  ];
+  let currentIndex = 0;
+  let slideInterval;
+  
+  // Cập nhật hình ảnh dựa trên chỉ số hiện tại
+  function updateImage() {
+      const imgElement = document.getElementById('product-image');
+      imgElement.src = images[currentIndex];
+  }
+  
+  // Chuyển đến ảnh trước
+  function prevImage() {
+      currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+      updateImage();
+      resetInterval(); // Đặt lại thời gian khi chủ động chuyển trang
+  }
+  
+  // Chuyển đến ảnh tiếp theo
+  function nextImage() {
+      currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+      updateImage();
+      resetInterval(); // Đặt lại thời gian khi chủ động chuyển trang
+  }
+  
+  // Thiết lập lại thời gian tự động trượt ảnh
+  function resetInterval() {
+      clearInterval(slideInterval); // Hủy thời gian hiện tại
+      slideInterval = setInterval(nextImage, 3000); // Thiết lập lại thời gian
+  }
+  
+  // Khởi chạy khi trang được tải
+  window.onload = function() {
+      updateImage();
+      slideInterval = setInterval(nextImage, 3000); // Bắt đầu tự động trượt ảnh
+  }
+  
+// ==========
+function updateFilters(filterType, filterValue) {
+    const appliedFilters = document.getElementById('applied-filters');
+    let existingFilter = document.querySelector(`li[data-filter="${filterType}"]`);
 
-function updateImage() {
-    const imgElement = document.getElementById('product-image');
-    imgElement.src = images[currentIndex];
-}
+    if (filterValue) {
+        if (existingFilter) {
+            existingFilter.querySelector('a').textContent = `${filterType}: ${filterValue}`;
+        } else {
+            let li = document.createElement('li');
+            li.setAttribute('data-filter', filterType);
 
-function prevImage() {
-    currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
-    updateImage();
-}
+            let a = document.createElement('a');
+            a.textContent = `${filterType}: ${filterValue}`;
+            a.href = "#"; // Set this to the appropriate link if needed
+            li.appendChild(a);
 
-function nextImage() {
-    currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
-    updateImage();
+            appliedFilters.appendChild(li);
+        }
+    } else if (existingFilter) {
+        appliedFilters.removeChild(existingFilter);
+    }
 }
