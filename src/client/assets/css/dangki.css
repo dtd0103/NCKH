@@ -208,3 +208,40 @@ body{
 .container.active .toggle-right{
     transform: translateX(200%);
 }
+
+
+/* Thanh điều hướng với logo */
+.top-bar__logo {
+    display: flex;
+    align-items: center;
+    margin: 10px; /* Giảm khoảng cách giữa logo và mép màn hình */
+  }
+  
+  .top-bar__logo-img {
+    width: 40px; /* Kích thước logo nhỏ hơn */
+    height: auto; /* Giữ tỉ lệ của logo */
+    margin-right: 8px; /* Giảm khoảng cách giữa logo và tiêu đề */
+  }
+  
+  .top-bar__logo-title {
+    font-size: 1.5rem; /* Kích thước tiêu đề nhỏ hơn */
+    font-weight: bold; /* Để tiêu đề nổi bật hơn */
+    color: #333; /* Màu tiêu đề, thay đổi nếu cần */
+    margin: 0; /* Xóa khoảng cách mặc định */
+  }
+  
+  /* Đảm bảo form-container chiếm toàn bộ không gian bên trái */
+  .form-container {
+    max-width: 400px; /* Kích thước tối đa của form nhỏ hơn */
+    margin: auto; /* Căn giữa form */
+    padding: 15px; /* Giảm khoảng cách bên trong form */
+  }
+  
+  /* Đảm bảo logo không bị chồng lên các phần tử khác */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9; /* Màu nền trang, có thể thay đổi */
+  }
+  
