@@ -330,3 +330,23 @@ function updateFilters(filterType, filterValue) {
         appliedFilters.removeChild(existingFilter);
     }
 }
+// ====
+function changePreview(index) {
+    const items = document.querySelectorAll('.prod-preview__item');
+    const thumbs = document.querySelectorAll('.prod-preview__thumb-img');
+
+    // Ẩn tất cả các ảnh trong prod-preview__item
+    items.forEach(item => item.style.display = 'none');
+
+    // Xóa class --current khỏi tất cả các thumbnail
+    thumbs.forEach(thumb => thumb.classList.remove('prod-preview__thumb-img--current'));
+
+    // Hiển thị ảnh được chọn và thêm class --current vào thumbnail
+    items[index].style.display = 'block';
+    thumbs[index].classList.add('prod-preview__thumb-img--current');
+}
+
+// Khởi tạo với việc chỉ hiển thị ảnh đầu tiên
+document.addEventListener('DOMContentLoaded', function () {
+    changePreview(0);
+});

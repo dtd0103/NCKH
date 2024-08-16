@@ -2705,19 +2705,20 @@ html {
   gap: 20px; /* Space between filters */
 }
 .filters h2{
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   margin: 0px 10px 0px 10px;
 }
 .filters h3{
-  font-size: 1.7rem;
+  font-size: 1.8rem;
 }
 
 .form__label {
   margin-bottom: 20px;
   display: block;
+  font-size: 1.8rem;
 }
 .filter__col {
-  flex: 1; /* Allow each filter to take up equal space */
+  flex: 1; /* Allow each f  ilter to take up equal space */
   margin: 0px 10px 0px 10px;
   outline: none;
   min-width: 150px; /* Minimum width for each filter */
@@ -2758,8 +2759,12 @@ html {
   background-color: #eee;
   font-size: 1.4rem;
   min-width: 80px;
+  max-height:34px;
   margin: 0px 10px 0px 10px;
   text-align: center; /* Center the text in each item */
+  white-space: nowrap; /* Ngăn không cho văn bản xuống hàng */
+  overflow: hidden; /* Ẩn phần văn bản tràn ra ngoài */
+  text-overflow: ellipsis; /* Thêm dấu "..." nếu văn bản bị cắt */
 }
 .form__tags ul{
   list-style: none;
