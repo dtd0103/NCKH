@@ -350,3 +350,36 @@ function changePreview(index) {
 document.addEventListener('DOMContentLoaded', function () {
     changePreview(0);
 });
+
+// ====form====
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('.form__input');
+
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            const errorElement = this.parentElement.nextElementSibling;
+            const iconElement = this.parentElement.querySelector('.form__input-icon-error');
+
+            if (this.validity.valid) {
+                errorElement.style.display = 'none';
+                iconElement.style.display = 'none';
+            } else {
+                errorElement.style.display = 'block';
+                iconElement.style.display = 'block';
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            const errorElement = this.parentElement.nextElementSibling;
+            const iconElement = this.parentElement.querySelector('.form__input-icon-error');
+
+            if (this.validity.valid) {
+                errorElement.style.display = 'none';
+                iconElement.style.display = 'none';
+            } else {
+                errorElement.style.display = 'block';
+                iconElement.style.display = 'block';
+            }
+        });
+    });
+});
