@@ -1433,7 +1433,18 @@ html {
   display: flex;
   align-items: center;
 }
-
+.top-act__input {
+  flex-grow: 1;
+  padding: 5px 10px;
+  outline: none;
+  margin: 0px 5px 0px 15px;
+}
+.top-act__btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
 .header {
   position: relative;
   z-index: 2;
@@ -2499,7 +2510,7 @@ html {
 
 .product-card__star {
   width: 16px; /* Kích thước của icon ngôi sao */
-  margin-right: 4px; /* Khoảng cách giữa các ngôi sao */
+
 }
 
 .filter-wrap {
@@ -3652,6 +3663,8 @@ html {
 .prod-prop__title {
   font-size: 1.8rem;
   font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 0;
   line-height: 144.444%;
 }
 .prod-prop__desc {

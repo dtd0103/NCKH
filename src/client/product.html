@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cửa Hàng Tạp Hóa</title>
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="./assets/favicon/site.webmanifest" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <!-- Scripts -->
+        <script src="./assets/js/scripts.js"></script>
+    </head>
+    <body>
+        <!-- Header -->
+        <header id="header" class="header"></header>
+        <script>
+            load("#header", "./templates/header.html");
+        </script>
+        <div class="container home"> 
+            <div class="home__row">
+                <h2 class="home__heading">Gợi ý hôm nay</h2>
+                <div class="filter-wrap">
+                    <button class="filter-btn js-toggle" toggle-target="#home-filter">
+                        Bộ lọc
+                        <img src="./assets/icons/filter.svg" alt="" class="filter-btn__icon icon" />
+                    </button>
+
+                    <div id="home-filter" class="filter hide">
+                        <img src="./assets/icons/arrow-up.png" alt="" class="filter__arrow" />
+                        <h3 class="filter__heading">Bộ lọc</h3>
+                        <form action="" class="filter__form form">
+                            <div class="filter__row filter__content">
+                                <!-- Filter column 1 -->
+                                <!-- <div class="filter__col">
+                                    <label for="" class="form__label">Kích thước/Cân nặng</label>
+                                    <div class="filter__form-group">
+                                        <div class="form__select-wrap">
+                                            <select class="form__select" style="--width: 158px">
+                                                <option value="500g">500g</option>
+                                                <option value="1kg">1kg</option>
+                                                <option value="2kg">2kg</option>
+                                            </select>
+                                            <select class="form__select">
+                                                <option value="gram">Gram</option>
+                                                <option value="kg">Kg</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="filter__form-group">
+                                        <div class="form__tags">
+                                            <input type="radio" id="small" name="size" value="small" class="form__tag-input">
+                                            <label for="small" class="form__tag">Nhỏ</label>
+                                
+                                            <input type="radio" id="medium" name="size" value="medium" class="form__tag-input">
+                                            <label for="medium" class="form__tag">Vừa</label>
+                                
+                                            <input type="radio" id="large" name="size" value="large" class="form__tag-input">
+                                            <label for="large" class="form__tag">Lớn</label>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="filters">
+                                    
+                                
+                                    <div class="filterrow">
+                                        <h2>Filters</h2>
+                                        <div class="filter__col">
+                                            <label for="us-shoe-size" class="form__label">Thẻ chính</label>
+                                            <select id="us-shoe-size" class="form__select" onchange="updateFilters('Thẻ chính', this.value)">
+                                                <option value="">Chọn thẻ</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+                                    
+                                        <div class="filter__col">
+                                            <label for="color" class="form__label">Thẻ phụ</label>
+                                            <select id="color" class="form__select" onchange="updateFilters('Thẻ phụ', this.value)">
+                                                <option value="">Chọn thẻ</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+                                    
+                                        <div class="filter__col">
+                                            <label for="brand" class="form__label">Loại</label>
+                                            <select id="brand" class="form__select" onchange="updateFilters('Loại', this.value)">
+                                                <option value="">Chọn loại
+                                                </option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Add more filter options similarly -->
+                                    <div class="filterrow">
+                                        <div class="filters-applied">
+                                            <h3>Các thẻ đã áp dụng</h3>
+                                            <ul id="applied-filters">
+                                                <!-- Applied filters will be listed here -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+
+                                <div class="filter__separate"></div>
+
+                                <!-- Filter column 3 -->
+                                <div class="filter__col" style=margin-top:20px>
+                                    <label for="" class="form__label"style=margin-bot:14px>Hãng</label>
+                                    <div class="filter__form-group">
+                                        <div class="filter__form-text-input">
+                                            <input
+                                                type="text"
+                                                name=""
+                                                id=""
+                                                placeholder="Search brand name"
+                                                class="filter__form-input"
+                                            />
+                                            <img
+                                                src="./assets/icons/search.svg"
+                                                alt=""
+                                                class="filter__form-input-icon icon"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="filter__form-group">
+                                        <div class="form__tags">
+                                            <a href="">
+                                                <ul>
+                                                    <li>Nike</li>
+                                                    <li>Adias</li>
+                                                    <li>Lenovo</li>
+                                                    <li>LOL</li>
+                                                </ul>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter__row filter__footer">
+                                <button class="btn btn--text filter__cancel js-toggle" toggle-target="#home-filter">
+                                    Hủy
+                                </button>
+                                <button
+                                    class="btn btn--primary filter__submit js-toggle"
+                                    toggle-target="#home-filter"
+                                >
+                                    Xem Kết Quả
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-5 row-cols-lg-2 row-cols-sm-1 g-3">
+                <!-- Product card 1 -->
+                <div class="col">
+                    <a href="./product-detail.html">
+                        <article class="product-card">
+                            <div class="product-card__img-wrap">
+                                <a href="./product-detail.html">
+                                    <img src="./assets/img/product/nikebag.png" alt="" class="product-card__thumb" />
+                                </a>
+                                <!-- <button class="like-btn product-card__like-btn">
+                                    <img src="./assets/icons/heart.svg" alt="" class="like-btn__icon icon" />
+                                    <img src="./assets/icons/heart-red.svg" alt="" class="like-btn__icon--liked" />
+                                </button> -->
+                            </div>
+                            <h3 class="product-card__title">
+                                <a href="./product-detail.html">Túi xách - Gym Tote</a>
+                            </h3>
+                            <p class="product-card__brand">Nike</p>
+                            <div class="product-card__row">
+                                <span class="product-card__price">$47.00</span>
+                                <div class="product-card__rating">
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star-half.svg" alt="" class="product-card__star" />
+                                <span class="product-card__score">4.3</span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+            
+                <!-- Product card 2 -->
+                <div class="col">
+                    <a href="./product-detail.html">
+                        <article class="product-card">
+                            <div class="product-card__img-wrap">
+                                <a href="./product-detail.html">
+                                    <img src="./assets/img/product/nikebag1.png" alt="" class="product-card__thumb" />
+                                </a>
+                                <!-- <button class="like-btn product-card__like-btn">
+                                    <img src="./assets/icons/heart.svg" alt="" class="like-btn__icon icon" />
+                                    <img src="./assets/icons/heart-red.svg" alt="" class="like-btn__icon--liked" />
+                                </button> -->
+                            </div>
+                            <h3 class="product-card__title">
+                                <a href="./product-detail.html">Túi xách - Túi đeo chéo nữ</a>
+                            </h3>
+                            <p class="product-card__brand">Nike</p>
+                            <div class="product-card__row">
+                                <span class="product-card__price">$47.00</span>
+                                <div class="product-card__rating">
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star-blank.svg" alt="" class="product-card__star" />
+                                <span class="product-card__score">4</span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+            
+                <!-- Product card 3 -->
+                <div class="col">
+                    <a href="./product-detail.html">
+                        <article class="product-card">
+                            <div class="product-card__img-wrap">
+                                <a href="./product-detail.html">
+                                    <img src="./assets/img/product/airpodsmax.png" alt="" class="product-card__thumb" />
+                                </a>
+                                <!-- <button class="like-btn product-card__like-btn">
+                                    <img src="./assets/icons/heart.svg" alt="" class="like-btn__icon icon" />
+                                    <img src="./assets/icons/heart-red.svg" alt="" class="like-btn__icon--liked" />
+                                </button> -->
+                            </div>
+                            <h3 class="product-card__title">
+                                <a href="./product-detail.html">Airpod - Airpods Max</a>
+                            </h3>
+                            <p class="product-card__brand">Apple</p>
+                            <div class="product-card__row">
+                                <span class="product-card__price">$47.00</span>
+                                <div class="product-card__rating">
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <span class="product-card__score">5</span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+            
+                <!-- Product card 4 -->
+                <div class="col">
+                    <a href="./product-detail.html">
+                        <article class="product-card">
+                            <div class="product-card__img-wrap">
+                                <a href="./product-detail.html">
+                                    <img src="./assets/img/product/canon.png" alt="" class="product-card__thumb" />
+                                </a>
+                                <!-- <button class="like-btn product-card__like-btn">
+                                    <img src="./assets/icons/heart.svg" alt="" class="like-btn__icon icon" />
+                                    <img src="./assets/icons/heart-red.svg" alt="" class="like-btn__icon--liked" />
+                                </button> -->
+                            </div>
+                            <h3 class="product-card__title">
+                                <a href="./product-detail.html">Máy quay phim - LEGRIA HF G70</a>
+                            </h3>
+                            <p class="product-card__brand">Canon</p>
+                            <div class="product-card__row">
+                                <span class="product-card__price">$47.00</span>
+                                <div class="product-card__rating">
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star-half.svg" alt="" class="product-card__star" />
+                                <span class="product-card__score">4.3</span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+                <!-- Product card 5 -->
+                <div class="col">
+                    <a href="./product-detail.html">
+                        <article class="product-card">
+                            <div class="product-card__img-wrap">
+                                <a href="./product-detail.html">
+                                    <img src="./assets/img/product/jordannike.png" alt="" class="product-card__thumb" />
+                                </a>
+                                <!-- <button class="like-btn product-card__like-btn">
+                                    <img src="./assets/icons/heart.svg" alt="" class="like-btn__icon icon" />
+                                    <img src="./assets/icons/heart-red.svg" alt="" class="like-btn__icon--liked" />
+                                </button> -->
+                            </div>
+                            <h3 class="product-card__title">
+                                <a href="./product-detail.html">Giày - Air Jordan 1 Low</a>
+                            </h3>
+                            <p class="product-card__brand">Nike</p>
+                            <div class="product-card__row">
+                                <span class="product-card__price">$47.00</span>
+                                <div class="product-card__rating">
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
+                                <img src="./assets/icons/star-half.svg" alt="" class="product-card__star" />
+                                <span class="product-card__score">4.3</span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer id="footer" class="footer"></footer>
+        <script>
+            load("#footer", "./templates/footer.html");
+        </script>
+        </body>
+    </html>
+    
