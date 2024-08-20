@@ -1,3 +1,0 @@
-[submodule "src/server/src/server/model_predict"]
-	path = src/server/src/server/model_predict
-	url = https://github.com/dtd0103/Neural-Attentive-Session-Based-Recommendation-PyTorch.git
