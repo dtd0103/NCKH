@@ -383,3 +383,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// =====heart======
+document.addEventListener('DOMContentLoaded', function() {
+    const likeBtn = document.querySelector('.like-btn');
+    
+    if (likeBtn) { 
+        likeBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn trang tải lại
+
+            this.classList.toggle('active');
+
+            const likedIcon = this.querySelector('.like-btn__icon--liked');
+            const defaultIcon = this.querySelector('.like-btn__icon');
+
+            // Chuyển đổi hiển thị giữa hai biểu tượng
+            if (this.classList.contains('active')) {
+                likedIcon.style.display = 'inline';
+                defaultIcon.style.display = 'none';
+            } else {
+                likedIcon.style.display = 'none';
+                defaultIcon.style.display = 'inline';
+            }
+        });
+    }
+});
