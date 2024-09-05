@@ -298,3 +298,107 @@ function deleteProduct(index) {
         renderProducts();
     }
 }
+// Quản lý người dùng
+let users = [
+    { id: 1, username: "nguyenhoang", email: "nguyenhoang@gmail.com" },
+    { id: 2, username: "lethi", email: "lethi@gmail.com" }
+];
+
+// Hiển thị danh sách người dùng
+function renderUsers() {
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = '';
+    users.forEach((user, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>${user.username}</strong> (${user.email})
+            <button onclick="editUser(${index})">Sửa</button>
+            <button onclick="deleteUser(${index})">Xóa</button>
+        `;
+        userList.appendChild(li);
+    });
+}
+
+// Chức năng sửa người dùng
+function editUser(index) {
+    const newUsername = prompt('Nhập tên người dùng mới:', users[index].username);
+    const newEmail = prompt('Nhập email người dùng mới:', users[index].email);
+    
+    if (newUsername && newEmail) {
+        users[index].username = newUsername.trim();
+        users[index].email = newEmail.trim();
+        renderUsers(); // Cập nhật danh sách người dùng
+    }
+}
+
+// Chức năng xóa người dùng
+function deleteUser(index) {
+    if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+        users.splice(index, 1); // Xóa người dùng
+        renderUsers(); // Cập nhật danh sách người dùng
+    }
+}
+
+// Khởi chạy chức năng
+renderUsers();
+
+    // Quản lý đơn hàng
+let orders = [
+    { id: 1, status: "Đang xử lý", customer: "Nguyen Hoang" },
+    { id: 2, status: "Hoàn tất", customer: "Le Thi" }
+];
+
+// Hiển thị danh sách đơn hàng
+function renderOrders() {
+    const orderList = document.getElementById('order-list');
+    orderList.innerHTML = '';
+    orders.forEach((order, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>Đơn hàng #${order.id}</strong> - Trạng thái: ${order.status} - Khách hàng: ${order.customer}
+            <button onclick="updateOrderStatus(${index})">Cập Nhật</button>
+            <button onclick="deleteOrder(${index})">Xóa</button>
+        `;
+        orderList.appendChild(li);
+    });
+}
+
+// Chức năng cập nhật trạng thái đơn hàng
+function updateOrderStatus(index) {
+    const newStatus = prompt('Nhập trạng thái mới cho đơn hàng:', orders[index].status);
+    if (newStatus) {
+        orders[index].status = newStatus.trim();
+        renderOrders(); // Cập nhật danh sách đơn hàng
+    }
+}
+
+// Chức năng xóa đơn hàng
+function deleteOrder(index) {
+    if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) {
+        orders.splice(index, 1); // Xóa đơn hàng
+        renderOrders(); // Cập nhật danh sách đơn hàng
+    }
+}
+
+// Khởi chạy chức năng
+renderOrders();
+
+// Dữ liệu sản phẩm với doanh thu (giả định)
+let productsSold = [
+    { id: 1, name: "Sản phẩm A", price: 50000 },
+    { id: 2, name: "Sản phẩm B", price: 150000 }
+];
+
+// Tính tổng doanh thu
+function generateSalesReport() {
+    let totalSales = 0;
+    productsSold.forEach(product => {
+        totalSales += product.price; // Cộng giá từng sản phẩm đã bán
+    });
+    document.getElementById('sales-report').textContent = `Tổng Doanh Thu: ${totalSales.toLocaleString()} VND`;
+}
+
+// Khởi chạy báo cáo
+generateSalesReport();
+
+

@@ -24,7 +24,12 @@
     <!-- Phần quản lý chỉ hiển thị sau khi đăng nhập -->
     <main id="admin-main" style="display: none;">
         <button onclick="logout()">Đăng Xuất</button>
-    
+    <!-- Quản Lý Người Dùng -->
+    <section id="manage-users" class="admin-section">
+        <h2>Quản Lý Người Dùng</h2>
+        <ul id="user-list"></ul>
+    </section>
+
         <!-- Quản Lý Danh Mục -->
         <section id="manage-categories" class="admin-section">
             <h2>Quản Lý Danh Mục</h2>
@@ -63,6 +68,17 @@
             </form>
             <ul id="product-list"></ul>
         </section>
+        <!-- Quản Lý Đơn Hàng -->
+        <section id="manage-orders" class="admin-section">
+            <h2>Quản Lý Đơn Hàng</h2>
+            <ul id="order-list"></ul>
+        </section>
+        <!-- Báo Cáo -->
+        <section id="view-reports" class="admin-section">
+            <h2>Báo Cáo Doanh Thu</h2>
+            <p id="sales-report"></p>
+        </section>
+
     </main>
 
     <footer>
