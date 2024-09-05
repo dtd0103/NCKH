@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,30 +11,76 @@
         <h1>Admin Dashboard</h1>
     </header>
 
+    <nav>
+        <ul>
+            <li><a href="#manage-categories">Quản Lý Danh Mục</a></li>
+            <li><a href="#manage-banners">Quản Lý Banner</a></li>
+            <li><a href="#manage-products">Quản Lý Sản Phẩm</a></li>
+            <!-- Bạn có thể thêm các liên kết khác ở đây -->
+        </ul>
+    </nav>
+
     <main>
-        <section class="admin-section">
-            <h2>Manage Categories</h2>
+        <!-- Quản Lý Danh Mục -->
+         <!-- Phần Đăng Nhập -->
+<section id="login-section" class="admin-section">
+    <h2>Đăng Nhập Admin</h2>
+    <form id="login-form">
+        <input type="text" id="admin-username" placeholder="Tên Đăng Nhập" required />
+        <input type="password" id="admin-password" placeholder="Mật Khẩu" required />
+        <button type="submit">Đăng Nhập</button>
+    </form>
+</section>
+<main id="admin-main" style="display: none;">
+    <!-- Các phần quản lý danh mục, banner, sản phẩm -->
+</main>
+
+        <section id="manage-categories" class="admin-section">
+            <h2>Quản Lý Danh Mục</h2>
             <form id="category-form">
-                <input type="text" id="category-name" placeholder="Category Name" required />
+                <input type="text" id="category-name" placeholder="Tên Danh Mục" required />
                 <input type="file" id="category-image" accept="image/*" required />
-                <button type="submit">Add Category</button>
+                <button type="submit">Thêm Danh Mục</button>
             </form>
 
             <ul id="category-list"></ul>
         </section>
 
-        <section class="admin-section">
-            <h2>Manage Banners</h2>
+        <!-- Quản Lý Banner -->
+        <section id="manage-banners" class="admin-section">
+            <h2>Quản Lý Banner</h2>
             <form id="banner-form">
-                <input type="text" id="banner-title" placeholder="Banner Title" required />
-                <textarea id="banner-description" placeholder="Banner Description" required></textarea>
+                <input type="text" id="banner-title" placeholder="Tiêu Đề Banner" required />
+                <textarea id="banner-description" placeholder="Mô Tả Banner" required></textarea>
                 <input type="file" id="banner-image" accept="image/*" required />
-                <button type="submit">Add Banner</button>
+                <button type="submit">Thêm Banner</button>
             </form>
 
             <ul id="banner-list"></ul>
         </section>
+
+        <!-- Quản Lý Sản Phẩm -->
+        <section id="manage-products" class="admin-section">
+            <h2>Quản Lý Sản Phẩm</h2>
+            <form id="product-form">
+                <input type="text" id="product-name" placeholder="Tên Sản Phẩm" required />
+                <textarea id="product-description" placeholder="Mô Tả Sản Phẩm" required></textarea>
+                <input type="number" id="product-price" placeholder="Giá" min="0" required />
+                <select id="product-category" required>
+                    <option value="">Chọn Danh Mục</option>
+                    <!-- Tùy thuộc vào danh mục đã được thêm -->
+                </select>
+                <input type="file" id="product-image" accept="image/*" required />
+                <button type="submit">Thêm Sản Phẩm</button>
+            </form>
+
+            <ul id="product-list"></ul>
+        </section>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Cửa Hàng Tạp Hóa</p>
+    </footer>
 
     <script src="./assets/js/admin.js"></script>
 </body>

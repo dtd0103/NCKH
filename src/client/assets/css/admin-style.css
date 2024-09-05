@@ -1,12 +1,41 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
 header {
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 1rem;
+    padding: 1rem 0;
+}
+
+nav {
+    background-color: #444;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
 main {
@@ -14,7 +43,15 @@ main {
 }
 
 .admin-section {
+    background-color: #fff;
+    padding: 1.5rem;
     margin-bottom: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.admin-section h2 {
+    margin-top: 0;
 }
 
 form {
@@ -23,9 +60,31 @@ form {
     margin-bottom: 1rem;
 }
 
-input, textarea, button {
-    margin-bottom: 0.5rem;
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
     padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form input[type="file"] {
+    margin-bottom: 0.5rem;
+}
+
+form button {
+    padding: 0.7rem;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #218838;
 }
 
 ul {
@@ -34,5 +93,60 @@ ul {
 }
 
 li {
-    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 0.7rem;
+    margin-bottom: 0.5rem;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+li img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-right: 1rem;
+}
+
+li .item-info {
+    flex: 1;
+}
+
+li .item-actions button {
+    margin-left: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+li .item-actions .edit-btn {
+    background-color: #007bff;
+    color: #fff;
+}
+
+li .item-actions .delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+li .item-actions .edit-btn:hover {
+    background-color: #0069d9;
+}
+
+li .item-actions .delete-btn:hover {
+    background-color: #c82333;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
