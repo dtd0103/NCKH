@@ -8,17 +8,16 @@ function loadData(key) {
 function saveData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
-// ========================================
+
 // Xác Thực Admin
-// ========================================
 const loginForm = document.getElementById('login-form');
 const adminMain = document.getElementById('admin-main');
 const loginSection = document.getElementById('login-section');
 
 // Đặt thông tin đăng nhập mặc định (trong thực tế, nên để backend quản lý)
-const adminCredentials = {
+const admin = {
     username: 'admin',
-    password: 'password123'
+    password: 'admin123'
 };
 
 // Kiểm tra xem admin đã đăng nhập chưa
@@ -30,6 +29,7 @@ function checkLogin() {
     }
 }
 
+// Gọi hàm kiểm tra đăng nhập khi tải trang
 checkLogin();
 
 // Xử lý đăng nhập
@@ -39,14 +39,23 @@ loginForm.addEventListener('submit', function(event) {
     const username = document.getElementById('admin-username').value.trim();
     const password = document.getElementById('admin-password').value.trim();
 
-    if (username === adminCredentials.username && password === adminCredentials.password) {
+    if (username === admin.username && password === admin.password) {
+        // Đăng nhập thành công
         localStorage.setItem('isLoggedIn', 'true');
         loginSection.style.display = 'none';
         adminMain.style.display = 'block';
     } else {
+        // Thông báo đăng nhập thất bại
         alert('Tên đăng nhập hoặc mật khẩu không chính xác!');
     }
 });
+
+// Xử lý đăng xuất
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    loginSection.style.display = 'block';
+    adminMain.style.display = 'none';
+}
 
 // ========================================
 // Quản Lý Danh Mục
@@ -177,7 +186,7 @@ function renderBanners() {
         li.innerHTML = `
             <img src="${banner.image}" alt="${banner.title}">
             <div class="item-info">
-                <h3>${banner.title}</h3>
+                <strong>${banner.title}</strong>
                 <p>${banner.description}</p>
             </div>
             <div class="item-actions">
@@ -191,7 +200,7 @@ function renderBanners() {
 
 function editBanner(index) {
     const newTitle = prompt('Nhập tiêu đề banner mới:', banners[index].title);
-    const newDescription = prompt('Nhập mô tả banner mới:', banners[index].description);
+    const newDescription = prompt('Nhập mô tả mới:', banners[index].description);
     if (newTitle && newDescription) {
         banners[index].title = newTitle.trim();
         banners[index].description = newDescription.trim();
@@ -224,18 +233,18 @@ productForm.addEventListener('submit', function(event) {
 
     const productName = document.getElementById('product-name').value.trim();
     const productDescription = document.getElementById('product-description').value.trim();
-    const productPrice = parseFloat(document.getElementById('product-price').value);
+    const productPrice = document.getElementById('product-price').value.trim();
     const productCategoryIndex = document.getElementById('product-category').value;
     const productImage = document.getElementById('product-image').files[0];
 
-    if (productName && productDescription && !isNaN(productPrice) && productCategoryIndex !== "" && productImage) {
+    if (productName && productDescription && productPrice && productCategoryIndex && productImage) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const newProduct = {
                 name: productName,
                 description: productDescription,
                 price: productPrice,
-                categoryIndex: parseInt(productCategoryIndex),
+                category: categories[productCategoryIndex].name,
                 image: e.target.result
             };
             products.push(newProduct);
@@ -252,14 +261,13 @@ function renderProducts() {
     productList.innerHTML = '';
     products.forEach((product, index) => {
         const li = document.createElement('li');
-        const categoryName = categories[product.categoryIndex]?.name || 'Không xác định';
         li.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
             <div class="item-info">
                 <strong>${product.name}</strong>
                 <p>${product.description}</p>
-                <p>Giá: $${product.price.toFixed(2)}</p>
-                <p>Danh Mục: ${categoryName}</p>
+                <p>Giá: $${product.price}</p>
+                <p>Danh mục: ${product.category}</p>
             </div>
             <div class="item-actions">
                 <button class="edit-btn" onclick="editProduct(${index})">Sửa</button>
@@ -271,17 +279,13 @@ function renderProducts() {
 }
 
 function editProduct(index) {
-    const product = products[index];
-    const newName = prompt('Nhập tên sản phẩm mới:', product.name);
-    const newDescription = prompt('Nhập mô tả sản phẩm mới:', product.description);
-    const newPrice = prompt('Nhập giá sản phẩm mới:', product.price);
-    const newCategoryIndex = prompt('Nhập chỉ số danh mục mới (0, 1, 2, ...):', product.categoryIndex);
-
-    if (newName && newDescription && !isNaN(parseFloat(newPrice)) && newCategoryIndex !== "") {
+    const newName = prompt('Nhập tên sản phẩm mới:', products[index].name);
+    const newDescription = prompt('Nhập mô tả sản phẩm mới:', products[index].description);
+    const newPrice = prompt('Nhập giá sản phẩm mới:', products[index].price);
+    if (newName && newDescription && newPrice) {
         products[index].name = newName.trim();
         products[index].description = newDescription.trim();
-        products[index].price = parseFloat(newPrice);
-        products[index].categoryIndex = parseInt(newCategoryIndex);
+        products[index].price = newPrice.trim();
         saveData('products', products);
         renderProducts();
     }

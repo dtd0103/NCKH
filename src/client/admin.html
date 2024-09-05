@@ -11,30 +11,21 @@
         <h1>Admin Dashboard</h1>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#manage-categories">Quản Lý Danh Mục</a></li>
-            <li><a href="#manage-banners">Quản Lý Banner</a></li>
-            <li><a href="#manage-products">Quản Lý Sản Phẩm</a></li>
-            <!-- Bạn có thể thêm các liên kết khác ở đây -->
-        </ul>
-    </nav>
+    <!-- Phần Đăng Nhập Admin -->
+    <section id="login-section" class="admin-section">
+        <h2>Đăng Nhập Admin</h2>
+        <form id="login-form">
+            <input type="text" id="admin-username" placeholder="Tên Đăng Nhập" required />
+            <input type="password" id="admin-password" placeholder="Mật Khẩu" required />
+            <button type="submit">Đăng Nhập</button>
+        </form>
+    </section>
 
-    <main>
+    <!-- Phần quản lý chỉ hiển thị sau khi đăng nhập -->
+    <main id="admin-main" style="display: none;">
+        <button onclick="logout()">Đăng Xuất</button>
+    
         <!-- Quản Lý Danh Mục -->
-         <!-- Phần Đăng Nhập -->
-<section id="login-section" class="admin-section">
-    <h2>Đăng Nhập Admin</h2>
-    <form id="login-form">
-        <input type="text" id="admin-username" placeholder="Tên Đăng Nhập" required />
-        <input type="password" id="admin-password" placeholder="Mật Khẩu" required />
-        <button type="submit">Đăng Nhập</button>
-    </form>
-</section>
-<main id="admin-main" style="display: none;">
-    <!-- Các phần quản lý danh mục, banner, sản phẩm -->
-</main>
-
         <section id="manage-categories" class="admin-section">
             <h2>Quản Lý Danh Mục</h2>
             <form id="category-form">
@@ -42,7 +33,6 @@
                 <input type="file" id="category-image" accept="image/*" required />
                 <button type="submit">Thêm Danh Mục</button>
             </form>
-
             <ul id="category-list"></ul>
         </section>
 
@@ -55,7 +45,6 @@
                 <input type="file" id="banner-image" accept="image/*" required />
                 <button type="submit">Thêm Banner</button>
             </form>
-
             <ul id="banner-list"></ul>
         </section>
 
@@ -68,12 +57,10 @@
                 <input type="number" id="product-price" placeholder="Giá" min="0" required />
                 <select id="product-category" required>
                     <option value="">Chọn Danh Mục</option>
-                    <!-- Tùy thuộc vào danh mục đã được thêm -->
                 </select>
                 <input type="file" id="product-image" accept="image/*" required />
                 <button type="submit">Thêm Sản Phẩm</button>
             </form>
-
             <ul id="product-list"></ul>
         </section>
     </main>
