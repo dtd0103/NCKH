@@ -3824,6 +3824,17 @@ html {
   font-size: 1.8rem;
   font-weight: 500;
   line-height: 144.444%;
+
+}
+.cart-info__row, .cart-info__continue-linkbt {
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 144.444%;
+  transition: translate 0.3s;
+  
+}
+.cart-info__continue-linkbt:hover {
+  translate: -5px;
 }
 .cart-info__row {
   display: flex;
@@ -3857,6 +3868,11 @@ html {
   align-items: center;
   gap: 10px;
 }
+.cart-info__continue-linkbt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .cart-info__continue-icon {
   rotate: 90deg;
   transition: translate 0.3s;
@@ -3864,6 +3880,7 @@ html {
 .cart-info__continue-link:hover .cart-info__continue-icon {
   translate: -5px;
 }
+
 .cart-info__sub-label {
   font-weight: 400;
 }
@@ -4062,26 +4079,68 @@ html {
   display: flex;
   gap: 20px;
 }
+
 .gift-item__icon-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 76px;
-  height: 76px;
+  margin-top: 4px;
+  width: 40px;
+  height: 40px;
   border-radius: 14px;
-  background: rgba(118, 68, 225, 0.1);
+  background: rgba(108, 108, 108, 0.1);
   box-shadow: 0px 20px 60px 10px var(--checkout-gift-shadow);
 }
+
 .gift-item__title {
   font-size: 1.8rem;
   font-weight: 500;
   line-height: 144.444%;
+  margin-top: 0px;
+  margin-bottom: 4px;
 }
-.gift-item__desc {
-  margin-top: 10px;
+
+.gift-item__desc { 
+  margin-top: 0;
+  margin-bottom: 8px;
   font-size: 1.4rem;
   line-height: 142.857%;
+}
+
+/* CSS cho phần input nhập mã giảm giá */
+.gift-item__input-wrap {
+  display: flex;
+}
+
+.gift-item__input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 1.6rem;
+  border: 1px solid #ccc;
+  border-radius: 20px 0px 0px 20px;
+  outline: none;
+}
+
+.gift-item__input:focus {
+  border-color: #0e0e0e;
+}
+
+.gift-item__btn {
+  padding: 10px 15px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: #0e0e0e;
+  border: 1px solid #333; 
+  border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+}
+
+.gift-item__btn:hover {
+  background-color: #000000;
+  color: #fff;
+  border: 1px solid #333; 
 }
 
 .user-address__top {
