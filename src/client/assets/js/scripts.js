@@ -383,3 +383,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// =====heart======
+document.addEventListener('DOMContentLoaded', function() {
+    const likeBtns = document.querySelectorAll('.like-btn'); // Lấy tất cả các nút "heart"
+    
+    likeBtns.forEach(function(likeBtn) {
+        likeBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn trang tải lại
+
+            this.classList.toggle('active');
+
+            const likedIcon = this.querySelector('.like-btn__icon--liked');
+            const defaultIcon = this.querySelector('.like-btn__icon');
+
+            // Chuyển đổi hiển thị giữa hai biểu tượng
+            if (this.classList.contains('active')) {
+                likedIcon.style.display = 'inline';
+                defaultIcon.style.display = 'none';
+            } else {
+                likedIcon.style.display = 'none';
+                defaultIcon.style.display = 'inline';
+            }
+        });
+    });
+});
+
+// =====So luong
+document.addEventListener("DOMContentLoaded", () => {
+    // Lấy tất cả các phần tử chứa nút số lượng
+    const quantityContainers = document.querySelectorAll(".cart-item__input");
+
+    quantityContainers.forEach(container => {
+        const decreaseBtn = container.querySelector(".decrease-btn");
+        const increaseBtn = container.querySelector(".increase-btn");
+        const quantitySpan = container.querySelector(".quantity");
+
+        let quantity = parseInt(quantitySpan.textContent); // Số lượng ban đầu từ phần tử
+
+        decreaseBtn.addEventListener("click", () => {
+            if (quantity > 1) {
+                quantity--;
+                quantitySpan.textContent = quantity;
+            }
+        });
+
+        increaseBtn.addEventListener("click", () => {
+            quantity++;
+            quantitySpan.textContent = quantity;
+        });
+    });
+});

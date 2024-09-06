@@ -1,0 +1,191 @@
+body {
+    font-family: 'Poppins', sans-serif; /* Thay đổi font để hiện đại hơn */
+    background-color: #1e1e2f; /* Màu nền galaxy đậm */
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(90deg, #1e1e2f, #4c0070, #1e1e2f); /* Hiệu ứng chuyển sắc màu galaxy */
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+    background: #4c0070; /* Tông màu tím galaxy cho thanh điều hướng */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0.7rem 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt */
+}
+
+nav ul li a:hover {
+    color: #ff69b4; /* Hiệu ứng chuyển màu hồng galaxy khi hover */
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.7); /* Tạo hiệu ứng phát sáng */
+}
+
+main {
+    padding: 3rem;
+    background: radial-gradient(circle, #1e1e2f, #2e2e48); /* Gradient nền mềm mại */
+}
+
+.admin-section {
+    background: #2e2e48; /* Nền tông màu galaxy nhẹ hơn cho các section */
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 15px; /* Tăng độ cong viền */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6); /* Hiệu ứng đổ bóng ấn tượng */
+    border: 2px solid transparent; /* Viền trong suốt ban đầu */
+    background-clip: padding-box, border-box; /* Cho phép nhiều lớp hiệu ứng */
+    border-image: linear-gradient(45deg, #ff69b4, #4c0070) 1; /* Hiệu ứng viền lấp lánh */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+.admin-section:hover {
+    transform: scale(1.03); /* Hiệu ứng phóng to nhẹ khi hover */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.8); /* Đổ bóng mạnh hơn khi hover */
+}
+
+.admin-section h2 {
+    margin-top: 0;
+    color: #ff69b4; /* Màu tiêu đề tông hồng galaxy */
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    border: 1px solid #4c0070;
+    border-radius: 8px;
+    background-color: #1e1e2f;
+    color: #fff;
+    transition: border 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #ff69b4; /* Tạo hiệu ứng viền khi focus */
+}
+
+form input[type="file"] {
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+form button {
+    padding: 0.8rem;
+    background: linear-gradient(90deg, #ff69b4, #4c0070);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+form button:hover {
+    background: linear-gradient(90deg, #ff8eb0, #601880);
+    transform: translateY(-3px); /* Nhấn mạnh hiệu ứng khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Đổ bóng đậm hơn */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #2e2e48, #4c0070);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+li:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Hiệu ứng đổ bóng khi hover */
+}
+
+li img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 1rem;
+}
+
+li .item-info {
+    flex: 1;
+    color: #fff;
+}
+
+li .item-actions button {
+    margin-left: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+li .item-actions .edit-btn {
+    background-color: #007bff;
+    color: #fff;
+}
+
+li .item-actions .edit-btn:hover {
+    background-color: #0056b3;
+}
+
+li .item-actions .delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+li .item-actions .delete-btn:hover {
+    background-color: #c82333;
+}
+
+footer {
+    background: linear-gradient(90deg, #1e1e2f, #4c0070);
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.5);
+}
