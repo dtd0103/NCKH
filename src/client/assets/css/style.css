@@ -2435,13 +2435,16 @@ html {
   font-weight: 400;
 }
 .btn--primary {
-  color: #ffffff;
-  background: #171c28;
+  color: #040404;
+  background: #ffffff;
+  border: 1px solid #040404;
+  border-radius: 9px;
   cursor: pointer;
-  transition: opacity 0.3s ease; /* Thêm hiệu ứng mượt */
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 .btn--primary:hover {
-  opacity: 0.8; /* Làm mờ khi hover (giảm độ mờ để tăng hoặc giảm hiệu ứng) */
+  background: #040404;
+  color: #ffffff;
 }
 .btn--outline {
   background: transparent;
@@ -2451,8 +2454,8 @@ html {
   border-radius: 99px;
 }
 .btn--danger {
-  color: #fff;
-  background: #ed4337;
+  color: #000000;
+  background: #ffffff;
 }
 .btn[disabled], .btn--disabled {
   opacity: 0.5;
@@ -2744,17 +2747,25 @@ html {
   display: block;
   font-size: 1.8rem;
 }
-.filter__col {
+.filter__col1{
   flex: 1; /* Allow each f  ilter to take up equal space */
   margin: 0px 10px 0px 10px;
   outline: none;
   min-width: 150px; /* Minimum width for each filter */
 }
+.filter__col {
+  flex: 1; /* Allow each f  ilter to take up equal space */
+  margin: 0px 10px 0px 10px;
+  outline: none;
+  min-width: 150px; /* Minimum width for each filter */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
 .form__select {
   width: 160px;
   padding: 10px;
-  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 10px 0px 0px 0px;
 
@@ -2768,6 +2779,7 @@ html {
 }
 .filters-applied h3{
   margin: 0;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -3886,7 +3898,19 @@ html {
 }
 .cart-info__next-btn {
   margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 1.6rem;
+  background-color: #ffffff;
+  color: #0e0e0e;
+  border: 1px solid #333; 
+  border-radius: 20px;
+  cursor: pointer;
+  width: 200px; /* Điều chỉnh độ rộng nếu cần */
 }
+
 .cart-info__edit-btn {
   display: flex;
   align-items: center;
@@ -4030,18 +4054,20 @@ html {
 .cart-item__input {
   display: flex;
   align-items: center;
+  justify-content: center; /* Giãn đều các mục */
   gap: 10px;
-  height: 44px;
-  padding: 0 20px;
-  border-radius: 10px;
-  border: 1px solid #d2d1d6;
+  height: 35px;
+  width: 100px;
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 146.667%;
+  margin-bottom: 0;
 }
+
 .cart-item__input-btn {
   display: flex;
 }
+
 .cart-item__total-price {
   font-size: 2.2rem;
   font-weight: 700;
@@ -4058,7 +4084,7 @@ html {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #9e9da8;
+  color: #000000;
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 150%;
@@ -4135,6 +4161,7 @@ html {
   border: 1px solid #333; 
   border-radius: 0px 20px 20px 0px;
   cursor: pointer;
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 }
 
 .gift-item__btn:hover {
@@ -4142,6 +4169,7 @@ html {
   color: #fff;
   border: 1px solid #333; 
 }
+
 
 .user-address__top {
   display: flex;
@@ -4523,6 +4551,7 @@ html {
   text-align: center; 
   border-radius: 25px; 
   width: 200px;
+  background-color: #ffffff;
   transition: background-color 0.5s ease, color 0.5s; 
 }
 

@@ -82,32 +82,50 @@
                                                 <p class="cart-item__price-wrap">
                                                     $47.00 | <span class="cart-item__status">Còn hàng</span>
                                                 </p>
-                                                <div class="cart-item__ctrl cart-item__ctrl--md-block">
-                                                    <div class="cart-item__input">
-                                                        LavAzza
-                                                        <img
-                                                            class="icon"
-                                                            src="./assets/icons/arrow-down-2.svg"
-                                                            alt=""
-                                                        />
-                                                    </div>
-                                                    <div class="cart-item__input">
-                                                        <button class="cart-item__input-btn">
-                                                            <img class="icon" src="./assets/icons/minus.svg" alt="" />
-                                                        </button>
-                                                        <span>1</span>
-                                                        <button class="cart-item__input-btn">
-                                                            <img class="icon" src="./assets/icons/plus.svg" alt="" />
-                                                        </button>
+                                            <div class="filter__form-group">
+                                                <div class="form__select-wrap">
+                                                    <label for="color" class="form__label">Chọn Size</label>
+                                                    <div class="filter__col" style="margin: 0;">
+                                                        <div>
+                                                            <select id="color" class="form__select" onchange="updateFilters('Size', this.value)" style="border-radius: 10px;height: 35px;width: 100px;">
+                                                                <option value="">Chọn size</option>
+                                                                <option value="XS">XS</option>
+                                                                <option value="S">S</option>
+                                                                <option value="M">M</option>
+                                                                <option value="L">L</option>
+                                                                <option value="XL">XL</option>
+                                                                <option value="XXL">XXL</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="cart-item__input">
+                                                            <button class="cart-item__input-btn decrease-btn">
+                                                                <img class="icon" src="./assets/icons/minus.svg" alt="minus" />
+                                                            </button>
+                                                            <span class="quantity">1</span>
+                                                            <button class="cart-item__input-btn increase-btn">
+                                                                <img class="icon" src="./assets/icons/plus.svg" alt="plus" />
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                
+                                            </div>  
                                             </div>
                                             <div class="cart-item__content-right">
                                                 <p class="cart-item__total-price">$47.00</p>
                                                 <div class="cart-item__ctrl">
-                                                    <button class="cart-item__ctrl-btn">
-                                                        <img src="./assets/icons/heart-2.svg" alt="" />
-                                                        Lưu
+                                                    <button class="like-btn prod-info__like-btn" style="border:0;background:#fff;box-shadow:none;" >
+                                                        <img
+                                                            src="./assets/icons/heart.svg"
+                                                            alt=""
+                                                            class="like-btn__icon icon"
+                                                        />
+                                                        <img
+                                                            src="./assets/icons/heart-red.svg"
+                                                            alt=""
+                                                            class="like-btn__icon icon like-btn__icon--liked"
+                                                            style="display: none;"
+                                                        />
                                                     </button>
                                                     <button
                                                         class="cart-item__ctrl-btn js-toggle"
@@ -125,7 +143,7 @@
                                     <article class="cart-item">
                                         <a href="./product-detail.html">
                                             <img
-                                                src="./assets/img/product/item-2.png"
+                                                src="./assets/img/product/item-1.png"
                                                 alt=""
                                                 class="cart-item__thumb"
                                             />
@@ -134,38 +152,56 @@
                                             <div class="cart-item__content-left">
                                                 <h3 class="cart-item__title">
                                                     <a href="./product-detail.html">
-                                                        Lavazza Coffee Blends - Try the Italian Espresso
+                                                        Coffee Beans - Espresso Arabica and Robusta Beans
                                                     </a>
                                                 </h3>
                                                 <p class="cart-item__price-wrap">
-                                                    $53.00 | <span class="cart-item__status">Còn hàng</span>
+                                                    $47.00 | <span class="cart-item__status">Còn hàng</span>
                                                 </p>
-                                                <div class="cart-item__ctrl cart-item__ctrl--md-block">
-                                                    <div class="cart-item__input">
-                                                        LavAzza
-                                                        <img
-                                                            class="icon"
-                                                            src="./assets/icons/arrow-down-2.svg"
-                                                            alt=""
-                                                        />
-                                                    </div>
-                                                    <div class="cart-item__input">
-                                                        <button class="cart-item__input-btn">
-                                                            <img class="icon" src="./assets/icons/minus.svg" alt="" />
-                                                        </button>
-                                                        <span>1</span>
-                                                        <button class="cart-item__input-btn">
-                                                            <img class="icon" src="./assets/icons/plus.svg" alt="" />
-                                                        </button>
+                                            <div class="filter__form-group">
+                                                <div class="form__select-wrap">
+                                                    <label for="color" class="form__label">Chọn Size</label>
+                                                    <div class="filter__col" style="margin: 0;">
+                                                        <div>
+                                                            <select id="color" class="form__select" onchange="updateFilters('Size', this.value)" style="border-radius: 10px;height: 35px;width: 100px;">
+                                                                <option value="">Chọn size</option>
+                                                                <option value="XS">XS</option>
+                                                                <option value="S">S</option>
+                                                                <option value="M">M</option>
+                                                                <option value="L">L</option>
+                                                                <option value="XL">XL</option>
+                                                                <option value="XXL">XXL</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="cart-item__input">
+                                                            <button class="cart-item__input-btn decrease-btn">
+                                                                <img class="icon" src="./assets/icons/minus.svg" alt="minus" />
+                                                            </button>
+                                                            <span class="quantity">1</span>
+                                                            <button class="cart-item__input-btn increase-btn">
+                                                                <img class="icon" src="./assets/icons/plus.svg" alt="plus" />
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                
+                                            </div>  
                                             </div>
                                             <div class="cart-item__content-right">
-                                                <p class="cart-item__total-price">$106.00</p>
+                                                <p class="cart-item__total-price">$47.00</p>
                                                 <div class="cart-item__ctrl">
-                                                    <button class="cart-item__ctrl-btn">
-                                                        <img src="./assets/icons/heart-2.svg" alt="" />
-                                                        Lưu
+                                                    <button class="like-btn prod-info__like-btn" style="border:0;background:#fff;box-shadow:none;" >
+                                                        <img
+                                                            src="./assets/icons/heart.svg"
+                                                            alt=""
+                                                            class="like-btn__icon icon"
+                                                        />
+                                                        <img
+                                                            src="./assets/icons/heart-red.svg"
+                                                            alt=""
+                                                            class="like-btn__icon icon like-btn__icon--liked"
+                                                            style="display: none;"
+                                                        />
                                                     </button>
                                                     <button
                                                         class="cart-item__ctrl-btn js-toggle"
@@ -183,7 +219,7 @@
                                     <article class="cart-item">
                                         <a href="./product-detail.html">
                                             <img
-                                                src="./assets/img/product/item-3.png"
+                                                src="./assets/img/product/item-1.png"
                                                 alt=""
                                                 class="cart-item__thumb"
                                             />
@@ -192,38 +228,55 @@
                                             <div class="cart-item__content-left">
                                                 <h3 class="cart-item__title">
                                                     <a href="./product-detail.html">
-                                                        Qualità Oro Mountain Grown - Espresso Coffee Beans
+                                                        Coffee Beans - Espresso Arabica and Robusta Beans
                                                     </a>
                                                 </h3>
                                                 <p class="cart-item__price-wrap">
-                                                    $38.65 | <span class="cart-item__status">Còn hàng</span>
+                                                    $47.00 | <span class="cart-item__status">Còn hàng</span>
                                                 </p>
-                                                <div class="cart-item__ctrl cart-item__ctrl--md-block">
-                                                    <div class="cart-item__input">
-                                                        LavAzza
-                                                        <img
-                                                            class="icon"
-                                                            src="./assets/icons/arrow-down-2.svg"
-                                                            alt=""
-                                                        />
-                                                    </div>
-                                                    <div class="cart-item__input">
-                                                        <button class="cart-item__input-btn">
-                                                            <img class="icon" src="./assets/icons/minus.svg" alt="" />
-                                                        </button>
-                                                        <span>1</span>
-                                                        <button class="cart-item__input-btn">
-                                                            <img class="icon" src="./assets/icons/plus.svg" alt="" />
-                                                        </button>
+                                            <div class="filter__form-group">
+                                                <div class="form__select-wrap">
+                                                    <label for="color" class="form__label">Chọn Size</label>
+                                                    <div class="filter__col" style="margin: 0;">
+                                                        <div>
+                                                            <select id="color" class="form__select" onchange="updateFilters('Size', this.value)" style="border-radius: 10px;height: 35px;width: 100px;">
+                                                                <option value="">Chọn size</option>
+                                                                <option value="XS">XS</option>
+                                                                <option value="S">S</option>
+                                                                <option value="M">M</option>
+                                                                <option value="L">L</option>
+                                                                <option value="XL">XL</option>
+                                                                <option value="XXL">XXL</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="cart-item__input">
+                                                            <button class="cart-item__input-btn decrease-btn">
+                                                                <img class="icon" src="./assets/icons/minus.svg" alt="minus" />
+                                                            </button>
+                                                            <span class="quantity">1</span>
+                                                            <button class="cart-item__input-btn increase-btn">
+                                                                <img class="icon" src="./assets/icons/plus.svg" alt="plus" />
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </div>  
                                             </div>
                                             <div class="cart-item__content-right">
-                                                <p class="cart-item__total-price">$38.65</p>
+                                                <p class="cart-item__total-price">$47.00</p>
                                                 <div class="cart-item__ctrl">
-                                                    <button class="cart-item__ctrl-btn">
-                                                        <img src="./assets/icons/heart-2.svg" alt="" />
-                                                        Lưu
+                                                    <button class="like-btn prod-info__like-btn" style="border:0;background:#fff;box-shadow:none;" >
+                                                        <img
+                                                            src="./assets/icons/heart.svg"
+                                                            alt=""
+                                                            class="like-btn__icon icon"
+                                                        />
+                                                        <img
+                                                            src="./assets/icons/heart-red.svg"
+                                                            alt=""
+                                                            class="like-btn__icon icon like-btn__icon--liked"
+                                                            style="display: none;"
+                                                        />
                                                     </button>
                                                     <button
                                                         class="cart-item__ctrl-btn js-toggle"
@@ -271,7 +324,7 @@
                             </div>
                         </div>
                         <div class="col-4 col-xl-12" style="padding-left: 0;">
-                            <div class="cart-info" style="border-radius: 0px 20px 0px 0px">
+                            <div class="cart-info" style="border-radius: 0px 20px 0px 0px; text-align: center;">
                                 <div class="cart-info__row">
                                     <span>Số lượng<span class="cart-info__sub-label">(sản phẩm)</span></span>
                                     <span>3</span>
@@ -289,12 +342,13 @@
                                     <span>Tổng cộng</span>
                                     <span>$201.65</span>
                                 </div>
-                                <a href="./shipping.html" class="cart-info__next-btn btn btn--primary btn--rounded">
-                                    Thanh toán
-                                </a>
+                                <div class="cart-info__next-btn-container" style="display: flex; justify-content: center;">
+                                    <a href="./shipping.html" class="cart-info__next-btn btn btn--primary btn--rounded">
+                                        Thanh toán
+                                    </a>
+                                </div>
                             </div>
-                            <div class="cart-info" style="margin-top: 0;border-radius: 0px 0px 20px 0px">
-                                <a href="#!">
+                            <div class="cart-info" style="margin-top: 0;border-radius: 0px 0px 20px 0px">                                
                                     <article class="gift-item">
                                         <div class="gift-item__icon-wrap">
                                             <img src="./assets/img/icon/coupon-solid-24.png" alt="" class="gift-item__icon" />
@@ -309,8 +363,7 @@
                                                 <button type="button" class="gift-item__btn">Áp dụng</button>
                                             </div>
                                         </div>
-                                    </article>
-                                </a>
+                                    </article>                                
                             </div>                            
                         </div>
                     </div>
@@ -327,16 +380,16 @@
         <!-- Modal: confirm remove shopping cart item -->
         <div id="delete-confirm" class="modal modal--small hide">
             <div class="modal__content">
-                <p class="modal__text">Do you want to remove this item from shopping cart?</p>
+                <p class="modal__text">Bạn có chắc muốn xóa sản phẩm khỏi giỏ hàng?</p>
                 <div class="modal__bottom">
                     <button class="btn btn--small btn--outline modal__btn js-toggle" toggle-target="#delete-confirm">
-                        Cancel
+                        Hủy bỏ
                     </button>
                     <button
                         class="btn btn--small btn--danger btn--primary modal__btn btn--no-margin js-toggle"
                         toggle-target="#delete-confirm"
                     >
-                        Delete
+                        Xóa
                     </button>
                 </div>
             </div>
