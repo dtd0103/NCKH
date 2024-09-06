@@ -1,6 +1,12 @@
-import express  from "express";
+import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import brandRouter from "./routes/brandRoute.js";
+import categoryRouter from "./routes/categoryRoute.js";
+import customerRouter from "./routes/customerRoute.js";
+import subCategoryRouter from "./routes/subCategoryRoute.js";
+import employeeRouter from "./routes/employeeRoute.js";
+import productRouter from "./routes/productRoute.js";
 
 const app = express();
 app.use(cors());
@@ -20,14 +26,15 @@ db.connect((err) => {
     console.log("Connected to the database.");
 });
 
-app.get("/", (req, res) => {
-    const sql = "SELECT * FROM danh_muc";
-    db.query(sql, (err, data) => {
-        if (err) return res.status(500).json({ error: err.message });
-        return res.json(data);
-    });
-});
+app.use(express.json());
+
+app.use("/api", categoryRouter);
+app.use("/api", subCategoryRouter);
+app.use("/api", customerRouter);
+app.use("/api", brandRouter);
+app.use("/api", employeeRouter);
+app.use("/api", productRouter);
 
 app.listen(8081, () => {
-    console.log("listening");
+    console.log("Listening");
 });

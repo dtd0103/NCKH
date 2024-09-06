@@ -16,11 +16,11 @@ subCategoryRouter.post(
     subCategoryController.createSubCategory
 );
 subCategoryRouter.put(
-    "/subcategories/:name",
+    "/subcategories",
     subCategoryController.updateSubCategory
 );
 subCategoryRouter.delete(
-    "/subcategories/:name",
+    "/subcategories/:id",
     subCategoryController.deleteSubCategory
 );
 

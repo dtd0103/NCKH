@@ -12,7 +12,7 @@ const getAllCategory = async function (req, res) {
 
 const getCategory = async function (req, res) {
     try {
-        const category = await Category.get(req.params.id);
+        const category = await Category.get(req.params.name);
         if (category) {
             res.json(category);
         } else {
@@ -53,8 +53,6 @@ const deleteCategory = async function (req, res) {
         res.status(500).send("Lỗi trong quá trình xóa danh mục.");
     }
 };
-
-// Sub_Category
 
 export default {
     getAllCategory,

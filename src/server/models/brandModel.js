@@ -48,10 +48,10 @@ class Brand {
     static update(data) {
         return new Promise((resolve, reject) => {
             const query =
-                "UPDATE thuong_hieu SET TH_Ma = ?, TH_Ten = ?, TH_HinhAnh = ? WHERE TH_Ma = ?";
+                "UPDATE thuong_hieu SET TH_Ten = ?, TH_HinhAnh = ? WHERE TH_Ma = ?";
             connection.query(
                 query,
-                [data.id, data.ten, data.hinh_anh, data],
+                [data.ten, data.hinh_anh, data],
                 (err, results) => {
                     if (err) {
                         return reject(err);

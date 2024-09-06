@@ -37,7 +37,7 @@ class SubCategory {
                 "INSERT INTO danh_muc_phu (DMP_Ma, DMP_Ten, DMP_HinhAnh, DM_Ma) VALUES (?, ?, ?, ?)";
             connection.query(
                 query,
-                [data.id, data.ten, data.hinh_anh, data.categoryId],
+                [data.id, data.name, data.image, data.categoryId],
                 (err, results) => {
                     if (err) {
                         return reject(err);
@@ -51,11 +51,11 @@ class SubCategory {
     static update(data) {
         return new Promise((resolve, reject) => {
             const query =
-                "UPDATE danh_muc_phu SET DMP_Ma = ?, DMP_Ten = ?, DMP_HinhAnh = ? WHERE DMP_Ma = ?";
+                "UPDATE danh_muc_phu SET DMP_Ten = ?, DMP_HinhAnh = ? WHERE DMP_Ma = ?";
 
             connection.query(
                 query,
-                [data.id, data.ten, data.hinh_anh, data.id],
+                [data.name, data.image, data.id],
                 (err, results) => {
                     if (err) {
                         return reject(err);
@@ -68,12 +68,53 @@ class SubCategory {
 
     static delete(id) {
         return new Promise((resolve, reject) => {
-            const query = "DELETE FROM danh_muc_phu WHERE DMP_Ma = ?";
-            connection.query(query, [id], (err, results) => {
+            connection.beginTransaction((err) => {
                 if (err) {
                     return reject(err);
                 }
-                resolve(results);
+
+                connection.query(
+                    "DELETE FROM dh_chitiet WHERE SP_Ma IN (SELECT SP_Ma FROM san_pham WHERE DMP_Ma = ?)",
+                    [id],
+                    (error, results) => {
+                        if (error) {
+                            return connection.rollback(() => reject(error));
+                        }
+
+                        connection.query(
+                            "DELETE FROM san_pham WHERE DMP_Ma = ?",
+                            [id],
+                            (error, results) => {
+                                if (error) {
+                                    return connection.rollback(() =>
+                                        reject(error)
+                                    );
+                                }
+
+                                connection.query(
+                                    "DELETE FROM danh_muc_phu WHERE DMP_Ma = ?",
+                                    [id],
+                                    (error, results) => {
+                                        if (error) {
+                                            return connection.rollback(() =>
+                                                reject(error)
+                                            );
+                                        }
+
+                                        connection.commit((err) => {
+                                            if (err) {
+                                                return connection.rollback(() =>
+                                                    reject(err)
+                                                );
+                                            }
+                                            resolve(results);
+                                        });
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
             });
         });
     }
