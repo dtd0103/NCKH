@@ -440,9 +440,6 @@
 /* 2. Ẩn mũi tên mặc định */
 .form__select_address {
     font-size: 1.5rem;
-    -webkit-appearance: none; /* Ẩn trên Chrome, Safari, Edge */
-    -moz-appearance: none; /* Ẩn trên Firefox */
-    appearance: none; /* Ẩn trên các trình duyệt khác */
     background-color: white; /* Màu nền mặc định */
     border: 1px solid #ccc;
     border-radius: 10px;
