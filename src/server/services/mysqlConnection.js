@@ -1,19 +1,22 @@
-import mysql from 'mysql'
+import mysql from "mysql";
+
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "dtdat020103",
-    database: "nckh_dtb",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
 connection.connect((err) => {
     if (err) {
         console.error("Error connecting to the database:", err);
-        process.exit(1); // Dừng ứng dụng nếu kết nối không thành công
+        process.exit(1);
     }
     console.log("Connected to the database.");
 });
 
 export default connection;
-

@@ -67,7 +67,7 @@ class Brand {
             const query = "DELETE FROM thuong_hieu WHERE TH_Ma = ?";
             connection.query(query, [id], (err, results) => {
                 if (err) {
-                    return reject(err);
+                    reject(err);
                 }
                 resolve(results);
             });

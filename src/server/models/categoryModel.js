@@ -62,64 +62,20 @@ class Category {
         });
     }
 
-    
     static delete(id) {
         return new Promise((resolve, reject) => {
-            connection.beginTransaction((err) => {
-                if (err) {
-                    return reject(err);
-                }
-    
-                connection.query(
-                    "DELETE FROM san_pham WHERE DM_Ma = ?",
-                    [id],
-                    (error, results) => {
-                        if (error) {
-                            return connection.rollback(() => reject(error));
-                        }
-    
-                        connection.query(
-                            "DELETE FROM dh_chitiet WHERE SP_Ma IN (SELECT SP_Ma FROM san_pham WHERE DM_Ma = ?)",
-                            [id],
-                            (error, results) => {
-                                if (error) {
-                                    return connection.rollback(() => reject(error));
-                                }
-    
-                                connection.query(
-                                    "DELETE FROM danh_muc_phu WHERE DM_Ma = ?",
-                                    [id],
-                                    (error, results) => {
-                                        if (error) {
-                                            return connection.rollback(() => reject(error));
-                                        }
-    
-                                        connection.query(
-                                            "DELETE FROM danh_muc WHERE DM_Ma = ?",
-                                            [id],
-                                            (error, results) => {
-                                                if (error) {
-                                                    return connection.rollback(() => reject(error));
-                                                }
-
-                                                connection.commit((err) => {
-                                                    if (err) {
-                                                        return connection.rollback(() => reject(err));
-                                                    }
-                                                    resolve(results);
-                                                });
-                                            }
-                                        );
-                                    }
-                                );
-                            }
-                        );
+            connection.query(
+                "DELETE FROM danh_muc WHERE DM_Ma = ?",
+                [id],
+                (err, results) => {
+                    if (err) {
+                        reject(err);
                     }
-                );
-            });
+                    resolve(results);
+                }
+            );
         });
     }
-    
 }
 
 export default Category;

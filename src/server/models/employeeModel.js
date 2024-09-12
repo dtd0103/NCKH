@@ -59,6 +59,7 @@ class Employee {
                     data.password,
                     data.phone,
                     data.address,
+                    data.role,
                     data.id,
                 ],
                 (err, results) => {
@@ -73,42 +74,16 @@ class Employee {
 
     static delete(id) {
         return new Promise((resolve, reject) => {
-            connection.beginTransaction((err) => {
-                if (err) {
-                    return reject(err);
-                }
-
-                connection.query(
-                    "DELETE FROM nv_donhang WHERE NV_Ma = ?",
-                    [id],
-                    (error, results) => {
-                        if (error) {
-                            return connection.rollback(() => reject(error));
-                        }
-
-                        connection.query(
-                            "DELETE FROM nhan_vien WHERE NV_Ma = ?",
-                            [id],
-                            (error, results) => {
-                                if (error) {
-                                    return connection.rollback(() =>
-                                        reject(error)
-                                    );
-                                }
-
-                                connection.commit((err) => {
-                                    if (err) {
-                                        return connection.rollback(() =>
-                                            reject(err)
-                                        );
-                                    }
-                                    resolve(results);
-                                });
-                            }
-                        );
+            connection.query(
+                "DELETE FROM nhan_vien WHERE NV_Ma = ?",
+                [id],
+                (err, results) => {
+                    if (err) {
+                        reject(err);
                     }
-                );
-            });
+                    resolve(results);
+                }
+            );
         });
     }
 }
