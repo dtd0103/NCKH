@@ -1,40 +1,45 @@
 import express from "express";
-import mysql from "mysql";
 import cors from "cors";
+import session from "express-session";
+import RedisStore from "connect-redis";
+import redis from "redis";
+
 import brandRouter from "./routes/brandRoute.js";
 import categoryRouter from "./routes/categoryRoute.js";
 import customerRouter from "./routes/customerRoute.js";
 import subCategoryRouter from "./routes/subCategoryRoute.js";
 import employeeRouter from "./routes/employeeRoute.js";
 import productRouter from "./routes/productRoute.js";
+import orderRouter from "./routes/orderRoute.js";
 
 const app = express();
 app.use(cors());
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "dtdat020103",
-    database: "nckh_dtb",
+const redisClient = redis.createClient({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
 });
 
-db.connect((err) => {
-    if (err) {
-        console.error("Error connecting to the database:", err);
-        process.exit(1); // Dừng ứng dụng nếu kết nối không thành công
-    }
-    console.log("Connected to the database.");
-});
+app.use(
+    session({
+        store: new RedisStore({ client: redisClient }),
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: false, maxAge: 60000 },
+    })
+);
 
 app.use(express.json());
 
-app.use("/api", categoryRouter);
-app.use("/api", subCategoryRouter);
-app.use("/api", customerRouter);
-app.use("/api", brandRouter);
-app.use("/api", employeeRouter);
-app.use("/api", productRouter);
+app.use("/api/v1", categoryRouter);
+app.use("/api/v1", subCategoryRouter);
+app.use("/api/v1", customerRouter);
+app.use("/api/v1", brandRouter);
+app.use("/api/v1", employeeRouter);
+app.use("/api/v1", productRouter);
+app.use("/api/v1", orderRouter);
 
-app.listen(8081, () => {
+app.listen(process.env.PORT, () => {
     console.log("Listening");
 });

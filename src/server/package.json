@@ -11,9 +11,25 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "bcrypt": "^5.1.1",
+<<<<<<< HEAD
+        "connect-redis": "^7.1.1",
+=======
+>>>>>>> 0e896eafbe0b5a26ff2142a183eeab6a0eab96b2
         "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
         "express": "^4.19.2",
+<<<<<<< HEAD
+        "express-session": "^1.18.0",
+        "jsonwebtoken": "^9.0.2",
         "mysql": "^2.18.1",
-        "mysql2": "^3.11.0"
+        "mysql2": "^3.11.0",
+        "redis": "^4.7.0"
+=======
+        "jsonwebtoken": "^9.0.2",
+        "mysql": "^2.18.1",
+        "mysql2": "^3.11.0",
+        "nodemon": "^3.1.4"
+>>>>>>> 0e896eafbe0b5a26ff2142a183eeab6a0eab96b2
     }
 }

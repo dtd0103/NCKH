@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Giỏ hàng | pussea</title>
+        <title>Vận chuyển | pussea</title>
 
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-touch-icon.png" />
@@ -18,6 +18,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="stylesheet" href="./assets/css/shipping.css" />
 
         <!-- Scripts -->
         <script src="./assets/js/scripts.js"></script>
@@ -52,7 +53,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#!" class="breadcrumbs__link breadcrumbs__link--current">Giỏ hàng</a>
+                            <a href="./shoppingcart.html" class="breadcrumbs__link">
+                                Giỏ hàng
+                                <img src="./assets/icons/arrow-right.svg" alt="" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!" class="breadcrumbs__link breadcrumbs__link--current">Vận chuyển</a>
                         </li>
                     </ul>
                 </div>
@@ -62,6 +69,103 @@
                     <div class="row gy-xl-3">
                         <div class="col-8 col-xl-12" style="padding-right: 0;">
                             <div class="cart-info" style="border-radius: 20px 0px 20px 20px;">
+                                <h1 class="cart-info__heading">1. Đơn hàng đã được giao tới vào khoảng ngày 13 - 16 tháng 9</h1>
+                                <div class="cart-info__separate"></div>
+
+                                <!-- Checkout address -->
+                                <div class="user-address">
+                                    <div class="user-address__top">
+                                        <div>
+                                            <h2 class="user-address__title">Địa chỉ</h2>
+                                            <p class="user-address__desc">Chọn địa chỉ giao hàng</p>
+                                        </div>
+                                        <button
+                                            class="user-address__btn btnadr btn--primaryaddress btn--rounded btn--small js-toggle"
+                                            toggle-target="#add-new-address"
+                                            style="width: 200px;"
+                                        >
+                                            <img src="./assets/icons/plus.svg" alt="" style="margin-right: 6px;"/>
+                                            Thêm địa chỉ mới
+                                        </button>
+                                    </div>
+                                    <div class="user-address__list">
+                                        <!-- Empty message -->
+                                        <!-- <p class="user-address__message">
+                                            Not address yet.
+                                            <a class="user-address__link js-toggle" href="#!" toggle-target="#add-new-address">Add a new address</a>
+                                        </p> -->
+
+                                        <!-- Address card 1 -->
+                                        <article class="address-card">
+                                            <div class="address-card__left">
+                                                <div class="address-card__choose">
+                                                    <label class="cart-info__checkbox">
+                                                        <input
+                                                            type="radio"
+                                                            name="shipping-adress"
+                                                            checked
+                                                            class="cart-info__checkbox-input"
+                                                        />
+                                                    </label>
+                                                </div>
+                                                <div class="address-card__info">
+                                                    <h3 class="address-card__title">Imran Khan</h3>
+                                                    <p class="address-card__desc">
+                                                        Museum of Rajas, Sylhet Sadar, Sylhet 3100.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="address-card__right">
+                                                <div class="address-card__ctrl">
+                                                    <button
+                                                        class="cart-info__edit-btn js-toggle"
+                                                        toggle-target="#add-new-address"
+                                                    >
+                                                        <img class="icon" src="./assets/icons/edit.svg" alt="" />
+                                                        Chỉnh sửa
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </article>
+
+                                        <!-- Address card 2 -->
+                                        <article class="address-card">
+                                            <div class="address-card__left">
+                                                <div class="address-card__choose">
+                                                    <label class="cart-info__checkbox">
+                                                        <input
+                                                            type="radio"
+                                                            name="shipping-adress"
+                                                            class="cart-info__checkbox-input"
+                                                        />
+                                                    </label>
+                                                </div>
+                                                <div class="address-card__info">
+                                                    <h3 class="address-card__title">Imran Khan</h3>
+                                                    <p class="address-card__desc">
+                                                        Al Hamra City (10th Floor), Hazrat Shahjalal Road, Sylhet,
+                                                        Sylhet, Bangladesh
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="address-card__right">
+                                                <div class="address-card__ctrl">
+                                                    <button
+                                                        class="cart-info__edit-btn js-toggle"
+                                                        toggle-target="#add-new-address"
+                                                    >
+                                                        <img class="icon" src="./assets/icons/edit.svg" alt="" />
+                                                        Chỉnh sửa
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
+
+                                <div class="cart-info__separate"></div>
+
+                                <h2 class="cart-info__sub-heading">Chi tiết sản phẩm</h2>
                                 <div class="cart-info__list">
                                     <!-- Cart item 1 -->
                                     <article class="cart-item">
@@ -84,7 +188,7 @@
                                                 </p>
                                             <div class="filter__form-group">
                                                 <div class="form__select-wrap">
-                                                    <label for="color" class="form__label">Chọn Size</label>
+                                                    <!-- <label for="color" class="form__label" style="font-size: 1.5rem;" >Chọn Size </label> -->
                                                     <div class="filter__col" style="margin: 0;">
                                                         <div>
                                                             <select id="color" class="form__select" onchange="updateFilters('Size', this.value)" style="border-radius: 10px;height: 35px;width: 100px;">
@@ -160,7 +264,7 @@
                                                 </p>
                                             <div class="filter__form-group">
                                                 <div class="form__select-wrap">
-                                                    <label for="color" class="form__label">Chọn Size</label>
+                                                    <!-- <label for="color" class="form__label" style="font-size: 1.5rem;">Chọn Size</label> -->
                                                     <div class="filter__col" style="margin: 0;">
                                                         <div>
                                                             <select id="color" class="form__select" onchange="updateFilters('Size', this.value)" style="border-radius: 10px;height: 35px;width: 100px;">
@@ -236,7 +340,7 @@
                                                 </p>
                                             <div class="filter__form-group">
                                                 <div class="form__select-wrap">
-                                                    <label for="color" class="form__label">Chọn Size</label>
+                                                    <!-- <label for="color" class="form__label" style="font-size: 1.5rem;">Chọn Size</label> -->
                                                     <div class="filter__col" style="margin: 0;">
                                                         <div>
                                                             <select id="color" class="form__select" onchange="updateFilters('Size', this.value)" style="border-radius: 10px;height: 35px;width: 100px;">
@@ -294,7 +398,7 @@
                                     <div class="row">
                                         <div class="col-8 col-xxl-7">
                                             <div class="cart-info__continue">
-                                                <a href="./" class="cart-info__continue-linkbt">
+                                                <a href="./" class="cart-info__continue-link">
                                                     <img
                                                         class="cart-info__continue-icon icon"
                                                         src="./assets/icons/arrow-down-2.svg"
@@ -324,9 +428,9 @@
                             </div>
                         </div>
                         <div class="col-4 col-xl-12" style="padding-left: 0;">
-                            <div class="cart-info" style="border-radius: 0px 20px 0px 0px; text-align: center;">
+                            <div class="cart-info" style="border-radius: 0px 20px 20px 0px">
                                 <div class="cart-info__row">
-                                    <span>Số lượng<span class="cart-info__sub-label">(sản phẩm)</span></span>
+                                    <span>Số lượng <span class="cart-info__sub-label">(sản phẩm)</span></span>
                                     <span>3</span>
                                 </div>
                                 <div class="cart-info__row">
@@ -334,7 +438,7 @@
                                     <span>$191.65</span>
                                 </div>
                                 <div class="cart-info__row">
-                                    <span>Phí vận chuyển</span>
+                                    <span>Phí vận chuyển </span>
                                     <span>$10.00</span>
                                 </div>
                                 <div class="cart-info__separate"></div>
@@ -343,8 +447,8 @@
                                     <span>$201.65</span>
                                 </div>
                                 <div class="cart-info__next-btn-container" style="display: flex; justify-content: center;">
-                                    <a href="./shipping.html" class="cart-info__next-btn btn btn--primary btn--rounded">
-                                        Thanh toán
+                                    <a href="./payment.html" class="cart-info__next-btn btn btn--primary btn--rounded">
+                                        Tiếp tục thanh toán
                                     </a>
                                 </div>
                             </div>
@@ -394,6 +498,90 @@
                 </div>
             </div>
             <div class="modal__overlay js-toggle" toggle-target="#delete-confirm"></div>
+        </div>
+
+        <!-- Modal: address new shipping address -->
+        <div id="add-new-address" class="modal hide" style="--content-width: 650px">
+            <div class="modal__content">
+                <form action="" class="form">
+                    <h2 class="modal__heading">Thêm địa chỉ mới</h2>
+                    <div class="modal__body">
+                        <div class="form__row">
+                            <div class="form__group">
+                                <label for="name" class="form__label form__label--small">Tên</label>
+                                <div class="form__text-input form__text-input--small">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        placeholder="Tên"
+                                        class="form__input"
+                                        required
+                                        minlength="3"
+                                    />
+                                    <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
+                                </div>
+                                <p class="form__error">Tên phải có ít nhất 3 kí tự</p>
+                            </div>
+                            <div class="form__group">
+                                <label for="phone" class="form__label form__label--small">Số điện thoại</label>
+                                <div class="form__text-input form__text-input--small">
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        id="phone"
+                                        placeholder="Số điện thoại"
+                                        class="form__input"
+                                        required
+                                        minlength="10"
+                                    />
+                                    <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
+                                </div>
+                                <p class="form__error">Số điện thoại phải có ít nhất 10 số</p>
+                            </div>
+                        </div>
+                        <div class="form__group">
+                            <label for="address" class="form__label form__label--small">Địa chỉ</label>
+                            <div class="form__text-area">
+                                <textarea
+                                    name="address"
+                                    id="address"
+                                    placeholder="Địa chỉ"
+                                    class="form__text-area-input"
+                                    required
+                                ></textarea>
+                                <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
+                            </div>
+                            <p class="form__error">Địa chỉ không được để trống</p>
+                        </div>
+                        <div class="form__group">
+                            <label for="city" class="form__label form__label--small">Thành phố</label>
+                            <div class="filter__col" style="margin: 0;" >
+                                <select id="Diachi" class="form__select_address" onchange="updateFilters('Diachi', this.value)">
+                                    <option value="Diachi">Chọn thành phố</option>
+                                    <option value="HCM">Thành phố Hồ Chí Minh</option>
+                                    <option value="HaNoi">Hà Nội</option>
+                                    <option value="CanTho">Cần Thơ</option>
+                                    <option value="VinhLong">Vĩnh Long</option>
+                                </select>
+                            </div>
+                            <p class="form__error">Thành phố không được để trống</p>
+                        </div>
+                    </div>
+                    <div class="modal__bottom">
+                        <button class="btn btn--small btn--text modal__btn js-toggle" toggle-target="#add-new-address">
+                            Hủy
+                        </button>
+                        <button
+                            class="btn btn--small btn--primary modal__btn btn--no-margin js-toggle"
+                            toggle-target="#add-new-address"
+                        >
+                            Tạo
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal__overlay"></div>
         </div>
     </body>
 </html>
