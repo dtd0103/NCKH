@@ -18,6 +18,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="stylesheet" href="./assets/css/shipping.css" />
 
         <!-- Scripts -->
         <script src="./assets/js/scripts.js"></script>
@@ -93,7 +94,9 @@
                                                             required
                                                             autofocus
                                                         />
+                                                        <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
                                                     </div>
+                                                    <p class="form__error">Tên không được để trống</p>
                                                 </div>
                                                 <div class="form__group">
                                                     <label for="email-address" class="form__label form-card__label">
@@ -107,12 +110,31 @@
                                                             class="form__input"
                                                             required
                                                         />
+                                                        <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
                                                     </div>
+                                                    <p class="form__error">Email không được để trống</p>
                                                 </div>
                                             </div>
                                             
                                             <!-- Form row 2 -->
                                             <div class="form__row">
+                                                <div class="form__group">
+                                                    <label for="username" class="form__label form-card__label">
+                                                        Tên đăng nhập
+                                                    </label>
+                                                    <div class="form__text-input">
+                                                        <input
+                                                            type="text"
+                                                            id="username"
+                                                            placeholder="Tên đăng nhập"
+                                                            class="form__input"
+                                                            minlength="6"
+                                                            required
+                                                        />
+                                                        <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
+                                                    </div>
+                                                    <p class="form__error">Tên đăng nhập có ít 6 ký tự</p>
+                                                </div>
                                                 <div class="form__group">
                                                     <label for="phone-number" class="form__label form-card__label">
                                                         Số điện thoại
@@ -125,8 +147,14 @@
                                                             class="form__input"
                                                             required
                                                         />
+                                                        <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
                                                     </div>
+                                                    <p class="form__error">Số điện thoại không được bỏ trống</p>
                                                 </div>
+                                            </div>
+                                        
+                                            <!-- Form row 3 -->
+                                            <div class="form__row">
                                                 <div class="form__group">
                                                     <label for="password" class="form__label form-card__label">
                                                         Mật khẩu
@@ -139,16 +167,17 @@
                                                             class="form__input"
                                                             required
                                                         />
+                                                        <img src="./assets/icons/form-error.svg" alt="" class="form__input-icon-error" />
                                                     </div>
+                                                    <p class="form__error">Mật khẩu không được bỏ trống</p>
                                                 </div>
                                             </div>
-                                            
-
+                                        
                                             <div class="form-card__bottom">
                                                 <a class="btn btn--text" href="./profile.html">Hủy</a>
-                                                <button class="btn btn--primary btn--rounded">Lưu</button>
+                                                <a class="btn btn--small btn--primary modal__btn btn--no-margin">Lưu</a>
                                             </div>
-                                        </form>
+                                        </form>                                        
                                     </div>
                                 </div>
                             </div>
