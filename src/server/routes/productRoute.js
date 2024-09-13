@@ -9,4 +9,6 @@ productRouter.post("/product", productController.createProduct);
 productRouter.put("/product", productController.updateProduct);
 productRouter.delete("/product/:id", productController.deleteProduct);
 
+productRouter.post("/product/view", productController.productView);
+
 export default productRouter;

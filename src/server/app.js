@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import RedisStore from "connect-redis";
-import redis from "redis";
+import redisClient from "./services/redisClient.js";
 
 import brandRouter from "./routes/brandRoute.js";
 import categoryRouter from "./routes/categoryRoute.js";
@@ -14,11 +14,6 @@ import orderRouter from "./routes/orderRoute.js";
 
 const app = express();
 app.use(cors());
-
-const redisClient = redis.createClient({
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-});
 
 app.use(
     session({

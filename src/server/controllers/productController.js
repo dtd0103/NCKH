@@ -1,4 +1,5 @@
 import Product from "../models/productModel.js";
+import redisClient from "../services/redisClient.js";
 
 const getAllProduct = async function (req, res) {
     try {
@@ -56,10 +57,42 @@ const deleteProduct = async function (req, res) {
     }
 };
 
+const productView = async function (req, res) {
+    const { productId } = req.body;
+
+    try {
+        const sessionId = req.sessionId;
+        const viewedProducts = await redisClient.hGetAll(
+            `viewedProducts:${sessionId}`
+        );
+
+        if (!viewedProducts || Object.keys(viewedProducts).length === 0) {
+            await redisClient.hSet(`viewedProducts:${sessionId}`, productId, 1);
+        } else {
+            const currentViewCount = viewedProducts[productId] || 0;
+            if (currentViewCount < 6) {
+                await redisClient.hSet(
+                    `viewedProducts:${sessionId}`,
+                    productId,
+                    parseInt(currentViewCount) + 1
+                );
+            }
+
+            res.json({
+                message: `Sản phẩm với id ${productId} đã được thêm vào danh sách sản phẩm đã xem.`,
+                viewedProducts: viewedProducts,
+            });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Có lỗi xảy ra.", error: err.message });
+    }
+};
+
 export default {
     getAllProduct,
     getProduct,
     createProduct,
     updateProduct,
     deleteProduct,
+    productView,
 };

@@ -90,7 +90,13 @@ const customerLogin = async function (req, res) {
             expiresIn: "1h",
         });
 
-        res.status(200).json({ message: "Đăng nhập thành công.", token });
+        req.session.userId = customer.KH_Ma;
+
+        res.status(200).json({
+            message: "Đăng nhập thành công.",
+            token: token,
+            sessionId: req.session.id,
+        });
     } catch (err) {
         res.status(500).json({
             message: "Có lỗi trong quá trình đăng nhập.",
