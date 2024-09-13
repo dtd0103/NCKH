@@ -202,7 +202,7 @@ strong {
 
 .col-4 {
   flex: 0 0 auto;
-  width: 33.3333333333%;
+  width: 37%;
 }
 
 .col-5 {
@@ -222,7 +222,7 @@ strong {
 
 .col-8 {
   flex: 0 0 auto;
-  width: 66.6666666667%;
+  width: 63%;
 }
 
 .col-9 {
@@ -2473,14 +2473,18 @@ html {
 }
 
 .product-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   max-height: 100%;
   padding: 16px;
-  border-radius: 20px;
   background: var(--product-card-bg);
   box-shadow: 0px 20px 60px 10px var(--product-card-shadow);
-  /* margin-top: 70px; */
+  transition: transform 0.3s ease;
+  overflow: hidden; /* Đảm bảo phần phủ không tràn ra ngoài */
+}
+.product-card:hover {
+  transform: translateY(-5px); /* Hiệu ứng di chuyển khi hover */
 }
 .product-card__img-wrap {
   position: relative;
@@ -3873,9 +3877,11 @@ html {
 }
 .cart-info__separate {
   margin: 30px 0;
-  height: 1px;
-  background: var(--checkout-border-color);
+  border: 0; /* Xóa border mặc định */
+  border-top: 1px dashed var(--checkout-border-color); /* Tạo đường kẻ nét đứt */
+  height: 0; /* Đặt height về 0 vì sử dụng border */
 }
+
 .cart-info__continue {
   height: 100%;
   display: flex;
@@ -4266,7 +4272,7 @@ html {
   align-items: center;
   gap: 20px;
   margin-top: 30px;
-  padding: 20px;
+  padding:  0px 20px;
   border-radius: 20px;
   background: var(--checkout-payment-item-bg);
 }
@@ -4281,6 +4287,7 @@ html {
 .payment-item__thumb {
   width: 70px;
   height: 54px;
+  border-radius: 10px;
   object-fit: cover;
 }
 .payment-item__content {
@@ -4857,4 +4864,47 @@ html {
   display: flex;
   -webkit-box-align: center;
   align-items: center;
+}
+.payment-method {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.payment-method__title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.payment-method__details {
+  display: flex;
+  align-items: center;
+}
+
+.payment-method__details span {
+  margin-right: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.payment-method__change {
+  font-size: 14px;
+  color: #0066cc;
+  text-decoration: none;
+}
+.modal_label{
+  font-size: 1.8rem;
+  margin-left: 20px;
+  display: block;
+  margin-bottom: 10px;
+}
+.modal_input{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.hide {
+  display: none;
 }
