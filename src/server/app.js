@@ -12,6 +12,13 @@ import employeeRouter from "./routes/employeeRoute.js";
 import productRouter from "./routes/productRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
 app.use(cors());
 
@@ -26,6 +33,16 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(
+    "/images/categories",
+    express.static(path.join(__dirname, "images/category"))
+);
+app.use(
+    "/images/products",
+    express.static(path.join(__dirname, "images/products"))
+);
 
 app.use("/api/v1", categoryRouter);
 app.use("/api/v1", subCategoryRouter);

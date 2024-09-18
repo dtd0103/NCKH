@@ -25,6 +25,20 @@ const getProduct = async function (req, res) {
     }
 };
 
+const getProductById = async function (req, res) {
+    try {
+        const product = await Product.getById(req.params.id);
+        if (product) {
+            res.json(product);
+        } else {
+            res.status(404).send("Sản phẩm không tồn tại.");
+        }
+    } catch (err) {
+        console.error("Lỗi truy vấn: " + err.message);
+        res.status(500).send("Lỗi trong quá trình lấy thông tin sản phẩm.");
+    }
+};
+
 const createProduct = async function (req, res) {
     try {
         const newProduct = await Product.create(req.body);
@@ -91,6 +105,7 @@ const productView = async function (req, res) {
 export default {
     getAllProduct,
     getProduct,
+    getProductById,
     createProduct,
     updateProduct,
     deleteProduct,

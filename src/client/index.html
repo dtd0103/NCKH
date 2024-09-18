@@ -6,9 +6,23 @@
         <title>Cửa Hàng Tạp Hóa</title>
 
         <!-- Favicon -->
-        <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="./assets/favicon/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="./assets/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="./assets/favicon/favicon-16x16.png"
+        />
         <link rel="manifest" href="./assets/favicon/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
@@ -31,147 +45,100 @@
         </script>
         <!-- MAIN -->
         <main>
-        <!-- Slider -->
-        <div class="slider-container">
-            <button class="arrow left-arrow" onclick="prevImage()">&#10094;</button>
-            <img id="product-image" src="./assets/img/ad-banner/shoecollection.png" alt="Product Image">
-            <button class="arrow right-arrow" onclick="nextImage()">&#10095;</button>
-        </div>
-        <!-- List -->
-        <div class="list">
-            <h1>
-                Danh mục phổ biến
-            </h1>
-            <ul class="list-category">
-                <li class="category-item">
-                    <a href="#!">
-                        <img src="./assets/img/cate-list/luxury-removebg-preview.png" alt="" class="cate-icon">
-                        <a href="">
-                            <span>
-                                <b>Hàng hiệu</b>
-                            </span>
-                        </a>
-                    </a>
-                </li>
-                <li class="category-item">
-                    <a href="#!">
-                        <img src="./assets/img/cate-list/sprot-removebg-preview.png" alt="" class="cate-icon">
-                        <a href="">
-                            <span>
-                                <b>Thể thao</b>
-                            </span>
-                        </a>
-                    </a>
-                </li>
-                <li class="category-item">
-                    <a href="#!" class="cate-link">
-                        <img src="./assets/img/cate-list/kid.png" alt="" class="cate-icon">
-                        <a href="">
-                            <span>
-                                <b>Trẻ em</b>
-                            </span>
-                        </a>
-                    </a>
-                </li>
-                <li class="category-item">
-                    <a href="#!">
-                        <img src="./assets/img/cate-list/furniture.png" alt="" class="cate-icon">
-                        <a href="">
-                            <span>
-                                <b>Nội thất</b>
-                            </span>
-                        </a>
-                    </a>
-                </li>
-                <li class="category-item">
-                    <a href="#!">
-                        <img src="./assets/img/cate-list/electronic.png" alt="" class="cate-icon">
-                        <a href="">
-                            <span>
-                                <b>Điện tử</b>
-                            </span>
-                        </a>
-                    </a>
-                </li>
-                <li class="category-item">
-                    <a href="#!">
-                        <img src="./assets/img/cate-list/book.png" alt="" class="cate-icon">
-                        <a href="">
-                            <span>
-                                <b>Sổ sách</b>
-                            </span>
-                        </a>
-                    </a>
-                </li>
-                <li class="category-item">
-                    <a href="#!">
-                        <img src="./assets/img/cate-list/fashion.png" alt="" class="cate-icon">
-                        <a href="">
-                            <span>
-                                <b>Thời trang</b>
-                            </span>
-                        </a>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- AD Banner -->
-        <!-- banner 1 -->
-        <div class="ad-banner">
-            <div class="ad-info">
-                <span class="ad-h1">
-                Bộ sưu tập giày dép siêu đẹp mùa hè.
-                </span>
-                <span class="ad-h2">
-                Vừa thời trang giá vừa rẻ, đẹp thì đừng bỏ lỡ những mẫu giày tại <i><b>pussea</b></i> nhé.
-                </span>
-                <a href="">
-                    <div class="ad-button">
-                        Xem ngay
-                    </div>
-                </a>
+            <!-- Slider -->
+            <div class="slider-container">
+                <button class="arrow left-arrow" onclick="prevImage()">
+                    &#10094;
+                </button>
+                <img
+                    id="product-image"
+                    src="./assets/img/ad-banner/shoecollection.png"
+                    alt="Product Image"
+                />
+                <button class="arrow right-arrow" onclick="nextImage()">
+                    &#10095;
+                </button>
             </div>
-            <div class="ad-img">
-                <img src="./assets/img/ad-banner/shoecollection.png" alt="">
+            <!-- List -->
+            <div class="list">
+                <h1>Danh mục phổ biến</h1>
+                <div class="category-wrapper">
+                    <ul class="list-category" id="category-list"></ul>
+                </div>
+                <button class="prev-btn">&#10094;</button>
+                <button class="next-btn">&#10095;</button>
             </div>
-        </div>
-        <!-- banner 2 -->
-        <div class="ad-banner">
-            <div class="ad-info">
-                <span class="ad-h1">
-                    Yêu ngôi nhà của bạn, yêu khu vườn của bạn.
-                    
-                </span>
-                <span class="ad-h2">
-                    Hoàn thiện ngôi nhà và khu vườn của bạn với những món đồ mà bạn sẽ yêu thích.
-                </span>
-                <a href="">
-                    <div class="ad-button">
-                        Xem ngay
-                    </div>
-                </a>
+            <!-- AD Banner -->
+            <!-- banner 1 -->
+            <div class="ad-banner">
+                <div class="ad-info">
+                    <span class="ad-h1">
+                        Bộ sưu tập giày dép siêu đẹp mùa hè.
+                    </span>
+                    <span class="ad-h2">
+                        Vừa thời trang giá vừa rẻ, đẹp thì đừng bỏ lỡ những mẫu
+                        giày tại <i><b>pussea</b></i> nhé.
+                    </span>
+                    <a href="">
+                        <div class="ad-button">Xem ngay</div>
+                    </a>
+                </div>
+                <div class="ad-img">
+                    <img
+                        src="./assets/img/ad-banner/shoecollection.png"
+                        alt=""
+                    />
+                </div>
             </div>
-            <div class="ad-img">
-                <img src="./assets/img/ad-banner/furniturebanner.png" alt="">
+            <!-- banner 2 -->
+            <div class="ad-banner">
+                <div class="ad-info">
+                    <span class="ad-h1">
+                        Yêu ngôi nhà của bạn, yêu khu vườn của bạn.
+                    </span>
+                    <span class="ad-h2">
+                        Hoàn thiện ngôi nhà và khu vườn của bạn với những món đồ
+                        mà bạn sẽ yêu thích.
+                    </span>
+                    <a href="">
+                        <div class="ad-button">Xem ngay</div>
+                    </a>
+                </div>
+                <div class="ad-img">
+                    <img
+                        src="./assets/img/ad-banner/furniturebanner.png"
+                        alt=""
+                    />
+                </div>
             </div>
-        </div>
-        <!-- product -->
-        <div class="container home"> 
-            <div class="home__row">
-                <h2 class="home__heading">Gợi ý hôm nay</h2>
-                <div class="filter-wrap">
-                    <button class="filter-btn js-toggle" toggle-target="#home-filter">
-                        Bộ lọc
-                        <img src="./assets/icons/filter.svg" alt="" class="filter-btn__icon icon" />
-                    </button>
+            <!-- product -->
+            <div class="container home">
+                <div class="home__row">
+                    <h2 class="home__heading">Gợi ý hôm nay</h2>
+                    <div class="filter-wrap">
+                        <button
+                            class="filter-btn js-toggle"
+                            toggle-target="#home-filter"
+                        >
+                            Bộ lọc
+                            <img
+                                src="./assets/icons/filter.svg"
+                                alt=""
+                                class="filter-btn__icon icon"
+                            />
+                        </button>
 
-                    <div id="home-filter" class="filter hide">
-                        <img src="./assets/icons/arrow-up.png" alt="" class="filter__arrow" />
-                        <h3 class="filter__heading">Bộ lọc</h3>
-                        <form action="" class="filter__form form">
-                            <div class="filter__row filter__content">
-                                <!-- Filter column 1 -->
-                                <!-- <div class="filter__col1">
+                        <div id="home-filter" class="filter hide">
+                            <img
+                                src="./assets/icons/arrow-up.png"
+                                alt=""
+                                class="filter__arrow"
+                            />
+                            <h3 class="filter__heading">Bộ lọc</h3>
+                            <form action="" class="filter__form form">
+                                <div class="filter__row filter__content">
+                                    <!-- Filter column 1 -->
+                                    <!-- <div class="filter__col1">
                                     <label for="" class="form__label">Kích thước/Cân nặng</label>
                                     <div class="filter__form-group">
                                         <div class="form__select-wrap">
@@ -198,145 +165,159 @@
                                             <label for="large" class="form__tag">Lớn</label>
                                         </div>
                                     </div>
-                                </div> -->             
-                                               
-                                <div class="filters">                           
-                                    <div class="filterrow">
-                                        <div class="filter__col1">
-                                            <label for="us-shoe-size" class="form__label">Thẻ chính</label>
-                                            <select id="us-shoe-size" class="form__select" onchange="updateFilters('Thẻ chính', this.value)">
-                                                <option value="">Chọn thẻ</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
-                                    
-                                        <div class="filter__col1">
-                                            <label for="color" class="form__label">Thẻ phụ</label>
-                                            <select id="color" class="form__select" onchange="updateFilters('Thẻ phụ', this.value)">
-                                                <option value="">Chọn thẻ</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
-                                    
-                                        <div class="filter__col1">
-                                            <label for="brand" class="form__label">Loại</label>
-                                            <select id="brand" class="form__select" onchange="updateFilters('Loại', this.value)">
-                                                <option value="">Chọn loại
-                                                </option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                
-                                    <!-- Add more filter options similarly -->
-                                    <div class="filterrow">
-                                        <div class="filters-applied">
-                                            <h3>Các thẻ đã áp dụng</h3>
-                                            <ul id="applied-filters">
-                                                <!-- Applied filters will be listed here -->
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                
+                                </div> -->
 
-                                <div class="filter__separate"></div>
+                                    <div class="filters">
+                                        <div class="filterrow">
+                                            <div class="filter__col1">
+                                                <label
+                                                    for="us-shoe-size"
+                                                    class="form__label"
+                                                    >Thẻ chính</label
+                                                >
+                                                <select
+                                                    id="us-shoe-size"
+                                                    class="form__select"
+                                                    onchange="updateFilters('Thẻ chính', this.value)"
+                                                >
+                                                    <option value="">
+                                                        Chọn thẻ
+                                                    </option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                </select>
+                                            </div>
 
-                                <!-- Filter column 3 -->
-                                <div class="filter__col1" style=margin-top:20px>
-                                    <label for="" class="form__label"style=margin-bot:14px>Hãng</label>
-                                    <div class="filter__form-group">
-                                        <div class="filter__form-text-input">
-                                            <input
-                                                type="text"
-                                                name=""
-                                                id=""
-                                                placeholder="Tìm kiếm nhãn hàng"
-                                                class="filter__form-input"
-                                            />
-                                            <img
-                                                src="./assets/icons/search.svg"
-                                                alt=""
-                                                class="filter__form-input-icon icon"
-                                            />
+                                            <div class="filter__col1">
+                                                <label
+                                                    for="color"
+                                                    class="form__label"
+                                                    >Thẻ phụ</label
+                                                >
+                                                <select
+                                                    id="color"
+                                                    class="form__select"
+                                                    onchange="updateFilters('Thẻ phụ', this.value)"
+                                                >
+                                                    <option value="">
+                                                        Chọn thẻ
+                                                    </option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="filter__col1">
+                                                <label
+                                                    for="brand"
+                                                    class="form__label"
+                                                    >Loại</label
+                                                >
+                                                <select
+                                                    id="brand"
+                                                    class="form__select"
+                                                    onchange="updateFilters('Loại', this.value)"
+                                                >
+                                                    <option value="">
+                                                        Chọn loại
+                                                    </option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="filter__form-group">
-                                        <div class="form__tags">
-                                            <a href="">
-                                                <ul>
-                                                    <li>Nike</li>
-                                                    <li>Adias</li>
-                                                    <li>Lenovo</li>
-                                                    <li>LOL</li>
+
+                                        <!-- Add more filter options similarly -->
+                                        <div class="filterrow">
+                                            <div class="filters-applied">
+                                                <h3>Các thẻ đã áp dụng</h3>
+                                                <ul id="applied-filters">
+                                                    <!-- Applied filters will be listed here -->
                                                 </ul>
-                                            </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter__separate"></div>
+
+                                    <!-- Filter column 3 -->
+                                    <div
+                                        class="filter__col1"
+                                        style="margin-top: 20px"
+                                    >
+                                        <label
+                                            for=""
+                                            class="form__label"
+                                            style="margin-bot: 14px"
+                                            >Hãng</label
+                                        >
+                                        <div class="filter__form-group">
+                                            <div
+                                                class="filter__form-text-input"
+                                            >
+                                                <input
+                                                    type="text"
+                                                    name=""
+                                                    id=""
+                                                    placeholder="Tìm kiếm nhãn hàng"
+                                                    class="filter__form-input"
+                                                />
+                                                <img
+                                                    src="./assets/icons/search.svg"
+                                                    alt=""
+                                                    class="filter__form-input-icon icon"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="filter__form-group">
+                                            <div class="form__tags">
+                                                <a href="">
+                                                    <ul>
+                                                        <li>Nike</li>
+                                                        <li>Adias</li>
+                                                        <li>Lenovo</li>
+                                                        <li>LOL</li>
+                                                    </ul>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="filter__row filter__footer">
-                                <button class="btn btn--text filter__cancel js-toggle" toggle-target="#home-filter">
-                                    Hủy
-                                </button>
-                                <button
-                                    class="btn btn--primary filter__submit js-toggle"
-                                    toggle-target="#home-filter"
-                                >
-                                    Xem Kết Quả
-                                </button>
-                            </div>
-                        </form>
+                                <div class="filter__row filter__footer">
+                                    <button
+                                        class="btn btn--text filter__cancel js-toggle"
+                                        toggle-target="#home-filter"
+                                    >
+                                        Hủy
+                                    </button>
+                                    <button
+                                        class="btn btn--primary filter__submit js-toggle"
+                                        toggle-target="#home-filter"
+                                    >
+                                        Xem Kết Quả
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row row-cols-5 row-cols-lg-2 row-cols-sm-1 g-3"  id="product-container">
-                <!-- Product card 1 -->
-                <div class="col">
-                    <a href="./product-detail.html">
-                        <article class="product-card">
-                            <div class="product-card__img-wrap">
-                                <a href="./product-detail.html">
-                                    <img src="./assets/img/product/nikebag.png" alt="" class="product-card__thumb" />
-                                </a>
-                                <!-- <button class="like-btn product-card__like-btn">
-                                    <img src="./assets/icons/heart.svg" alt="" class="like-btn__icon icon" />
-                                    <img src="./assets/icons/heart-red.svg" alt="" class="like-btn__icon--liked" />
-                                </button> -->
-                            </div>
-                            <h3 class="product-card__title">
-                                <a href="./product-detail.html">Túi xách - Gym Tote</a>
-                            </h3>
-                            <p class="product-card__brand">Nike</p>
-                            <div class="product-card__row">
-                                <span class="product-card__price">$47.00</span>
-                                <div class="product-card__rating">
-                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
-                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
-                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
-                                <img src="./assets/icons/star.svg" alt="" class="product-card__star" />
-                                <img src="./assets/icons/star-half.svg" alt="" class="product-card__star" />
-                                <span class="product-card__score">4.3</span>
-                                </div>
-                            </div>
-                        </article>
-                    </a>
+                <div
+                    class="row row-cols-5 row-cols-lg-2 row-cols-sm-1 g-3"
+                    id="product-container"
+                >
+                    <!-- Product card 1 -->
                 </div>
             </div>
-        </div>
         </main>
         <!-- Footer -->
         <footer id="footer" class="footer"></footer>
         <script>
             load("#footer", "./templates/footer.html");
         </script>
+        <script src="./assets/js/category.js"></script>
         <script src="./assets/js/product.js"></script>
     </body>
 </html>

@@ -12,6 +12,21 @@ class Product {
         });
     }
 
+    static getById(id) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                "SELECT * FROM san_pham s JOIN danh_muc d on d.DM_Ma = s.DM_Ma JOIN thuong_hieu t ON s.TH_Ma = t.TH_Ma  WHERE SP_Ma = ?",
+                [id],
+                (err, results) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results[0]);
+                }
+            );
+        });
+    }
+
     static get(name) {
         return new Promise((resolve, reject) => {
             const productName = `%${name}%`;

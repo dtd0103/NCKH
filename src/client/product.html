@@ -6,9 +6,23 @@
         <title>Cửa Hàng Tạp Hóa</title>
 
         <!-- Favicon -->
-        <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="./assets/favicon/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="./assets/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="./assets/favicon/favicon-16x16.png"
+        />
         <link rel="manifest" href="./assets/favicon/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
@@ -27,16 +41,27 @@
         <script>
             load("#header", "./templates/header.html");
         </script>
-        <div class="container home"> 
+        <div class="container home">
             <div class="home__row">
                 <h2 class="home__heading">Gợi ý hôm nay</h2>
                 <div class="filter-wrap">
-                    <button class="filter-btn js-toggle" toggle-target="#home-filter">
+                    <button
+                        class="filter-btn js-toggle"
+                        toggle-target="#home-filter"
+                    >
                         Bộ lọc
-                        <img src="./assets/icons/filter.svg" alt="" class="filter-btn__icon icon" />
+                        <img
+                            src="./assets/icons/filter.svg"
+                            alt=""
+                            class="filter-btn__icon icon"
+                        />
                     </button>
                     <div id="home-filter" class="filter hide">
-                        <img src="./assets/icons/arrow-up.png" alt="" class="filter__arrow" />
+                        <img
+                            src="./assets/icons/arrow-up.png"
+                            alt=""
+                            class="filter__arrow"
+                        />
                         <h3 class="filter__heading">Bộ lọc</h3>
                         <form action="" class="filter__form form">
                             <div class="filter__row filter__content">
@@ -70,33 +95,60 @@
                                     </div>
                                 </div> -->
                                 <div class="filters">
-                                    
-                                
                                     <div class="filterrow">
                                         <div class="filter__col">
-                                            <label for="us-shoe-size" class="form__label">Thẻ chính</label>
-                                            <select id="us-shoe-size" class="form__select" onchange="updateFilters('Thẻ chính', this.value)">
-                                                <option value="">Chọn thẻ</option>
+                                            <label
+                                                for="us-shoe-size"
+                                                class="form__label"
+                                                >Thẻ chính</label
+                                            >
+                                            <select
+                                                id="us-shoe-size"
+                                                class="form__select"
+                                                onchange="updateFilters('Thẻ chính', this.value)"
+                                            >
+                                                <option value="">
+                                                    Chọn thẻ
+                                                </option>
                                                 <option value="7">7</option>
                                                 <option value="8">8</option>
                                                 <option value="9">9</option>
                                             </select>
                                         </div>
-                                    
+
                                         <div class="filter__col">
-                                            <label for="color" class="form__label">Thẻ phụ</label>
-                                            <select id="color" class="form__select" onchange="updateFilters('Thẻ phụ', this.value)">
-                                                <option value="">Chọn thẻ</option>
+                                            <label
+                                                for="color"
+                                                class="form__label"
+                                                >Thẻ phụ</label
+                                            >
+                                            <select
+                                                id="color"
+                                                class="form__select"
+                                                onchange="updateFilters('Thẻ phụ', this.value)"
+                                            >
+                                                <option value="">
+                                                    Chọn thẻ
+                                                </option>
                                                 <option value="7">7</option>
                                                 <option value="8">8</option>
                                                 <option value="9">9</option>
                                             </select>
                                         </div>
-                                    
+
                                         <div class="filter__col">
-                                            <label for="brand" class="form__label">Loại</label>
-                                            <select id="brand" class="form__select" onchange="updateFilters('Loại', this.value)">
-                                                <option value="">Chọn loại
+                                            <label
+                                                for="brand"
+                                                class="form__label"
+                                                >Loại</label
+                                            >
+                                            <select
+                                                id="brand"
+                                                class="form__select"
+                                                onchange="updateFilters('Loại', this.value)"
+                                            >
+                                                <option value="">
+                                                    Chọn loại
                                                 </option>
                                                 <option value="7">7</option>
                                                 <option value="8">8</option>
@@ -104,7 +156,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                
+
                                     <!-- Add more filter options similarly -->
                                     <div class="filterrow">
                                         <div class="filters-applied">
@@ -114,15 +166,21 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    
                                 </div>
-                                
 
                                 <div class="filter__separate"></div>
 
                                 <!-- Filter column 3 -->
-                                <div class="filter__col" style=margin-top:20px>
-                                    <label for="" class="form__label"style=margin-bot:14px>Hãng</label>
+                                <div
+                                    class="filter__col"
+                                    style="margin-top: 20px"
+                                >
+                                    <label
+                                        for=""
+                                        class="form__label"
+                                        style="margin-bot: 14px"
+                                        >Hãng</label
+                                    >
                                     <div class="filter__form-group">
                                         <div class="filter__form-text-input">
                                             <input
@@ -154,7 +212,10 @@
                                 </div>
                             </div>
                             <div class="filter__row filter__footer">
-                                <button class="btn btn--text filter__cancel js-toggle" toggle-target="#home-filter">
+                                <button
+                                    class="btn btn--text filter__cancel js-toggle"
+                                    toggle-target="#home-filter"
+                                >
                                     Hủy
                                 </button>
                                 <button
@@ -168,8 +229,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-cols-5 row-cols-lg-2 row-cols-sm-1 g-3" id="product-container">           
-            </div>
+            <div
+                class="row row-cols-5 row-cols-lg-2 row-cols-sm-1 g-3"
+                id="product-container"
+            ></div>
         </div>
         <!-- Footer -->
         <footer id="footer" class="footer"></footer>
@@ -177,6 +240,5 @@
             load("#footer", "./templates/footer.html");
         </script>
         <script src="./assets/js/product.js"></script>
-        </body>
-    </html>
-    
+    </body>
+</html>
