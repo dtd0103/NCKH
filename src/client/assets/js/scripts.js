@@ -24,9 +24,9 @@ function checkLogin() {
     const token = localStorage.getItem("authToken");
     console.log("Token:", token);
     if (token) {
-        load("#header", "./templates/header-logined.html");
+        load("#header", "./templates/header2-logined.html");
     } else {
-        load("#header", "./templates/header.html");
+        load("#header", "./templates/header2.html");
     }
 }
 
