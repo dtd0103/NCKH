@@ -17,6 +17,7 @@
       sizes="32x32"
       href="./assets/favicon/favicon-32x32.png"
     />
+
     <link
       rel="icon"
       type="image/png"
@@ -31,17 +32,33 @@
     <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/shipping.css" />
 
+    <link rel="icon" href="./assets/image/img1.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/header.css" />
+    <link rel="stylesheet" href="./assets/css/grid.css" />
+    <link rel="stylesheet" href="./assets/css/shipping.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/fonts/fontawesome-free-5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Scripts -->
     <script src="./assets/js/scripts.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
   </head>
   <body>
     <!-- Header -->
     <header id="header" class="header"></header>
     <script>
-      load("#header", "./templates/header-logined.html");
+      load("#header", "./templates/header2-logined.html");
     </script>
 
     <!-- MAIN -->
@@ -100,7 +117,7 @@
         <div class="checkout-container">
           <div class="row gy-xl-3">
             <div class="col-8 col-xl-8 col-lg-12" style="padding-right: 0">
-              <div class="cart-info" style="border-radius: 20px 0px 0px 0px">
+              <div class="cart-info">
                 <div class="cart-info__top">
                   <h2 class="cart-info__heading cart-info__heading--lv2">
                     1. Đơn hàng đã được giao tới vào khoảng ngày 13 - 16 tháng 9
@@ -135,7 +152,7 @@
 
               <div
                 class="cart-info"
-                style="margin-top: 0; border-radius: 0px 0px 20px 20px"
+                style="margin-top: 0;"
               >
                 <h2 class="cart-info__heading cart-info__heading--lv2">
                   2. Phương thức vận chuyển
@@ -204,7 +221,7 @@
               </div>
             </div>
             <div class="col-4 col-xl-4 col-lg-12" style="padding-left: 0">
-              <div class="cart-info" style="border-radius: 0px 20px 20px 0px">
+              <div class="cart-info" >
                 <h2 class="cart-info__heading cart-info__heading--lv2">
                   Chi tiết thanh toán
                 </h2>
@@ -367,7 +384,7 @@
               </div>
               <div
                 class="cart-info"
-                style="margin-top: 0; border-radius: 0px 0px 20px 0px"
+                style="margin-top: 0;"
               >
                 <article class="gift-item">
                   <div class="gift-item__icon-wrap">
