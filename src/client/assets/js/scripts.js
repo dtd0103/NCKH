@@ -352,37 +352,36 @@ document.addEventListener("DOMContentLoaded", function () {
   const inputs = document.querySelectorAll(".form__input");
 
   inputs.forEach((input) => {
+    // Handle input validation as the user types
     input.addEventListener("input", function () {
-      const errorElement = this.parentElement.nextElementSibling;
-      const iconElement = this.parentElement.querySelector(
-        ".form__input-icon-error"
-      );
-
-      if (this.validity.valid) {
-        errorElement.style.display = "none";
-        iconElement.style.display = "none";
-      } else {
-        errorElement.style.display = "block";
-        iconElement.style.display = "block";
-      }
+      handleValidation(this);
     });
 
+    // Handle validation when the input loses focus (blur)
     input.addEventListener("blur", function () {
-      const errorElement = this.parentElement.nextElementSibling;
-      const iconElement = this.parentElement.querySelector(
-        ".form__input-icon-error"
-      );
-
-      if (this.validity.valid) {
-        errorElement.style.display = "none";
-        iconElement.style.display = "none";
-      } else {
-        errorElement.style.display = "block";
-        iconElement.style.display = "block";
-      }
+      handleValidation(this);
     });
   });
+
+  function handleValidation(input) {
+    const errorElement = input.parentElement.nextElementSibling;
+    const iconElement = input.parentElement.querySelector(
+      ".form__input-icon-error"
+    );
+
+    // Check if the input is valid according to its type (e.g., required, email format)
+    if (input.validity.valid) {
+      errorElement.style.display = "none";
+      iconElement.style.display = "none";
+      input.classList.remove("input-error"); // Remove the error styling if valid
+    } else {
+      errorElement.style.display = "block";
+      iconElement.style.display = "block";
+      input.classList.add("input-error"); // Add error styling if not valid
+    }
+  }
 });
+
 // =====heart======
 document.addEventListener("DOMContentLoaded", function () {
   const likeBtns = document.querySelectorAll(".like-btn"); // Lấy tất cả các nút "heart"
@@ -440,9 +439,9 @@ document.addEventListener("DOMContentLoaded", function() {
     radioButtons.forEach(radio => {
       radio.addEventListener('change', function() {
         if (this.value === 'card') {
-          cardInfo.classList.remove('hide');
+          cardInfo.classList.remove('hidden');
         } else {
-          cardInfo.classList.add('hide');
+          cardInfo.classList.add('hidden');
         }
       });
     });

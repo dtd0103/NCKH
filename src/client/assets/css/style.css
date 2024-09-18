@@ -4905,6 +4905,10 @@ html {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.hide {
+.hidden {
   display: none;
+}
+
+.show {
+  display: flex /* or flex, grid, etc. based on your needs */
 }
