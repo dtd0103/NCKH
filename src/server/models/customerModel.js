@@ -15,7 +15,7 @@ class Customer {
     static createCustomerAccount(data) {
         return new Promise((resolve, reject) => {
             connection.query(
-                "INSERT INTO khach_hang (KH_Ten, KH_Username, KH_Password, KH_SoDienThoai, KH_DiaChi) VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO khach_hang (KH_Ten, KH_TaiKhoan, KH_MatKhau, KH_SoDienThoai, KH_DiaChi) VALUES (?, ?, ?, ?, ?)",
                 [
                     data.name,
                     data.username,
@@ -37,7 +37,7 @@ class Customer {
     static findCustomerByUsername(username) {
         return new Promise((resolve, reject) => {
             connection.query(
-                "SELECT * FROM khach_hang WHERE KH_Username = ?",
+                "SELECT * FROM khach_hang WHERE KH_TaiKhoan = ?",
                 [username],
                 (err, results) => {
                     if (err) {

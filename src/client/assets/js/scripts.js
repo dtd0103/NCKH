@@ -1,15 +1,6 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
-/**
- * Hàm tải template
- *
- * Cách dùng:
- * <div id="parent"></div>
- * <script>
- *  load("#parent", "./path-to-template.html");
- * </script>
- */
 function load(selector, path) {
     const cached = localStorage.getItem(path);
     if (cached) {
@@ -28,6 +19,38 @@ function load(selector, path) {
             window.dispatchEvent(new Event("template-loaded"));
         });
 }
+
+function checkLogin() {
+    const token = localStorage.getItem("authToken");
+    console.log("Token:", token);
+    if (token) {
+        load("#header", "./templates/header-logined.html");
+    } else {
+        load("#header", "./templates/header.html");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", checkLogin);
+
+document.getElementById("logoutButton").addEventListener("click", async () => {
+    try {
+        await fetch("http://localhost:8081/api/v1/customer/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        });
+
+        localStorage.removeItem("authToken");
+
+        window.location.href = "./login.html";
+
+        // load("#header", "./templates/header.html");
+    } catch (error) {
+        console.error("Đăng xuất thất bại:", error.message);
+    }
+});
 
 /**
  * Hàm kiểm tra một phần tử
@@ -258,9 +281,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // slider
 const images = [
-    "./assets/img/ad-banner/shoecollection.png",
+    "./assets/img/ad-banner/shoecollection.jpg",
     "./assets/img/ad-banner/furniturebanner.png",
-    "./assets/img/ad-banner/fashion-banner.png",
+    "./assets/img/ad-banner/family.jpg",
 ];
 let currentIndex = 0;
 let slideInterval;
