@@ -26,6 +26,7 @@ loginForm.addEventListener("submit", async (event) => {
         const data = await response.json();
         console.log(data.message);
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("username", data.username);
 
         window.location.href = "index.html";
     } catch (error) {
@@ -34,7 +35,7 @@ loginForm.addEventListener("submit", async (event) => {
 });
 
 function checkLoggedIn() {
-    const token = localStorage.getItem("authToken"); 
+    const token = localStorage.getItem("authToken");
 
     if (token) {
         window.location.href = "index.html";
