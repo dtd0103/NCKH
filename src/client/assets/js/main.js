@@ -211,3 +211,17 @@ const sliderScrollHorizontal = [{
 sliderScrollHorizontal.forEach(el => {
     scrollHorizontal(el.menu, el.items, el.timer)
 })
+document
+  .querySelector(".header__menu__right__cart")
+  .addEventListener("click", function () {
+    const dropdown = document.querySelector(".cart-dropdown");
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+  });
+
+window.addEventListener("click", function (e) {
+  const cart = document.querySelector(".header__menu__right__cart");
+  if (!cart.contains(e.target)) {
+    document.querySelector(".cart-dropdown").style.display = "none";
+  }
+});

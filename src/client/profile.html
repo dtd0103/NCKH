@@ -52,6 +52,7 @@
     <script src="./assets/js/scripts.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/profile.js"></script>
   </head>
   <body>
     <!-- Header -->
@@ -107,7 +108,7 @@
               <div class="cart-info" >
                 <div class="row gy-3">
                   <!-- My Wallet -->
-                  <div class="col-12">
+                  <!-- <div class="col-12">
                     <h2 class="cart-info__heading">Ví</h2>
                     <p class="cart-info__desc profile__desc">
                       Phương thức thanh toán
@@ -116,7 +117,7 @@
                     <div
                       class="row gy-md-2 row-cols-3 row-cols-xl-2 row-cols-lg-1"
                     >
-                      <!-- Payment card 1 -->
+                      
                       <div class="col">
                         <article
                           class="payment-card"
@@ -148,7 +149,7 @@
                         </article>
                       </div>
 
-                      <!-- Payment card 2 -->
+                      
                       <div class="col">
                         <article
                           class="payment-card"
@@ -180,7 +181,7 @@
                         </article>
                       </div>
 
-                      <!-- Add new payment card -->
+                      
                       <div class="col">
                         <a class="new-card" href="./add-new-card.html">
                           <img
@@ -192,7 +193,7 @@
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
                   <!-- Account info -->
                   <div class="col-12">
@@ -201,25 +202,6 @@
                       Địa chỉ, thông tin liên lạc và mật khẩu
                     </p>
                     <div class="row gy-md-2 row-cols-2 row-cols-lg-1">
-                      <!-- Account info 1 -->
-                      <div class="col">
-                        <a href="./edit-personal-info.html">
-                          <article class="account-info">
-                            <div class="account-info__icon">
-                              <img
-                                src="./assets/icons/message.svg"
-                                alt=""
-                                class="icon"
-                              />
-                            </div>
-                            <div>
-                              <h3 class="account-info__title">Địa chỉ Email</h3>
-                              <p class="account-info__desc">j97@gmail.com</p>
-                            </div>
-                          </article>
-                        </a>
-                      </div>
-
                       <!-- Account info 2 -->
                       <div class="col">
                         <a href="./edit-personal-info.html">
@@ -233,8 +215,7 @@
                             </div>
                             <div>
                               <h3 class="account-info__title">Số điện thoại</h3>
-                              <p class="account-info__desc">
-                                +84 11122 2345 657
+                              <p class="account-info__desc" id="customerPhone">
                               </p>
                             </div>
                           </article>
@@ -254,8 +235,7 @@
                             </div>
                             <div>
                               <h3 class="account-info__title">Thêm địa chỉ</h3>
-                              <p class="account-info__desc">
-                                Bangladesh Embassy, Washington, DC 20008
+                              <p class="account-info__desc" id="customerAddress">                                
                               </p>
                             </div>
                           </article>
@@ -264,11 +244,9 @@
                     </div>
                   </div>
 
-                  <div class="col-12">
+                  <!-- <div class="col-12">
                     <h2 class="cart-info__heading">Danh sách yêu thích</h2>
                     <p class="cart-info__desc profile__desc">2 sản phẩm</p>
-
-                    <!-- Favourite item 1 -->
                     <article class="favourite-item">
                       <img
                         src="./assets/img/product/nikebag0_1.png"
@@ -288,7 +266,6 @@
 
                     <div class="separate" style="--margin: 20px"></div>
 
-                    <!-- Favourite item 2 -->
                     <article class="favourite-item">
                       <img
                         src="./assets/img/product/jordannike.png"
@@ -305,7 +282,7 @@
                         </div>
                       </div>
                     </article>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -324,8 +301,8 @@
                     alt=""
                     class="profile-user__avatar"
                   />
-                  <h1 class="profile-user__name">Đỗ Thành Đạt</h1>
-                  <p class="profile-user__desc">Đăng kí ngày: 17th May 2022</p>
+                  <h1 class="profile-user__name" id="customerName">Tên</h1>
+                  <p class="profile-user__desc" id="customerUsername">username</p>
                 </div>
                 <!-- Menu 1 -->
                 <div class="profile-menu">
