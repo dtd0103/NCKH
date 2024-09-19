@@ -63,6 +63,9 @@ function loadCategories() {
             const categoryList = document.querySelector(
                 ".sub-menu__item__children"
             );
+
+            categoryList.innerHTML = "";
+
             categories.forEach((category) => {
                 const li = document.createElement("li");
                 li.classList.add("col-1__item", "col-1__item__link");
