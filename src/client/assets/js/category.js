@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             listItem.className = "category-item";
 
             listItem.innerHTML = `
-                <a href="#!">
+                <a href="product.html?categoryId=${category.DM_Ma}">
                     <img src="http://localhost:8081/images/categories/${category.DM_HinhAnh.trim()}" alt="${
                 category.DM_Ten
             }" class="cate-icon">
