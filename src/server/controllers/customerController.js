@@ -105,7 +105,7 @@ const customerLogin = async function (req, res) {
             message: "Đăng nhập thành công.",
             token: token,
             sessionId: req.session.id,
-            userId: customer.KH_Ma,
+            username: customer.KH_TaiKhoan,
         });
     } catch (err) {
         console.error("Login error:", err);
