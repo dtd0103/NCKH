@@ -53,6 +53,8 @@
     <script src="./assets/js/scripts.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/edit-personal-info.js"></script>
+    <script src="./assets/js/profile.js"></script>
   </head>
   <body>
     <!-- Header -->
@@ -127,9 +129,8 @@
                           <label
                             for="full-name"
                             class="form__label form-card__label"
+                            >Họ tên</label
                           >
-                            Họ tên
-                          </label>
                           <div class="form__text-input">
                             <input
                               type="text"
@@ -149,16 +150,15 @@
                         </div>
                         <div class="form__group">
                           <label
-                            for="email-address"
+                            for="address"
                             class="form__label form-card__label"
+                            >Địa chỉ</label
                           >
-                            Địa chỉ Email
-                          </label>
                           <div class="form__text-input">
                             <input
                               type="text"
-                              id="email-address"
-                              placeholder="Địa chỉ email"
+                              id="address"
+                              placeholder="Địa chỉ"
                               class="form__input"
                               required
                             />
@@ -168,7 +168,7 @@
                               class="form__input-icon-error"
                             />
                           </div>
-                          <p class="form__error">Email không được để trống</p>
+                          <p class="form__error">Địa chỉ không được để trống</p>
                         </div>
                       </div>
 
@@ -178,9 +178,8 @@
                           <label
                             for="username"
                             class="form__label form-card__label"
+                            >Tên đăng nhập</label
                           >
-                            Tên đăng nhập
-                          </label>
                           <div class="form__text-input">
                             <input
                               type="text"
@@ -202,9 +201,8 @@
                           <label
                             for="phone-number"
                             class="form__label form-card__label"
+                            >Số điện thoại</label
                           >
-                            Số điện thoại
-                          </label>
                           <div class="form__text-input">
                             <input
                               type="text"
@@ -231,9 +229,8 @@
                           <label
                             for="password"
                             class="form__label form-card__label"
+                            >Mật khẩu</label
                           >
-                            Mật khẩu
-                          </label>
                           <div class="form__text-input">
                             <input
                               type="password"
@@ -256,10 +253,12 @@
 
                       <div class="form-card__bottom">
                         <a class="btn btn--text" href="./profile.html">Hủy</a>
-                        <a
+                        <button
                           class="btn btn--small btn--primary modal__btn btn--no-margin"
-                          >Lưu</a
+                          type="submit"
                         >
+                          Lưu
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -275,8 +274,8 @@
                     alt=""
                     class="profile-user__avatar"
                   />
-                  <h1 class="profile-user__name">Imran Khan</h1>
-                  <p class="profile-user__desc">Đăng kí ngày: 17th May 2022</p>
+                  <h1 class="profile-user__name" id="profile-name"></h1>
+                  <p class="profile-user__desc" id="profile-username">bleble</p>
                 </div>
 
                 <!-- Menu 1 -->
