@@ -35,7 +35,7 @@ loginForm.addEventListener("submit", async (event) => {
 });
 
 function checkLoggedIn() {
-    const token = localStorage.getItem("authToken"); 
+    const token = localStorage.getItem("authToken");
 
     if (token) {
         window.location.href = "index.html";
