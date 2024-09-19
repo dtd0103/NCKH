@@ -47,6 +47,7 @@ window.addEventListener("template-loaded", () => {
                 });
 
                 localStorage.removeItem("authToken");
+                localStorage.removeItem("username");
 
                 window.location.href = "./login.html";
             } catch (error) {
@@ -124,13 +125,6 @@ function debounce(func, timeout = 300) {
     };
 }
 
-/**
- * Hàm tính toán vị trí arrow cho dropdown
- *
- * Cách dùng:
- * 1. Thêm class "js-dropdown-list" vào thẻ ul cấp 1
- * 2. CSS "left" cho arrow qua biến "--arrow-left-pos"
- */
 const calArrowPos = debounce(() => {
     if (isHidden($(".js-dropdown-list"))) return;
 
@@ -148,14 +142,6 @@ window.addEventListener("resize", calArrowPos);
 // Tính toán lại vị trí arrow sau khi tải template
 window.addEventListener("template-loaded", calArrowPos);
 
-/**
- * Giữ active menu khi hover
- *
- * Cách dùng:
- * 1. Thêm class "js-menu-list" vào thẻ ul menu chính
- * 2. Thêm class "js-dropdown" vào class "dropdown" hiện tại
- *  nếu muốn reset lại item active khi ẩn menu
- */
 window.addEventListener("template-loaded", handleActiveMenu);
 
 function handleActiveMenu() {
@@ -198,13 +184,6 @@ function handleActiveMenu() {
     });
 }
 
-/**
- * JS toggle
- *
- * Cách dùng:
- * <button class="js-toggle" toggle-target="#box">Click</button>
- * <div id="box">Content show/hide</div>
- */
 window.addEventListener("template-loaded", initJsToggle);
 
 function initJsToggle() {
@@ -276,7 +255,7 @@ window.addEventListener("template-loaded", () => {
 });
 const isDark = localStorage.dark === "true";
 document.querySelector("html").classList.toggle("dark", isDark);
-// ==========
+
 document.addEventListener("DOMContentLoaded", () => {
     const slideshowItems = document.querySelectorAll(".slideshow__item");
     const currentNum = document.querySelector(".slideshow__num--current");
@@ -285,10 +264,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevButton = document.querySelector(".slideshow__button--prev");
     let currentIndex = 0;
 
-    // Update total number of items
     totalNum.textContent = slideshowItems.length;
 
-    // Function to show slide based on index
     function showSlide(index) {
         slideshowItems.forEach((item, i) => {
             item.classList.remove("active");
@@ -299,7 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
         currentNum.textContent = index + 1;
     }
 
-    // Event listeners for navigation buttons
     nextButton.addEventListener("click", () => {
         currentIndex = (currentIndex + 1) % slideshowItems.length;
         showSlide(currentIndex);
@@ -311,7 +287,6 @@ document.addEventListener("DOMContentLoaded", () => {
         showSlide(currentIndex);
     });
 
-    // Initial display
     showSlide(currentIndex);
 });
 
@@ -428,33 +403,31 @@ document.addEventListener("DOMContentLoaded", function () {
             ".form__input-icon-error"
         );
 
-        // Check if the input is valid according to its type (e.g., required, email format)
         if (input.validity.valid) {
             errorElement.style.display = "none";
             iconElement.style.display = "none";
-            input.classList.remove("input-error"); // Remove the error styling if valid
+            input.classList.remove("input-error");
         } else {
             errorElement.style.display = "block";
             iconElement.style.display = "block";
-            input.classList.add("input-error"); // Add error styling if not valid
+            input.classList.add("input-error");
         }
     }
 });
 
 // =====heart======
 document.addEventListener("DOMContentLoaded", function () {
-    const likeBtns = document.querySelectorAll(".like-btn"); // Lấy tất cả các nút "heart"
+    const likeBtns = document.querySelectorAll(".like-btn");
 
     likeBtns.forEach(function (likeBtn) {
         likeBtn.addEventListener("click", function (event) {
-            event.preventDefault(); // Ngăn trang tải lại
+            event.preventDefault();
 
             this.classList.toggle("active");
 
             const likedIcon = this.querySelector(".like-btn__icon--liked");
             const defaultIcon = this.querySelector(".like-btn__icon");
 
-            // Chuyển đổi hiển thị giữa hai biểu tượng
             if (this.classList.contains("active")) {
                 likedIcon.style.display = "inline";
                 defaultIcon.style.display = "none";
@@ -507,80 +480,77 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-// =====
+
 document.addEventListener("DOMContentLoaded", async function () {
-  // Lấy từ khóa tìm kiếm từ URL
-  const params = new URLSearchParams(window.location.search);
-  const searchQuery = params.get("query");
-  try {
-    // Gửi yêu cầu GET đến endpoint tìm kiếm với từ khóa tìm kiếm
-    const response = await fetch(
-      `http://localhost:8081/api/v1/product/name/${searchQuery}`
-    );
+    const params = new URLSearchParams(window.location.search);
+    const searchQuery = params.get("query");
+    try {
+        const response = await fetch(
+            `http://localhost:8081/api/v1/product/name/${searchQuery}`
+        );
 
-    if (!response.ok) {
-      throw new Error("Tìm kiếm không thành công.");
-    }
+        if (!response.ok) {
+            throw new Error("Tìm kiếm không thành công.");
+        }
 
-    const products = await response.json();
-    console.log(products);
+        const products = await response.json();
+        console.log(products);
 
-    // Hiển thị kết quả tìm kiếm
-    const container = document.getElementById("product-container");
-    if (products.length === 0) {
-      container.innerHTML = "<p>Không tìm thấy sản phẩm phù hợp.</p>";
-    } else {
-      container.innerHTML = products
-        .map(
-          (product) => `
+        const container = document.getElementById("product-container");
+        if (products.length === 0) {
+            container.innerHTML = "<p>Không tìm thấy sản phẩm phù hợp.</p>";
+        } else {
+            container.innerHTML = products
+                .map(
+                    (product) => `
                         <div class="col">
                             <a href="product-detail.html?id=${product.SP_Ma}">
                                 <article class="product-card">
                                     <div class="product-card__img-wrap">
-                                        <img src="${
-                                          product.SP_HinhAnh
+                                        <img src="http://localhost:8081/images/product/${
+                                            product.SP_HinhAnh
                                         }" alt="" class="product-card__thumb" />
                                     </div>
                                     <h3 class="product-card__title">
                                         ${
-                                          product.SP_Ten.charAt(
-                                            0
-                                          ).toUpperCase() +
-                                          product.SP_Ten.slice(1)
+                                            product.SP_Ten.charAt(
+                                                0
+                                            ).toUpperCase() +
+                                            product.SP_Ten.slice(1)
                                         }
                                     </h3>
                                     <p class="product-card__brand">Brand Name</p>
                                     <div class="product-card__row">
                                         <span class="product-card__price">$${
-                                          product.SP_DonGia
+                                            product.SP_DonGia
                                         }</span>
                                     </div>
                                 </article>
                             </a>
                         </div>`
-        )
-        .join("");
+                )
+                .join("");
+        }
+    } catch (err) {
+        console.error("Lỗi khi tìm kiếm sản phẩm:", err);
     }
-  } catch (err) {
-    console.error("Lỗi khi tìm kiếm sản phẩm:", err);
-  }
 });
 document.addEventListener("DOMContentLoaded", function () {
-  const searchForm = document.getElementById("search-form");
-  const searchInput = document.getElementById("search-input");
+    const searchForm = document.getElementById("search-form");
+    const searchInput = document.getElementById("search-input");
 
-  searchForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // Ngăn chặn hành vi mặc định của form (reload trang)
+    searchForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của form (reload trang)
 
-    const searchQuery = searchInput.value.trim(); // Lấy giá trị từ input
-    if (!searchQuery) {
-      alert("Vui lòng nhập thông tin cần tìm.");
-      return;
-    }
+        const searchQuery = searchInput.value.trim(); // Lấy giá trị từ input
+        if (!searchQuery) {
+            alert("Vui lòng nhập thông tin cần tìm.");
+            return;
+        }
 
-    // Điều hướng đến trang search.html với từ khóa tìm kiếm
-    window.location.href = `search.html?query=${encodeURIComponent(
-      searchQuery
-    )}`;
-  });
+        // Điều hướng đến trang search.html với từ khóa tìm kiếm
+        window.location.href = `search.html?query=${encodeURIComponent(
+            searchQuery
+        )}`;
+    });
 });
