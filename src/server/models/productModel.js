@@ -27,6 +27,21 @@ class Product {
         });
     }
 
+    static getByCategory(categoryId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                "SELECT * FROM san_pham s JOIN danh_muc d on d.DM_Ma = s.DM_Ma WHERE s.DM_Ma = ?",
+                [categoryId],
+                (err, results) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results);
+                }
+            );
+        });
+    }
+
     static get(name) {
         return new Promise((resolve, reject) => {
             const productName = `%${name}%`;

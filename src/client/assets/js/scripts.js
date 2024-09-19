@@ -30,32 +30,65 @@ function checkLogin() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", checkLogin);
+window.addEventListener("template-loaded", () => {
+    const logoutButton = document.getElementById("logoutButton");
 
-document.getElementById("logoutButton").addEventListener("click", async () => {
-    try {
-        await fetch("http://localhost:8081/api/v1/customer/logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            try {
+                await fetch("http://localhost:8081/api/v1/customer/logout", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "authToken"
+                        )}`,
+                    },
+                });
+
+                localStorage.removeItem("authToken");
+
+                window.location.href = "./login.html";
+            } catch (error) {
+                console.error("Đăng xuất thất bại:", error.message);
+            }
         });
-
-        localStorage.removeItem("authToken");
-
-        window.location.href = "./login.html";
-
-        // load("#header", "./templates/header.html");
-    } catch (error) {
-        console.error("Đăng xuất thất bại:", error.message);
     }
 });
 
-/**
- * Hàm kiểm tra một phần tử
- * có bị ẩn bởi display: none không
- */
+function loadCategories() {
+    fetch("http://localhost:8081/api/v1/categories")
+        .then((res) => res.json())
+        .then((categories) => {
+            const categoryList = document.querySelector(
+                ".sub-menu__item__children"
+            );
+            categories.forEach((category) => {
+                const li = document.createElement("li");
+                li.classList.add("col-1__item", "col-1__item__link");
+
+                const a = document.createElement("a");
+                a.href = `product.html?categoryId=${category.DM_Ma}`;
+                a.textContent =
+                    category.DM_Ten.charAt(0).toUpperCase() +
+                    category.DM_Ten.slice(1);
+                a.classList.add("col-1__item__link");
+
+                li.appendChild(a);
+                categoryList.appendChild(li);
+            });
+        })
+        .catch((error) => {
+            console.error("Lỗi khi tải categories:", error);
+        });
+}
+
+window.addEventListener("template-loaded", () => {
+    loadCategories();
+});
+
+document.addEventListener("DOMContentLoaded", checkLogin);
+
 function isHidden(element) {
     if (!element) return true;
 

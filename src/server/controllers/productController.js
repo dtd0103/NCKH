@@ -25,6 +25,18 @@ const getProduct = async function (req, res) {
     }
 };
 
+const getProductByCategoryId = async function (req, res) {
+    try {
+        const products = await Product.getByCategory(req.params.categoryId);
+        res.json(products);
+    } catch (err) {
+        console.error("Lỗi truy vấn: " + err.message);
+        res.status(500).send(
+            "Lỗi trong quá trình lấy thông tin sản phẩm theo danh mục."
+        );
+    }
+};
+
 const getProductById = async function (req, res) {
     try {
         const product = await Product.getById(req.params.id);
@@ -106,6 +118,7 @@ export default {
     getAllProduct,
     getProduct,
     getProductById,
+    getProductByCategoryId,
     createProduct,
     updateProduct,
     deleteProduct,

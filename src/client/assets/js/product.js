@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const productApiUrl = "http://localhost:8081/api/v1/products";
     const brandApiUrl = "http://localhost:8081/api/v1/brands";
 
+    const params = new URLSearchParams(window.location.search);
+    const categoryId = params.get("categoryId");
+
     try {
         const productsResponse = await fetch(productApiUrl);
         const products = await productsResponse.json();
@@ -12,10 +15,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             brands.map((brand) => [brand.TH_Ma, brand.TH_Ten])
         );
 
-        const selectedProducts = getRandomProducts(products, 10);
+        let filteredProducts;
+        if (categoryId) {
+            filteredProducts = products.filter(
+                (product) => product.DM_Ma === parseInt(categoryId)
+            );
+        } else {
+            filteredProducts = getRandomProducts(products, 10);
+        }
 
         const container = document.getElementById("product-container");
-        container.innerHTML = selectedProducts
+        container.innerHTML = filteredProducts
             .map(
                 (product) => `
                 <div class="col">
