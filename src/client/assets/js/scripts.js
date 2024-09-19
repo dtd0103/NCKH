@@ -508,3 +508,79 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 // =====
+document.addEventListener("DOMContentLoaded", async function () {
+  // Lấy từ khóa tìm kiếm từ URL
+  const params = new URLSearchParams(window.location.search);
+  const searchQuery = params.get("query");
+  try {
+    // Gửi yêu cầu GET đến endpoint tìm kiếm với từ khóa tìm kiếm
+    const response = await fetch(
+      `http://localhost:8081/api/v1/product/name/${searchQuery}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Tìm kiếm không thành công.");
+    }
+
+    const products = await response.json();
+    console.log(products);
+
+    // Hiển thị kết quả tìm kiếm
+    const container = document.getElementById("product-container");
+    if (products.length === 0) {
+      container.innerHTML = "<p>Không tìm thấy sản phẩm phù hợp.</p>";
+    } else {
+      container.innerHTML = products
+        .map(
+          (product) => `
+                        <div class="col">
+                            <a href="product-detail.html?id=${product.SP_Ma}">
+                                <article class="product-card">
+                                    <div class="product-card__img-wrap">
+                                        <img src="${
+                                          product.SP_HinhAnh
+                                        }" alt="" class="product-card__thumb" />
+                                    </div>
+                                    <h3 class="product-card__title">
+                                        ${
+                                          product.SP_Ten.charAt(
+                                            0
+                                          ).toUpperCase() +
+                                          product.SP_Ten.slice(1)
+                                        }
+                                    </h3>
+                                    <p class="product-card__brand">Brand Name</p>
+                                    <div class="product-card__row">
+                                        <span class="product-card__price">$${
+                                          product.SP_DonGia
+                                        }</span>
+                                    </div>
+                                </article>
+                            </a>
+                        </div>`
+        )
+        .join("");
+    }
+  } catch (err) {
+    console.error("Lỗi khi tìm kiếm sản phẩm:", err);
+  }
+});
+document.addEventListener("DOMContentLoaded", function () {
+  const searchForm = document.getElementById("search-form");
+  const searchInput = document.getElementById("search-input");
+
+  searchForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của form (reload trang)
+
+    const searchQuery = searchInput.value.trim(); // Lấy giá trị từ input
+    if (!searchQuery) {
+      alert("Vui lòng nhập thông tin cần tìm.");
+      return;
+    }
+
+    // Điều hướng đến trang search.html với từ khóa tìm kiếm
+    window.location.href = `search.html?query=${encodeURIComponent(
+      searchQuery
+    )}`;
+  });
+});
