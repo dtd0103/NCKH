@@ -1455,6 +1455,16 @@ html {
     cursor: pointer;
     padding: 5px;
 }
+.top-act__btn::before {
+    position: absolute;
+    content: "";
+    background: #eaeaea;
+    width: 1px;
+    height: 33px;
+    top: 9px;
+    left: 0;
+}
+
 .header {
     position: relative;
     z-index: 2;
@@ -1730,8 +1740,8 @@ html {
 
 .act-dropdown {
     position: absolute;
-    top: 48px;
-    right: -60px;
+    top: 38px;
+    right: -70px;
     width: min(500px, 100vw);
     padding-top: 28px;
     display: none;

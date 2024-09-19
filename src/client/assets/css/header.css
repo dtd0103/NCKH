@@ -810,7 +810,7 @@
   .header__menu__right {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  gap: 11px;
   margin-left: 100px;
   height: 100%;
   width: 90px;
