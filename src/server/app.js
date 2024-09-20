@@ -21,6 +21,8 @@ const __dirname = dirname(__filename);
 
 const app = express();
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
@@ -28,12 +30,32 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: false, maxAge: 60000 },
+        cookie: { secure: false, maxAge: 3600000 },
     })
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.post("/api/v1/validate-session", (req, res) => {
+    const { sessionId } = req.body;
+
+    redisClient.exists(`viewedProducts:${sessionId}`, (err, reply) => {
+        if (err) {
+            return res
+                .status(500)
+                .json({ message: "Có lỗi xảy ra.", error: err.message });
+        }
+
+        if (reply === 1) {
+            return res.json({ valid: true });
+        } else {
+            return res.json({ valid: false });
+        }
+    });
+});
+
+app.get("/api/v1/session-id", (req, res) => {
+    const sessionId = req.sessionID;
+    res.json({ sessionId });
+});
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(

@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         container.innerHTML = filteredProducts
             .map(
                 (product) => `
-                <div class="col">
+                <div class="col" id="product data-product-id="${product.SP_Ma}">
                     <a href="product-detail.html?id=${product.SP_Ma}">
                         <article class="product-card">
                             <div class="product-card__img-wrap">
@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 <span class="product-card__price">$${
                                     product.SP_DonGia
                                 }</span>
-                                
                             </div>
                         </article>
                     </a>
@@ -64,8 +63,38 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("Lỗi: ", err);
     }
 
+    container.addEventListener("click", async (e) => {
+        const productElement = e.target.closest("#product");
+
+        if (productElement) {
+            const productId = productElement.getAttribute("data-product-id");
+            trackProductView(productId);
+        }
+    });
+
     function getRandomProducts(products, count) {
         const shuffled = products.sort(() => 0.5 - Math.random());
         return shuffled.slice(0, count);
+    }
+
+    async function trackProductView(productId) {
+        const sessionId = localStorage.getItem("sessionid");
+        try {
+            const response = await fetch(
+                "http://localhost:8081/api/v1/product/view",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ productId, sessionId }),
+                }
+            );
+
+            const data = await response.json();
+            console.log(data.message);
+        } catch (error) {
+            console.error("Error tracking product view:", error);
+        }
     }
 });

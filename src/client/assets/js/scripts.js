@@ -48,6 +48,7 @@ window.addEventListener("template-loaded", () => {
 
                 localStorage.removeItem("authToken");
                 localStorage.removeItem("username");
+                localStorage.removeItem("sessionid");
 
                 window.location.href = "./login.html";
             } catch (error) {
@@ -548,9 +549,58 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Điều hướng đến trang search.html với từ khóa tìm kiếm
         window.location.href = `search.html?query=${encodeURIComponent(
             searchQuery
         )}`;
     });
 });
+window.addEventListener("DOMContentLoaded", () => {
+    const existingSessionId = localStorage.getItem("sessionid");
+
+    if (existingSessionId) {
+        console.log("Session ID đã tồn tại:", existingSessionId);
+    } else {
+        fetch("http://localhost:8081/api/v1/session-id")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Session ID:", data.sessionId);
+                localStorage.setItem("sessionid", data.sessionId);
+
+                setTimeout(() => {
+                    localStorage.removeItem("sessionid");
+                    console.log("Session ID đã được xóa sau 1 giờ.");
+                }, 3600000);
+            })
+            .catch((error) => {
+                console.error("Error fetching session ID:", error);
+            });
+    }
+});
+
+// window.addEventListener("DOMContentLoaded", () => {
+//     const sessionId = localStorage.getItem("sessionid");
+
+//     if (sessionId) {
+//         fetch("http://localhost:8081/api/v1/validate-session", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({ sessionId }), // Gửi sessionId
+//         })
+//             .then((response) => {
+//                 if (!response.ok) {
+//                     throw new Error("Network response was not ok");
+//                 }
+//                 return response.json();
+//             })
+//             .then((data) => {
+//                 console.log("Session validation result:", data);
+//             })
+//             .catch((error) => {
+//                 console.error("Error validating session:", error);
+//             });
+//     } else {
+//         console.log("No session ID found in localStorage.");
+//     }
+// });
