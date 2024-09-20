@@ -366,6 +366,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             document.getElementById("product-brand").textContent = `${product.TH_Ten.charAt(0).toUpperCase()}${product.TH_Ten.slice(1)}`;
 
+            // Hàm để lưu số sản phẩm vào localStorage
+            function saveProductCount() {
+                const existingProducts = JSON.parse(localStorage.getItem("productIds")) || [];
+                const count = existingProducts.length;
+                localStorage.setItem("productCount", count);
+            }
+
             // Thêm sự kiện click vào nút "Thêm vào giỏ"
             const addToCartButton = document.querySelector(".prod-info__add-to-cart");
             addToCartButton.addEventListener("click", function (event) {
@@ -373,18 +380,20 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 const existingProducts = JSON.parse(localStorage.getItem("productIds")) || [];
                 
-                if (!existingProducts.includes(product.SP_Ma)) {
-                    existingProducts.push(product.SP_Ma);
-                    localStorage.setItem("productIds", JSON.stringify(existingProducts));
-                } else {
-                    alert("Sản phẩm đã có trong giỏ!");
-                }
+                // Thêm product.SP_Ma vào localStorage mà không kiểm tra trùng lặp
+                existingProducts.push(product.SP_Ma);
+                localStorage.setItem("productIds", JSON.stringify(existingProducts));
+
+                // Lưu số sản phẩm vào localStorage
+                saveProductCount();
             });
         } catch (err) {
             console.error("Lỗi: ", err);
         }
     }
 });
+
+
 
 
 
