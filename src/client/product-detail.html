@@ -51,7 +51,6 @@
         <!-- Scripts -->
         <script src="./assets/js/scripts.js"></script>
         <script src="./assets/js/main.js"></script>
-        <script src="./assets/js/main.js"></script>
     </head>
     <body>
         <!-- Header -->
@@ -207,7 +206,8 @@
                                                                 max-width: 200px;
                                                             "
                                                             class="btn btn--primary-prod prod-info__add-to-cart"
-                                                        >
+                                                            data-id="${product.SP_Ma}"
+                                                            >
                                                             Thêm vào giỏ
                                                         </button>
                                                     </div>
@@ -346,63 +346,27 @@
             load("#footer", "./templates/footer.html");
         </script>
         <script>
-            document.addEventListener("DOMContentLoaded", async function () {
-                const urlParams = new URLSearchParams(window.location.search);
-                const productId = urlParams.get("id");
+document.addEventListener("DOMContentLoaded", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
 
-                if (productId) {
-                    try {
-                        const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
-                        const response = await fetch(productApiUrl);
-                        const product = await response.json();
+    if (productId) {
+        try {
+            const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
+            const response = await fetch(productApiUrl);
+            const product = await response.json();
 
-                        document.getElementById(
-                            "product-category"
-                        ).textContent =
-                            product.DM_Ten.charAt(0).toUpperCase() +
-                            product.DM_Ten.slice(1);
+            document.getElementById("product-category").textContent =
+                product.DM_Ten.charAt(0).toUpperCase() +
+                product.DM_Ten.slice(1);
 
-                        document
-                            .querySelectorAll(".product-name")
-                            .forEach((element) => {
-                                element.textContent =
-                                    product.SP_Ten.charAt(0).toUpperCase() +
-                                    product.SP_Ten.slice(1);
-                            });
-
-                        document.getElementById(
-                            "product-price"
-                        ).textContent = `${product.SP_DonGia}$`;
-                        let productImg = `http://localhost:8081/images/product/${product.SP_HinhAnh}`;
-                        const imgElement =
-                            document.querySelector(".prod-preview__img");
-                        imgElement.src = productImg;
-
-                        document.getElementById(
-                            "product-description"
-                        ).textContent = product.SP_ThongTin;
-
-                        document.getElementById(
-                            "prod-prop__desc"
-                        ).textContent = `Còn lại ${product.SP_SoLuong} sản phẩm`;
-
-                        document.getElementById(
-                            "category"
-                        ).textContent = `${product.DM_Ten.charAt(
-                            0
-                        ).toUpperCase()}${product.DM_Ten.slice(1)}`;
-
-                        document.getElementById(
-                            "product-brand"
-                        ).textContent = `${product.TH_Ten.charAt(
-                            0
-                        ).toUpperCase()}${product.TH_Ten.slice(1)}`;
-                    } catch (err) {
-                        console.error("Lỗi: ", err);
-                    }
-                }
+            document.querySelectorAll(".product-name").forEach((element) => {
+                element.textContent =
+                    product.SP_Ten.charAt(0).toUpperCase() +
+                    product.SP_Ten.slice(1);
             });
 
+<<<<<<< HEAD
             document.addEventListener("DOMContentLoaded", async function () {
                 const params = new URLSearchParams(window.location.search);
                 const productId = params.get("id");
@@ -441,6 +405,57 @@
                     }
                 }
             });
+=======
+            document.getElementById("product-price").textContent = `${product.SP_DonGia}$`;
+            let productImg = `http://localhost:8081/images/product/${product.SP_HinhAnh}`;
+            const imgElement = document.querySelector(".prod-preview__img");
+            imgElement.src = productImg;
+
+            document.getElementById("product-description").textContent = product.SP_ThongTin;
+
+            document.getElementById("prod-prop__desc").textContent = `Còn lại ${product.SP_SoLuong} sản phẩm`;
+
+            document.getElementById("category").textContent = `${product.DM_Ten.charAt(0).toUpperCase()}${product.DM_Ten.slice(1)}`;
+
+            document.getElementById("product-brand").textContent = `${product.TH_Ten.charAt(0).toUpperCase()}${product.TH_Ten.slice(1)}`;
+
+            // Hàm để lưu số sản phẩm vào localStorage
+            function saveProductCount() {
+                const existingProducts = JSON.parse(localStorage.getItem("productIds")) || [];
+                const count = existingProducts.length;
+                localStorage.setItem("productCount", count);
+            }
+
+            // Thêm sự kiện click vào nút "Thêm vào giỏ"
+            const addToCartButton = document.querySelector(".prod-info__add-to-cart");
+            addToCartButton.addEventListener("click", function (event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định
+
+                const existingProducts = JSON.parse(localStorage.getItem("productIds")) || [];
+                
+                // Thêm product.SP_Ma vào localStorage mà không kiểm tra trùng lặp
+                existingProducts.push(product.SP_Ma);
+                localStorage.setItem("productIds", JSON.stringify(existingProducts));
+
+                // Lưu số sản phẩm vào localStorage
+                saveProductCount();
+            });
+        } catch (err) {
+            console.error("Lỗi: ", err);
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+
+>>>>>>> be2af7cb6da8e8fc790e14c33a3af04daddb09d7
         </script>
     </body>
 </html>
