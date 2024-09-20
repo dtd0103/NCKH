@@ -20,7 +20,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-app.use(cors());
 app.use(
     cors({
         origin: "http://127.0.0.1:8080", // Địa chỉ client
@@ -35,18 +34,20 @@ app.use(
         store: new RedisStore({ client: redisClient }),
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: true, // Có thể thử đổi thành true
+        saveUninitialized: false, // Có thể thử đổi thành true
         cookie: {
             secure: false, // Đặt là true nếu bạn chạy trên https
             maxAge: 3600000,
-            sameSite: "lax", // Hoặc 'none' nếu bạn cần gửi cookie qua cross-origin
+            sameSite: "none", // Hoặc 'none' nếu bạn cần gửi cookie qua cross-origin
         },
     })
 );
 
 app.use((req, res, next) => {
+    console.log(`Received request for ${req.url}`);
     console.log("Session ID:", req.sessionID);
     console.log("Session Data:", req.session);
+    console.log("Cookies:", req.cookies);
     next();
 });
 

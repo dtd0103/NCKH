@@ -401,14 +401,18 @@
                             0
                         ).toUpperCase()}${product.TH_Ten.slice(1)}`;
 
-                        // Hàm để lưu số sản phẩm vào localStorage
+                        // Hàm để lưu và đếm số lượng sản phẩm unique vào localStorage
                         function saveProductCount() {
-                            const existingProducts =
+                            const cart =
                                 JSON.parse(
                                     localStorage.getItem("productIds")
-                                ) || [];
-                            const count = existingProducts.length;
-                            localStorage.setItem("productCount", count);
+                                ) || {};
+
+                            const uniqueProductCount = Object.keys(cart).length; // Số lượng sản phẩm unique
+                            localStorage.setItem(
+                                "productCount",
+                                uniqueProductCount
+                            );
                         }
 
                         // Thêm sự kiện click vào nút "Thêm vào giỏ"
@@ -420,20 +424,32 @@
                             function (event) {
                                 event.preventDefault(); // Ngăn chặn hành động mặc định
 
-                                const existingProducts =
+                                let cart =
                                     JSON.parse(
                                         localStorage.getItem("productIds")
-                                    ) || [];
+                                    ) || {};
 
-                                // Thêm product.SP_Ma vào localStorage mà không kiểm tra trùng lặp
-                                existingProducts.push(product.SP_Ma);
+                                // Nếu productId đã tồn tại trong giỏ hàng, tăng số lượng
+                                if (cart[product.SP_Ma]) {
+                                    cart[product.SP_Ma] += 1;
+                                } else {
+                                    cart[product.SP_Ma] = 1; // Nếu chưa tồn tại, đặt số lượng là 1
+                                }
+
+                                // Lưu giỏ hàng mới vào localStorage
                                 localStorage.setItem(
                                     "productIds",
-                                    JSON.stringify(existingProducts)
+                                    JSON.stringify(cart)
                                 );
 
-                                // Lưu số sản phẩm vào localStorage
+                                // Lưu và cập nhật số lượng sản phẩm unique
                                 saveProductCount();
+
+                                // Cập nhật hiển thị giỏ hàng (gọi hàm từ updateCartCount.js)
+                                updateCartCount(); // Gọi từ file khác
+
+                                // Gọi lại hàm cập nhật giỏ hàng để hiển thị sản phẩm mới ngay lập tức
+                                updateCartPreview(); // Đảm bảo rằng hàm này được định nghĩa trong addcart.js
                             }
                         );
                     } catch (err) {
@@ -441,7 +457,8 @@
                     }
                 }
             });
-
+        </script>
+        <script>
             document.addEventListener("DOMContentLoaded", async function () {
                 const params = new URLSearchParams(window.location.search);
                 const productId = params.get("id");
