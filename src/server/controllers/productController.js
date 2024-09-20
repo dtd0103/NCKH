@@ -90,7 +90,7 @@ const productView = async function (req, res) {
     const { productId } = req.body;
 
     try {
-        const sessionId = req.sessionID; // Ensure sessionId is set correctly
+        const sessionId = req.sessionID;
 
         const viewedProducts = await redisClient.hGetAll(
             `viewedProducts:${sessionId}`

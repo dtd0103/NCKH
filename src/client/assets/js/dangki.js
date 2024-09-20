@@ -15,6 +15,7 @@ registerForm.addEventListener("submit", async (event) => {
             "http://localhost:8081/api/v1/customer/register",
             {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

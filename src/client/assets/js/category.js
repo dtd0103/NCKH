@@ -27,7 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch("http://localhost:8081/api/v1/categories");
+        const response = await fetch(
+            "http://localhost:8081/api/v1/categories",
+            {
+                method: "GET",
+                credentials: "include",
+            }
+        );
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }

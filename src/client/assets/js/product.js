@@ -6,10 +6,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const categoryId = params.get("categoryId");
 
     try {
-        const productsResponse = await fetch(productApiUrl);
+        const productsResponse = await fetch(productApiUrl, {
+            method: "GET",
+            credentials: "include",
+        });
         const products = await productsResponse.json();
 
-        const brandsResponse = await fetch(brandApiUrl);
+        const brandsResponse = await fetch(brandApiUrl, {
+            method: "GET",
+            credentials: "include",
+        });
         const brands = await brandsResponse.json();
         const brandsMap = new Map(
             brands.map((brand) => [brand.TH_Ma, brand.TH_Ten])

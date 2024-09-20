@@ -11,6 +11,7 @@ loginForm.addEventListener("submit", async (event) => {
             "http://localhost:8081/api/v1/customer/login",
             {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

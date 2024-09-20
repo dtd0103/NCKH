@@ -21,6 +21,12 @@ const __dirname = dirname(__filename);
 
 const app = express();
 app.use(cors());
+app.use(
+    cors({
+        origin: "http://127.0.0.1:8080", // Địa chỉ client
+        credentials: true, // Cho phép gửi cookie
+    })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,10 +35,20 @@ app.use(
         store: new RedisStore({ client: redisClient }),
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: false,
-        cookie: { secure: false, maxAge: 3600000 },
+        saveUninitialized: true, // Có thể thử đổi thành true
+        cookie: {
+            secure: false, // Đặt là true nếu bạn chạy trên https
+            maxAge: 3600000,
+            sameSite: "lax", // Hoặc 'none' nếu bạn cần gửi cookie qua cross-origin
+        },
     })
 );
+
+app.use((req, res, next) => {
+    console.log("Session ID:", req.sessionID);
+    console.log("Session Data:", req.session);
+    next();
+});
 
 // app.post("/api/v1/validate-session", (req, res) => {
 //     const { sessionId } = req.body;
