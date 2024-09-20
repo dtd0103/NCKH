@@ -88,13 +88,17 @@
                     <ul class="breadcrumbs checkout-page__breadcrumbs">
                         <li>
                             <a href="./" class="breadcrumbs__link">
-                            Trang chủ
-                            <img src="./assets/icons/arrow-right.svg" alt="" />
+                                Trang chủ
+                                <img
+                                    src="./assets/icons/arrow-right.svg"
+                                    alt=""
+                                />
                             </a>
-                         </li>
+                        </li>
                         <li>
                             <a
-                                href="#" onclick="goBack()"
+                                href="#"
+                                onclick="goBack()"
                                 class="breadcrumbs__link"
                                 id="category"
                             >
@@ -114,7 +118,7 @@
                 <!-- Product info -->
                 <div class="product-container prod-info-content">
                     <div class="row">
-                        <div class="col-5 col-xl-6 col-lg-12" >
+                        <div class="col-5 col-xl-6 col-lg-12">
                             <div class="prod-preview">
                                 <div class="prod-preview__list">
                                     <div class="prod-preview__item">
@@ -133,14 +137,21 @@
                                     <p
                                         class="prod-info__heading"
                                         id="product-category"
-                                        style="font-size: 3rem;font-weight:bold;"
+                                        style="
+                                            font-size: 3rem;
+                                            font-weight: bold;
+                                        "
                                     ></p>
                                     <h1
-                                        style="font-size: 2.5rem;"
+                                        style="font-size: 2.5rem"
                                         class="prod-info__heading product-name"
                                     ></h1>
                                     <p
-                                        style="font-size: 2.5rem;color:#9e9da8;font-style: italic;"
+                                        style="
+                                            font-size: 2.5rem;
+                                            color: #9e9da8;
+                                            font-style: italic;
+                                        "
                                         class="prod-info__heading"
                                         id="product-brand"
                                     ></p>
@@ -150,7 +161,7 @@
                                                 <div class="prod-prop">
                                                     <img
                                                         src="./assets/icons/buy.svg"
-                                                        alt=""                                                        
+                                                        alt=""
                                                         class="prod-prop__icon icon"
                                                     />
                                                     <div>
@@ -170,7 +181,7 @@
                                                     <img
                                                         src="./assets/icons/bag.svg"
                                                         alt=""
-                                                        class="prod-prop__icon icon"                                                      
+                                                        class="prod-prop__icon icon"
                                                     />
                                                     <div>
                                                         <h4
@@ -185,14 +196,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="prod-info__card">
-                                                    <p >Giá sản phẩm:</p>
-                                                    <p                                                        
+                                                    <p>Giá sản phẩm:</p>
+                                                    <p
                                                         class="prod-info__total-price"
                                                         id="product-price"
                                                     ></p>
                                                     <div class="prod-info__row">
                                                         <button
-                                                            style="max-width: 200px;"
+                                                            style="
+                                                                max-width: 200px;
+                                                            "
                                                             class="btn btn--primary-prod prod-info__add-to-cart"
                                                         >
                                                             Thêm vào giỏ
@@ -386,6 +399,45 @@
                         ).toUpperCase()}${product.TH_Ten.slice(1)}`;
                     } catch (err) {
                         console.error("Lỗi: ", err);
+                    }
+                }
+            });
+
+            document.addEventListener("DOMContentLoaded", async function () {
+                const params = new URLSearchParams(window.location.search);
+                const productId = params.get("id");
+
+                if (productId) {
+                    console.log("Product ID:", productId);
+                    await trackProductView(productId);
+                }
+
+                async function trackProductView(productId) {
+                    console.log("Request body:", { productId }); // Log the request body
+
+                    try {
+                        const response = await fetch(
+                            "http://localhost:8081/api/v1/product/view",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ productId }), // Make sure to include sessionId if needed
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error(
+                                "Network response was not ok: " +
+                                    response.statusText
+                            );
+                        }
+
+                        const data = await response.json();
+                        console.log(data.message);
+                    } catch (error) {
+                        console.error("Error tracking product view:", error);
                     }
                 }
             });

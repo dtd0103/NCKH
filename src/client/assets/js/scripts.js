@@ -554,29 +554,28 @@ document.addEventListener("DOMContentLoaded", function () {
         )}`;
     });
 });
-<<<<<<< HEAD
-window.addEventListener("DOMContentLoaded", () => {
-    const existingSessionId = localStorage.getItem("sessionid");
+// window.addEventListener("DOMContentLoaded", () => {
+//     const existingSessionId = localStorage.getItem("sessionid");
 
-    if (existingSessionId) {
-        console.log("Session ID đã tồn tại:", existingSessionId);
-    } else {
-        fetch("http://localhost:8081/api/v1/session-id")
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Session ID:", data.sessionId);
-                localStorage.setItem("sessionid", data.sessionId);
+//     if (existingSessionId) {
+//         console.log("Session ID đã tồn tại:", existingSessionId);
+//     } else {
+//         fetch("http://localhost:8081/api/v1/session-id")
+//             .then((response) => response.json())
+//             .then((data) => {
+//                 console.log("Session ID:", data.sessionId);
+//                 localStorage.setItem("sessionid", data.sessionId);
 
-                setTimeout(() => {
-                    localStorage.removeItem("sessionid");
-                    console.log("Session ID đã được xóa sau 1 giờ.");
-                }, 3600000);
-            })
-            .catch((error) => {
-                console.error("Error fetching session ID:", error);
-            });
-    }
-});
+//                 setTimeout(() => {
+//                     localStorage.removeItem("sessionid");
+//                     console.log("Session ID đã được xóa sau 1 giờ.");
+//                 }, 3600000);
+//             })
+//             .catch((error) => {
+//                 console.error("Error fetching session ID:", error);
+//             });
+//     }
+// });
 
 // window.addEventListener("DOMContentLoaded", () => {
 //     const sessionId = localStorage.getItem("sessionid");
@@ -605,8 +604,3 @@ window.addEventListener("DOMContentLoaded", () => {
 //         console.log("No session ID found in localStorage.");
 //     }
 // });
-=======
-function goBack() {
-  window.history.back();
-}
->>>>>>> 5ea10304e9573451bc819a76b5bdce06b0fe5fd4

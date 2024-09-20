@@ -29,33 +29,33 @@ app.use(
         store: new RedisStore({ client: redisClient }),
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: { secure: false, maxAge: 3600000 },
     })
 );
 
-app.post("/api/v1/validate-session", (req, res) => {
-    const { sessionId } = req.body;
+// app.post("/api/v1/validate-session", (req, res) => {
+//     const { sessionId } = req.body;
 
-    redisClient.exists(`viewedProducts:${sessionId}`, (err, reply) => {
-        if (err) {
-            return res
-                .status(500)
-                .json({ message: "Có lỗi xảy ra.", error: err.message });
-        }
+//     redisClient.exists(`viewedProducts:${sessionId}`, (err, reply) => {
+//         if (err) {
+//             return res
+//                 .status(500)
+//                 .json({ message: "Có lỗi xảy ra.", error: err.message });
+//         }
 
-        if (reply === 1) {
-            return res.json({ valid: true });
-        } else {
-            return res.json({ valid: false });
-        }
-    });
-});
+//         if (reply === 1) {
+//             return res.json({ valid: true });
+//         } else {
+//             return res.json({ valid: false });
+//         }
+//     });
+// });
 
-app.get("/api/v1/session-id", (req, res) => {
-    const sessionId = req.sessionID;
-    res.json({ sessionId });
-});
+// app.get("/api/v1/session-id", (req, res) => {
+//     const sessionId = req.sessionID;
+//     res.json({ sessionId });
+// });
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(

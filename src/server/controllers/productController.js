@@ -84,9 +84,14 @@ const deleteProduct = async function (req, res) {
 };
 
 const productView = async function (req, res) {
-    const { productId } = req.body.productId;
+    console.log("Request body received:", req.body);
+    console.log("Server Session ID:", req.sessionID);
+
+    const { productId } = req.body;
+
     try {
-        const sessionId = req.sessionId;
+        const sessionId = req.sessionID; // Ensure sessionId is set correctly
+
         const viewedProducts = await redisClient.hGetAll(
             `viewedProducts:${sessionId}`
         );
