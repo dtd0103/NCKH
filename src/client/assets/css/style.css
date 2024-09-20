@@ -3284,6 +3284,7 @@ html {
 
 .account-info {
     display: flex;
+    max-height: 105.78px;
     align-items: center;
     gap: 10px;
     padding: 10px;
@@ -3301,6 +3302,7 @@ html {
     background: var(--account-info-icon-bg);
 }
 .account-info__title {
+    margin-top: 10px;
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 146.667%;
@@ -3584,7 +3586,6 @@ html {
 }
 .prod-preview__list {
     display: flex;
-    overflow: hidden;
 }
 @media (max-width: 991.98px) {
     .prod-preview__list {
@@ -3599,8 +3600,8 @@ html {
 }
 .prod-preview__img {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 35%; /* Đẩy hình ảnh xuống giữa */
+    left: 10%; /* Đẩy hình ảnh sang bên phải giữa */
     width: 100%;
     height: 100%;
     object-fit: contain;
