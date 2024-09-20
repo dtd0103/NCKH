@@ -2428,7 +2428,6 @@ html {
     justify-content: center;
     width: 50px;
     height: 50px;
-    border-radius: 50%;
     box-shadow: 0px 20px 60px rgba(124, 124, 124, 0.2);
 }
 .like-btn__icon--liked {
@@ -2453,7 +2452,6 @@ html {
     gap: 10px;
     height: 41px;
     padding: 0 25px;
-    border-radius: 6px;
     background: #f8f8fb;
     font-size: 1.5rem;
     font-weight: 500;
@@ -2481,6 +2479,19 @@ html {
 .btn--primary:hover {
     background: #040404;
     color: #ffffff;
+}
+.btn--primary-prod {
+    font-size: 1.8rem;
+    color: #ffffff;
+    background: #000000;
+    border: 1px solid #ffffff;
+    cursor: pointer;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+.btn--primary-prod:hover {
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #222222;
 }
 .btn--outline {
     background: transparent;
@@ -3273,6 +3284,7 @@ html {
 
 .account-info {
     display: flex;
+    max-height: 105.78px;
     align-items: center;
     gap: 10px;
     padding: 10px;
@@ -3290,6 +3302,7 @@ html {
     background: var(--account-info-icon-bg);
 }
 .account-info__title {
+    margin-top: 10px;
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 146.667%;
@@ -3540,7 +3553,7 @@ html {
     flex-direction: column;
     min-height: 80vh;
     padding-bottom: 50px;
-    background: var(--product-detail-bg);
+
 }
 
 .product-container {
@@ -3553,8 +3566,8 @@ html {
 }
 
 .prod-info-content {
-    border-radius: 20px;
     background: var(--product-detail-info-content-bg);
+    
 }
 
 .prod-preview {
@@ -3573,7 +3586,6 @@ html {
 }
 .prod-preview__list {
     display: flex;
-    overflow: hidden;
 }
 @media (max-width: 991.98px) {
     .prod-preview__list {
@@ -3588,11 +3600,12 @@ html {
 }
 .prod-preview__img {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 35%; /* Đẩy hình ảnh xuống giữa */
+    left: 10%; /* Đẩy hình ảnh sang bên phải giữa */
     width: 100%;
     height: 100%;
     object-fit: contain;
+
 }
 .prod-preview__thumbs {
     display: flex;
@@ -3633,9 +3646,8 @@ html {
 }
 
 .prod-info {
+
     padding: 60px;
-    border-radius: 10px;
-    background: var(--product-detail-info-bg);
 }
 @media (max-width: 1399.98px) {
     .prod-info {
@@ -3666,14 +3678,15 @@ html {
     background: var(--product-detail-tag-bg);
 }
 .prod-info__card {
+    background-color: #FFF;
     margin-top: 30px;
     padding: 20px;
-    border-radius: 6px;
     border: 1px solid #b9babe;
 }
 .prod-info__row {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .prod-info__price {
     font-size: 1.6rem;
@@ -3691,6 +3704,7 @@ html {
     line-height: 142.857%;
 }
 .prod-info__total-price {
+    color: #e34444;
     margin: 20px 0;
     font-size: 2.6rem;
     font-weight: 500;
@@ -3703,8 +3717,6 @@ html {
     width: 46px;
     height: 46px;
     margin-left: 20px;
-    border-radius: 6px;
-    border: 1px solid #d2d1d6;
     background: transparent;
 }
 

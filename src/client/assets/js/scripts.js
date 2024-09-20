@@ -554,6 +554,7 @@ document.addEventListener("DOMContentLoaded", function () {
         )}`;
     });
 });
+<<<<<<< HEAD
 window.addEventListener("DOMContentLoaded", () => {
     const existingSessionId = localStorage.getItem("sessionid");
 
@@ -604,3 +605,8 @@ window.addEventListener("DOMContentLoaded", () => {
 //         console.log("No session ID found in localStorage.");
 //     }
 // });
+=======
+function goBack() {
+  window.history.back();
+}
+>>>>>>> 5ea10304e9573451bc819a76b5bdce06b0fe5fd4
