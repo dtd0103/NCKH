@@ -87,6 +87,12 @@
                 <div class="product-container">
                     <ul class="breadcrumbs checkout-page__breadcrumbs">
                         <li>
+                            <a href="./" class="breadcrumbs__link">
+                            Trang chủ
+                            <img src="./assets/icons/arrow-right.svg" alt="" />
+                            </a>
+                         </li>
+                        <li>
                             <a
                                 href="#!"
                                 class="breadcrumbs__link"
@@ -108,7 +114,7 @@
                 <!-- Product info -->
                 <div class="product-container prod-info-content">
                     <div class="row">
-                        <div class="col-5 col-xl-6 col-lg-12">
+                        <div class="col-5 col-xl-6 col-lg-12" >
                             <div class="prod-preview">
                                 <div class="prod-preview__list">
                                     <div class="prod-preview__item">
@@ -127,11 +133,14 @@
                                     <p
                                         class="prod-info__heading"
                                         id="product-category"
+                                        style="font-size: 3rem;font-weight:bold;"
                                     ></p>
                                     <h1
+                                        style="font-size: 2.5rem;"
                                         class="prod-info__heading product-name"
                                     ></h1>
                                     <p
+                                        style="font-size: 2.5rem;color:#9e9da8;font-style: italic;"
                                         class="prod-info__heading"
                                         id="product-brand"
                                     ></p>
@@ -141,7 +150,7 @@
                                                 <div class="prod-prop">
                                                     <img
                                                         src="./assets/icons/buy.svg"
-                                                        alt=""
+                                                        alt=""                                                        
                                                         class="prod-prop__icon icon"
                                                     />
                                                     <div>
@@ -161,7 +170,7 @@
                                                     <img
                                                         src="./assets/icons/bag.svg"
                                                         alt=""
-                                                        class="prod-prop__icon icon"
+                                                        class="prod-prop__icon icon"                                                      
                                                     />
                                                     <div>
                                                         <h4
@@ -176,33 +185,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="prod-info__card">
-                                                    <p>Giá sản phẩm:</p>
-                                                    <p
+                                                    <p >Giá sản phẩm:</p>
+                                                    <p                                                        
                                                         class="prod-info__total-price"
                                                         id="product-price"
                                                     ></p>
                                                     <div class="prod-info__row">
                                                         <button
-                                                            class="btn btn--primary prod-info__add-to-cart"
+                                                            style="max-width: 200px;"
+                                                            class="btn btn--primary-prod prod-info__add-to-cart"
                                                         >
                                                             Thêm vào giỏ
-                                                        </button>
-                                                        <button
-                                                            class="like-btn prod-info__like-btn"
-                                                        >
-                                                            <img
-                                                                src="./assets/icons/heart.svg"
-                                                                alt=""
-                                                                class="like-btn__icon icon"
-                                                            />
-                                                            <img
-                                                                src="./assets/icons/heart-red.svg"
-                                                                alt=""
-                                                                class="like-btn__icon icon like-btn__icon--liked"
-                                                                style="
-                                                                    display: none;
-                                                                "
-                                                            />
                                                         </button>
                                                     </div>
                                                 </div>
