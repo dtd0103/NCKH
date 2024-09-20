@@ -225,7 +225,7 @@ strong {
 
 .col-8 {
     flex: 0 0 auto;
-    width: 63%;
+    width: 99%;
 }
 
 .col-9 {
@@ -1824,7 +1824,7 @@ html {
     position: relative;
     padding-top: 100%;
     border: 1px solid var(--header-act-dropdown-border-color);
-    border-radius: 10px;
+   
 }
 .cart-preview-item__thumb {
     position: absolute;
@@ -4089,10 +4089,12 @@ html {
 }
 .cart-item__ctrl {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     gap: 20px;
     margin-top: auto;
     min-height: 44px;
+   
 }
 @media (max-width: 575.98px) {
     .cart-item__ctrl {
