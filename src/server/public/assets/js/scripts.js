@@ -571,14 +571,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Hàm cập nhật số lượng hàng trong giỏ <TỔNG TẤT CẢ>
-
+// Hàm cập nhật số lượng sản phẩm trong giỏ
 function updateCartCount() {
     let productCount = localStorage.getItem("productCount");
-
-    // Kiểm tra nếu productCount tồn tại, nếu không thì đặt giá trị mặc định là 0
     productCount = productCount ? productCount : 0;
 
-    // Cập nhật nội dung cho thẻ <h2> có class "act-dropdown__title"
     let titleElement = document.querySelector(".act-dropdown__title");
     if (titleElement) {
         titleElement.textContent = `Bạn có ${productCount} loại sản phẩm trong giỏ`;
@@ -590,56 +587,39 @@ document.addEventListener("DOMContentLoaded", function () {
     updateCartCount();
 });
 
-//Hàm hiển thị sản phẩm
-// Hàm hiển thị giỏ hàng
+// Hàm hiển thị trước giỏ hàng
 async function updateCartPreview() {
-    // Lấy productIds từ localStorage
     const cart = JSON.parse(localStorage.getItem("productIds")) || {};
 
-    // Nếu giỏ hàng trống, không thực hiện tiếp
     if (Object.keys(cart).length === 0) {
         console.log("Giỏ hàng trống");
         return;
     }
 
-    // Phần tử nơi bạn muốn hiển thị danh sách sản phẩm
     const cartContainer = document.querySelector(".act-dropdown__list");
-
-    // Xóa các sản phẩm cũ trước khi cập nhật giỏ hàng mới
     cartContainer.innerHTML = "";
 
-    // Phần tử nơi bạn muốn hiển thị tổng giá và phí
-    const subtotalElement = document.querySelector(
-        ".act-dropdown__row .act-dropdown__value"
-    );
-    const totalElement = document.querySelector(
-        ".act-dropdown__row--bold .act-dropdown__value"
-    );
+    const subtotalElement = document.querySelector(".act-dropdown__row .act-dropdown__value");
+    const totalElement = document.querySelector(".act-dropdown__row--bold .act-dropdown__value");
 
-    // Biến để tính tổng giá của các sản phẩm
     let subtotal = 0;
-    const shippingFee = 10; // Phí vận chuyển mặc định
+    const shippingFee = 10;
 
     try {
-        // Lặp qua tất cả các productId trong cart
         for (const productId in cart) {
             if (cart.hasOwnProperty(productId)) {
-                const quantity = cart[productId]; // Lấy số lượng sản phẩm
-
-                const productApiUrl = `/api/v1/product/id/${productId}`;
-                const response = await fetch(productApiUrl, {
-                    method: "GET",
-                });
+                const quantity = cart[productId];
+                const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
+                const response = await fetch(productApiUrl);
                 const product = await response.json();
 
-                // Tạo phần tử HTML để hiển thị sản phẩm
                 const productElement = document.createElement("div");
                 productElement.classList.add("col");
 
                 productElement.innerHTML = `
                     <article class="cart-preview-item">
                         <div class="cart-preview-item__img-wrap">
-                            <img src="/images/product/${product.SP_HinhAnh}" 
+                            <img src="http://localhost:8081/images/product/${product.SP_HinhAnh}" 
                                  alt="${product.SP_Ten}" 
                                  class="cart-preview-item__thumb" />
                         </div>
@@ -649,31 +629,42 @@ async function updateCartPreview() {
                     </article>
                 `;
 
-                // Thêm sản phẩm vào container
                 cartContainer.appendChild(productElement);
 
-                // Tính tổng giá của sản phẩm với số lượng tương ứng
                 subtotal += parseFloat(product.SP_DonGia) * quantity;
             }
         }
 
-        // Tính tổng cộng (subtotal + phí vận chuyển)
         const total = subtotal + shippingFee;
-
-        // Hiển thị giá tạm tính và tổng cộng
         subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
         totalElement.textContent = `$${total.toFixed(2)}`;
     } catch (err) {
         console.error("Lỗi khi lấy thông tin sản phẩm:", err);
     }
 }
+// Hàm cập nhật tổng tiền và số lượng sản phẩm
+function updateTotals(cart) {
+    let subtotal = 0;
+    let totalQuantity = 0;
+    const shippingFee = 10.0;
 
-// Gọi hàm updateCartPreview ngay khi trang load
-document.addEventListener("DOMContentLoaded", function () {
-    updateCartPreview();
-});
+    for (const productId in cart) {
+        if (cart.hasOwnProperty(productId)) {
+            const quantity = cart[productId];
+            const price = parseFloat(document.querySelector(`[data-id="${productId}"] .cart-item__price`).textContent.split(" ")[1]);
+            subtotal += price * quantity;
+            totalQuantity += quantity;
+        }
+    }
 
-// ===== Hàm hiển thị trong shoppingcart.html
+    const total = subtotal + shippingFee;
+    document.querySelector(".cart-info__row span:nth-child(2)").textContent = totalQuantity;
+    document.querySelector(".cart-info__subtotal").textContent = `$${subtotal.toFixed(2)}`;
+    document.querySelector(".cart-info__shipping-fee").textContent = `$${shippingFee.toFixed(2)}`;
+    document.querySelector(".cart-info__total").textContent = `$${total.toFixed(2)}`;
+}
+
+// Hàm hiển thị giỏ hàng trong trang shoppingcart.html
 document.addEventListener("DOMContentLoaded", async function () {
     const cart = JSON.parse(localStorage.getItem("productIds")) || {};
 
@@ -685,29 +676,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     const cartContainer = document.querySelector(".cart-info__list");
     cartContainer.innerHTML = "";
 
-    let subtotal = 0; // Biến để tính tổng tạm tính
-    let totalQuantity = 0; // Biến để tính tổng số lượng sản phẩm
-
     try {
         for (const productId in cart) {
             if (cart.hasOwnProperty(productId)) {
-                const productApiUrl = `/api/v1/product/id/${productId}`;
-                const response = await fetch(productApiUrl, {
-                    method: "GET",
-                });
+                const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
+                const response = await fetch(productApiUrl);
                 const product = await response.json();
 
-                // Tính tổng tạm tính và số lượng
                 const productTotal = product.SP_DonGia * cart[productId];
-                subtotal += productTotal;
-                totalQuantity += cart[productId];
 
                 const productElement = document.createElement("article");
                 productElement.classList.add("cart-item");
+                productElement.setAttribute("data-id", productId);
 
                 productElement.innerHTML = `
                     <a href="./product-detail.html?id=${productId}">
-                        <img src="/images/product/${product.SP_HinhAnh}" 
+                        <img src="http://localhost:8081/images/product/${product.SP_HinhAnh}" 
                              alt="${product.SP_Ten}" 
                              class="cart-item__thumb" />
                     </a>
@@ -719,22 +703,17 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 </a>
                             </h3>
                             <p class="cart-item__price-wrap">
-                              <span class="cart-item__price">Giá: ${product.SP_DonGia.toFixed(
-                                  2
-                              )}đ</span> | 
-                              <span class="cart-item__status">Còn hàng</span>
+                                <span class="cart-item__price">Giá: ${product.SP_DonGia.toFixed(2)}đ</span> | 
+                                <span class="cart-item__status">Còn hàng</span>
                             </p>
                             <div class="filter__form-group">
                                 <div class="form__select-wrap">
-                                    <div class="filter__col" style="margin: 0;">                                                        
-
+                                    <div class="filter__col" style="margin: 0;">                                                    
                                         <div class="cart-item__input">
                                             <button class="cart-item__input-btn decrease-btn">
                                                 <img class="icon" src="./assets/icons/minus.svg" alt="minus" />
                                             </button>
-                                            <span class="quantity">${
-                                                cart[productId]
-                                            }</span>
+                                            <span class="quantity">${cart[productId]}</span>
                                             <button class="cart-item__input-btn increase-btn">
                                                 <img class="icon" src="./assets/icons/plus.svg" alt="plus" />
                                             </button>
@@ -744,11 +723,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                             </div>  
                         </div>
                         <div class="cart-item__content-right">
-                            <p class="cart-item__total-price">$${productTotal.toFixed(
-                                2
-                            )}</p>
+                            <p class="cart-item__total-price">$${productTotal.toFixed(2)}</p>
                             <div class="cart-item__ctrl">                                                    
-
                                 <button class="cart-item__ctrl-btn js-toggle" toggle-target="#delete-confirm">
                                     <img src="./assets/icons/trash.svg" alt="" />
                                     Xóa
@@ -759,30 +735,69 @@ document.addEventListener("DOMContentLoaded", async function () {
                 `;
 
                 cartContainer.appendChild(productElement);
+
+                // Thêm sự kiện cho nút tăng/giảm số lượng
+                const decreaseBtn = productElement.querySelector(".decrease-btn");
+                const increaseBtn = productElement.querySelector(".increase-btn");
+                const quantityDisplay = productElement.querySelector(".quantity");
+
+                decreaseBtn.addEventListener("click", function () {
+                    if (cart[productId] > 1) {
+                        cart[productId]--;
+                        quantityDisplay.textContent = cart[productId];
+                        localStorage.setItem("productIds", JSON.stringify(cart));
+
+                        productElement.querySelector(".cart-item__total-price").textContent = 
+                          `$${(product.SP_DonGia * cart[productId]).toFixed(2)}`;
+
+                        updateTotals(cart);
+                    } else {
+                        delete cart[productId];
+                        localStorage.setItem("productIds", JSON.stringify(cart));
+                        cartContainer.removeChild(productElement);
+                        alert(`Sản phẩm "${product.SP_Ten}" đã bị xóa khỏi giỏ hàng.`);
+                        updateTotals(cart);
+                    }
+                });
+
+                increaseBtn.addEventListener("click", function () {
+                    if (cart[productId] < product.SP_SoLuong) {
+                        cart[productId]++;
+                        quantityDisplay.textContent = cart[productId];
+                        localStorage.setItem("productIds", JSON.stringify(cart));
+
+                        productElement.querySelector(".cart-item__total-price").textContent = 
+                          `$${(product.SP_DonGia * cart[productId]).toFixed(2)}`;
+
+                        updateTotals(cart);
+                    } else {
+                        alert(`Không thể tăng số lượng vì chỉ còn ${product.SP_SoLuong} sản phẩm.`);
+                    }
+                });
+
+                // Thêm sự kiện cho nút xóa
+                const deleteBtn = productElement.querySelector(".js-toggle");
+                deleteBtn.addEventListener("click", function () {
+                    delete cart[productId];
+                    localStorage.setItem("productIds", JSON.stringify(cart));
+                    cartContainer.removeChild(productElement);
+                    alert(`Sản phẩm "${product.SP_Ten}" đã bị xóa khỏi giỏ hàng.`);
+                    updateTotals(cart);
+                });
             }
         }
 
-        // Tính toán và cập nhật các giá trị
-        const shippingFee = 10.0; // Phí vận chuyển cố định
-        const total = subtotal + shippingFee;
-
-        // Cập nhật thông tin số lượng và giá
-        document.querySelector(
-            ".cart-info__row span:nth-child(2)"
-        ).textContent = totalQuantity; // Cập nhật số lượng
-        document.querySelector(
-            ".cart-info__subtotal"
-        ).textContent = `$${subtotal.toFixed(2)}`; // Cập nhật tạm tính
-        document.querySelector(
-            ".cart-info__shipping-fee"
-        ).textContent = `$${shippingFee.toFixed(2)}`; // Cập nhật phí vận chuyển
-        document.querySelector(
-            ".cart-info__total"
-        ).textContent = `$${total.toFixed(2)}`; // Cập nhật tổng cộng
+        updateTotals(cart);
     } catch (err) {
         console.error("Lỗi khi lấy thông tin sản phẩm:", err);
     }
 });
+
+// Gọi hàm cập nhật giỏ hàng ngay khi trang load
+document.addEventListener("DOMContentLoaded", function () {
+    updateCartPreview();
+});
+
 
 window.addEventListener("DOMContentLoaded", async () => {
     const userName = localStorage.getItem("username"); // Lấy userId từ localStorage
