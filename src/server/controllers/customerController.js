@@ -83,13 +83,13 @@ const customerLogin = async function (req, res) {
                 .json({ message: "Tài khoản không tồn tại." });
         }
 
-        console.log("Customer from DB:", customer);
+        // console.log("Customer from DB:", customer);
 
         const passwordMatch = await bcrypt.compare(
             password,
             customer.KH_MatKhau
         );
-        console.log("Password match result:", passwordMatch);
+        // console.log("Password match result:", passwordMatch);
 
         if (!passwordMatch) {
             return res.status(400).json({ message: "Sai mật khẩu." });
@@ -98,6 +98,11 @@ const customerLogin = async function (req, res) {
         const token = jwt.sign({ id: customer.KH_Ma }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
+
+        if (req.session.anonymousUser) {
+            delete req.session.anonymousUser;
+            console.log("Anonymous user ID đã được xóa.");
+        }
 
         req.session.userId = customer.KH_Ma;
 

@@ -27,13 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch(
-            "http://localhost:8081/api/v1/categories",
-            {
-                method: "GET",
-                credentials: "include",
-            }
-        );
+        const response = await fetch("/api/v1/categories");
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
@@ -51,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             listItem.innerHTML = `
                 <a href="product.html?categoryId=${category.DM_Ma}">
-                    <img src="http://localhost:8081/images/categories/${category.DM_HinhAnh.trim()}" alt="${
+                    <img src="/images/categories/${category.DM_HinhAnh.trim()}" alt="${
                 category.DM_Ten
             }" class="cate-icon">
                     <span>

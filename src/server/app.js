@@ -16,64 +16,38 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
+import cookieParser from "cookie-parser";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-app.use(
-    cors({
-        origin: "http://127.0.0.1:8080", // Địa chỉ client
-        credentials: true, // Cho phép gửi cookie
-    })
-);
+
+// Cấu hình CORS
+app.use(cors());
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Cấu hình session với Redis
 app.use(
     session({
         store: new RedisStore({ client: redisClient }),
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: false, // Có thể thử đổi thành true
+        saveUninitialized: false,
         cookie: {
-            secure: false, // Đặt là true nếu bạn chạy trên https
+            secure: false,
             maxAge: 3600000,
-            sameSite: "none", // Hoặc 'none' nếu bạn cần gửi cookie qua cross-origin
         },
     })
 );
 
-app.use((req, res, next) => {
-    console.log(`Received request for ${req.url}`);
-    console.log("Session ID:", req.sessionID);
-    console.log("Session Data:", req.session);
-    console.log("Cookies:", req.cookies);
-    next();
-});
+// Phục vụ các tệp HTML và các tệp tĩnh
+app.use(express.static(path.join(__dirname, "public")));
 
-// app.post("/api/v1/validate-session", (req, res) => {
-//     const { sessionId } = req.body;
-
-//     redisClient.exists(`viewedProducts:${sessionId}`, (err, reply) => {
-//         if (err) {
-//             return res
-//                 .status(500)
-//                 .json({ message: "Có lỗi xảy ra.", error: err.message });
-//         }
-
-//         if (reply === 1) {
-//             return res.json({ valid: true });
-//         } else {
-//             return res.json({ valid: false });
-//         }
-//     });
-// });
-
-// app.get("/api/v1/session-id", (req, res) => {
-//     const sessionId = req.sessionID;
-//     res.json({ sessionId });
-// });
-
+// Phục vụ hình ảnh
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(
     "/images/categories",
@@ -84,6 +58,7 @@ app.use(
     express.static(path.join(__dirname, "images/products"))
 );
 
+// API routes
 app.use("/api/v1", categoryRouter);
 app.use("/api/v1", subCategoryRouter);
 app.use("/api/v1", customerRouter);
@@ -91,7 +66,18 @@ app.use("/api/v1", brandRouter);
 app.use("/api/v1", employeeRouter);
 app.use("/api/v1", productRouter);
 app.use("/api/v1", orderRouter);
+app.get("/api/v1/setAnonymousSession", (req, res) => {
+    if (!req.session.anonymousUser) {
+        // Tạo session ẩn danh mới nếu chưa có
+        req.session.anonymousUser = {
+            id: `anon-${Date.now()}`,
+            name: "Guest",
+        };
+    }
+    res.json(req.session.anonymousUser);
+});
 
+// Khởi động server
 app.listen(process.env.PORT, () => {
-    console.log("Listening");
+    console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });

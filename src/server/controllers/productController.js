@@ -108,6 +108,8 @@ const productView = async function (req, res) {
                 );
             }
 
+            console.log("Cookies received:", req.cookies); // Kiểm tra nếu cookie từ client không được gửi
+            console.log("Session Data:", req.session); // Kiểm tra session có hoạt động không
             res.json({
                 message: `Sản phẩm với id ${productId} đã được thêm vào danh sách sản phẩm đã xem.`,
                 viewedProducts: viewedProducts,

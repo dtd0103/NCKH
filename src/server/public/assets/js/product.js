@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const productApiUrl = "http://localhost:8081/api/v1/products";
-    const brandApiUrl = "http://localhost:8081/api/v1/brands";
+    const productApiUrl = "/api/v1/products";
+    const brandApiUrl = "/api/v1/brands";
 
     const params = new URLSearchParams(window.location.search);
     const categoryId = params.get("categoryId");
@@ -8,13 +8,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         const productsResponse = await fetch(productApiUrl, {
             method: "GET",
-            credentials: "include",
         });
         const products = await productsResponse.json();
 
         const brandsResponse = await fetch(brandApiUrl, {
             method: "GET",
-            credentials: "include",
         });
         const brands = await brandsResponse.json();
         const brandsMap = new Map(
@@ -30,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             filteredProducts = getRandomProducts(products, 10);
         }
 
-        const container = document.getElementById("product-container"); // let productImg = `http://localhost:8081/images/product/${product.SP_HinhAnh}`;
+        const container = document.getElementById("product-container"); // let productImg = `/images/product/${product.SP_HinhAnh}`;
         container.innerHTML = filteredProducts
             .map(
                 (product) => `
@@ -38,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <a href="product-detail.html?id=${product.SP_Ma}">
                         <article class="product-card">
                             <div class="product-card__img-wrap">
-                                <img src="http://localhost:8081/images/product/${
+                                <img src="/images/product/${
                                     product.SP_HinhAnh
                                 }" alt="" class="product-card__thumb" />
                             </div>

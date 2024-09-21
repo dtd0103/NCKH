@@ -7,7 +7,7 @@ function load(selector, path) {
         $(selector).innerHTML = cached;
     }
 
-    fetch(path)
+    fetch(path, {})
         .then((res) => res.text())
         .then((html) => {
             if (html !== cached) {
@@ -36,13 +36,11 @@ window.addEventListener("template-loaded", () => {
     if (logoutButton) {
         logoutButton.addEventListener("click", async () => {
             try {
-                await fetch("http://localhost:8081/api/v1/customer/logout", {
+                await fetch("/api/v1/customer/logout", {
                     method: "POST",
+
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "authToken"
-                        )}`,
                     },
                 });
                 localStorage.removeItem("authToken");
@@ -59,9 +57,8 @@ window.addEventListener("template-loaded", () => {
 });
 
 function loadCategories() {
-    fetch("http://localhost:8081/api/v1/categories", {
+    fetch("/api/v1/categories", {
         method: "GET",
-        credentials: "include",
     })
         .then((res) => res.json())
         .then((categories) => {
@@ -488,21 +485,19 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", async function () {
     const params = new URLSearchParams(window.location.search);
     const searchQuery = params.get("query");
-    const brandApiUrl = "http://localhost:8081/api/v1/brands";
-    const brandsResponse = await fetch(brandApiUrl);
+    const brandApiUrl = "/api/v1/brands";
+    const brandsResponse = await fetch(brandApiUrl, {
+        method: "GET",
+    });
     const brands = await brandsResponse.json();
     const brandsMap = new Map(
         brands.map((brand) => [brand.TH_Ma, brand.TH_Ten])
     );
 
     try {
-        const response = await fetch(
-            `http://localhost:8081/api/v1/product/name/${searchQuery}`,
-            {
-                method: "GET",
-                credentials: "include",
-            }
-        );
+        const response = await fetch(`/api/v1/product/name/${searchQuery}`, {
+            method: "GET",
+        });
 
         if (!response.ok) {
             throw new Error("Tìm kiếm không thành công.");
@@ -522,7 +517,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <a href="product-detail.html?id=${product.SP_Ma}">
                                 <article class="product-card">
                                     <div class="product-card__img-wrap">
-                                        <img src="http://localhost:8081/images/product/${
+                                        <img src="/images/product/${
                                             product.SP_HinhAnh
                                         }" alt="" class="product-card__thumb" />
                                     </div>
@@ -598,41 +593,53 @@ document.addEventListener("DOMContentLoaded", function () {
 //Hàm hiển thị sản phẩm
 // Hàm hiển thị giỏ hàng
 async function updateCartPreview() {
-  const cart = JSON.parse(localStorage.getItem("productIds")) || {};
+    // Lấy productIds từ localStorage
+    const cart = JSON.parse(localStorage.getItem("productIds")) || {};
 
-  if (Object.keys(cart).length === 0) {
-    console.log("Giỏ hàng trống");
-    return;
-  }
+    // Nếu giỏ hàng trống, không thực hiện tiếp
+    if (Object.keys(cart).length === 0) {
+        console.log("Giỏ hàng trống");
+        return;
+    }
 
-  const cartContainer = document.querySelector(".act-dropdown__list");
-  cartContainer.innerHTML = "";
+    // Phần tử nơi bạn muốn hiển thị danh sách sản phẩm
+    const cartContainer = document.querySelector(".act-dropdown__list");
 
-  const subtotalElement = document.querySelector(
-    ".act-dropdown__row .act-dropdown__value"
-  );
-  const totalElement = document.querySelector(
-    ".act-dropdown__row--bold .act-dropdown__value"
-  );
+    // Xóa các sản phẩm cũ trước khi cập nhật giỏ hàng mới
+    cartContainer.innerHTML = "";
 
-  let subtotal = 0;
-  const shippingFee = 10;
+    // Phần tử nơi bạn muốn hiển thị tổng giá và phí
+    const subtotalElement = document.querySelector(
+        ".act-dropdown__row .act-dropdown__value"
+    );
+    const totalElement = document.querySelector(
+        ".act-dropdown__row--bold .act-dropdown__value"
+    );
 
-  try {
-    for (const productId in cart) {
-      if (cart.hasOwnProperty(productId)) {
-        const quantity = cart[productId];
-        const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
-        const response = await fetch(productApiUrl);
-        const product = await response.json();
+    // Biến để tính tổng giá của các sản phẩm
+    let subtotal = 0;
+    const shippingFee = 10; // Phí vận chuyển mặc định
 
-        const productElement = document.createElement("div");
-        productElement.classList.add("col");
+    try {
+        // Lặp qua tất cả các productId trong cart
+        for (const productId in cart) {
+            if (cart.hasOwnProperty(productId)) {
+                const quantity = cart[productId]; // Lấy số lượng sản phẩm
 
-        productElement.innerHTML = `
+                const productApiUrl = `/api/v1/product/id/${productId}`;
+                const response = await fetch(productApiUrl, {
+                    method: "GET",
+                });
+                const product = await response.json();
+
+                // Tạo phần tử HTML để hiển thị sản phẩm
+                const productElement = document.createElement("div");
+                productElement.classList.add("col");
+
+                productElement.innerHTML = `
                     <article class="cart-preview-item">
                         <div class="cart-preview-item__img-wrap">
-                            <img src="http://localhost:8081/images/product/${product.SP_HinhAnh}" 
+                            <img src="/images/product/${product.SP_HinhAnh}" 
                                  alt="${product.SP_Ten}" 
                                  class="cart-preview-item__thumb" />
                         </div>
@@ -642,59 +649,65 @@ async function updateCartPreview() {
                     </article>
                 `;
 
-        cartContainer.appendChild(productElement);
+                // Thêm sản phẩm vào container
+                cartContainer.appendChild(productElement);
 
-        subtotal += parseFloat(product.SP_DonGia) * quantity;
-      }
+                // Tính tổng giá của sản phẩm với số lượng tương ứng
+                subtotal += parseFloat(product.SP_DonGia) * quantity;
+            }
+        }
+
+        // Tính tổng cộng (subtotal + phí vận chuyển)
+        const total = subtotal + shippingFee;
+
+        // Hiển thị giá tạm tính và tổng cộng
+        subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+        totalElement.textContent = `$${total.toFixed(2)}`;
+    } catch (err) {
+        console.error("Lỗi khi lấy thông tin sản phẩm:", err);
     }
-
-    const total = subtotal + shippingFee;
-
-    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-    totalElement.textContent = `$${total.toFixed(2)}`;
-  } catch (err) {
-    console.error("Lỗi khi lấy thông tin sản phẩm:", err);
-  }
 }
+
 // Gọi hàm updateCartPreview ngay khi trang load
 document.addEventListener("DOMContentLoaded", function () {
-  updateCartPreview();
+    updateCartPreview();
 });
-
-
-
-
 
 // ===== Hàm hiển thị trong shoppingcart.html
 document.addEventListener("DOMContentLoaded", async function () {
-  const cart = JSON.parse(localStorage.getItem("productIds")) || {};
+    const cart = JSON.parse(localStorage.getItem("productIds")) || {};
 
-  if (Object.keys(cart).length === 0) {
-    console.log("Giỏ hàng trống");
-    return;
-  }
+    if (Object.keys(cart).length === 0) {
+        console.log("Giỏ hàng trống");
+        return;
+    }
 
-  const cartContainer = document.querySelector(".cart-info__list");
-  cartContainer.innerHTML = "";
+    const cartContainer = document.querySelector(".cart-info__list");
+    cartContainer.innerHTML = "";
 
-  try {
-    for (const productId in cart) {
-      if (cart.hasOwnProperty(productId)) {
-        const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
-        const response = await fetch(productApiUrl);
-        const product = await response.json();
+    let subtotal = 0; // Biến để tính tổng tạm tính
+    let totalQuantity = 0; // Biến để tính tổng số lượng sản phẩm
 
-        const productTotal = product.SP_DonGia * cart[productId];
+    try {
+        for (const productId in cart) {
+            if (cart.hasOwnProperty(productId)) {
+                const productApiUrl = `/api/v1/product/id/${productId}`;
+                const response = await fetch(productApiUrl, {
+                    method: "GET",
+                });
+                const product = await response.json();
 
-        const productElement = document.createElement("article");
-        productElement.classList.add("cart-item");
-        productElement.setAttribute("data-id", productId);
+                // Tính tổng tạm tính và số lượng
+                const productTotal = product.SP_DonGia * cart[productId];
+                subtotal += productTotal;
+                totalQuantity += cart[productId];
 
-        productElement.innerHTML = `
+                const productElement = document.createElement("article");
+                productElement.classList.add("cart-item");
+
+                productElement.innerHTML = `
                     <a href="./product-detail.html?id=${productId}">
-                        <img src="http://localhost:8081/images/product/${
-                          product.SP_HinhAnh
-                        }" 
+                        <img src="/images/product/${product.SP_HinhAnh}" 
                              alt="${product.SP_Ten}" 
                              class="cart-item__thumb" />
                     </a>
@@ -706,20 +719,21 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 </a>
                             </h3>
                             <p class="cart-item__price-wrap">
-                                <span class="cart-item__price">Giá: ${product.SP_DonGia.toFixed(
+                              <span class="cart-item__price">Giá: ${product.SP_DonGia.toFixed(
                                   2
-                                )}đ</span> | 
-                                <span class="cart-item__status">Còn hàng</span>
+                              )}đ</span> | 
+                              <span class="cart-item__status">Còn hàng</span>
                             </p>
                             <div class="filter__form-group">
                                 <div class="form__select-wrap">
-                                    <div class="filter__col" style="margin: 0;">                                                    
+                                    <div class="filter__col" style="margin: 0;">                                                        
+
                                         <div class="cart-item__input">
                                             <button class="cart-item__input-btn decrease-btn">
                                                 <img class="icon" src="./assets/icons/minus.svg" alt="minus" />
                                             </button>
                                             <span class="quantity">${
-                                              cart[productId]
+                                                cart[productId]
                                             }</span>
                                             <button class="cart-item__input-btn increase-btn">
                                                 <img class="icon" src="./assets/icons/plus.svg" alt="plus" />
@@ -731,9 +745,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                         </div>
                         <div class="cart-item__content-right">
                             <p class="cart-item__total-price">$${productTotal.toFixed(
-                              2
+                                2
                             )}</p>
                             <div class="cart-item__ctrl">                                                    
+
                                 <button class="cart-item__ctrl-btn js-toggle" toggle-target="#delete-confirm">
                                     <img src="./assets/icons/trash.svg" alt="" />
                                     Xóa
@@ -743,151 +758,53 @@ document.addEventListener("DOMContentLoaded", async function () {
                     </div>
                 `;
 
-        cartContainer.appendChild(productElement);
+                cartContainer.appendChild(productElement);
+            }
+        }
 
-        // Thêm sự kiện cho nút tăng/giảm số lượng
-        const decreaseBtn = productElement.querySelector(".decrease-btn");
-        const increaseBtn = productElement.querySelector(".increase-btn");
-        const quantityDisplay = productElement.querySelector(".quantity");
+        // Tính toán và cập nhật các giá trị
+        const shippingFee = 10.0; // Phí vận chuyển cố định
+        const total = subtotal + shippingFee;
 
-        decreaseBtn.addEventListener("click", function () {
-          if (cart[productId] > 1) {
-            cart[productId]--;
-            quantityDisplay.textContent = cart[productId];
-            localStorage.setItem("productIds", JSON.stringify(cart));
-            updateTotals(cart);
-          } else {
-            delete cart[productId];
-            localStorage.setItem("productIds", JSON.stringify(cart));
-            cartContainer.removeChild(productElement);
-            alert(`Sản phẩm "${product.SP_Ten}" đã bị xóa khỏi giỏ hàng.`);
-            updateTotals(cart);
-          }
-        });
-
-        increaseBtn.addEventListener("click", function () {
-          if (cart[productId] < product.SP_SoLuong) {
-            cart[productId]++;
-            quantityDisplay.textContent = cart[productId];
-            localStorage.setItem("productIds", JSON.stringify(cart));
-            updateTotals(cart);
-          } else {
-            alert(
-              `Không thể tăng số lượng vì chỉ còn ${product.SP_SoLuong} sản phẩm.`
-            );
-          }
-        });
-
-        // Thêm sự kiện cho nút xóa
-        const deleteBtn = productElement.querySelector(".js-toggle");
-        deleteBtn.addEventListener("click", function () {
-          delete cart[productId];
-          localStorage.setItem("productIds", JSON.stringify(cart));
-          cartContainer.removeChild(productElement);
-          alert(`Sản phẩm "${product.SP_Ten}" đã bị xóa khỏi giỏ hàng.`);
-          updateTotals(cart);
-        });
-      }
+        // Cập nhật thông tin số lượng và giá
+        document.querySelector(
+            ".cart-info__row span:nth-child(2)"
+        ).textContent = totalQuantity; // Cập nhật số lượng
+        document.querySelector(
+            ".cart-info__subtotal"
+        ).textContent = `$${subtotal.toFixed(2)}`; // Cập nhật tạm tính
+        document.querySelector(
+            ".cart-info__shipping-fee"
+        ).textContent = `$${shippingFee.toFixed(2)}`; // Cập nhật phí vận chuyển
+        document.querySelector(
+            ".cart-info__total"
+        ).textContent = `$${total.toFixed(2)}`; // Cập nhật tổng cộng
+    } catch (err) {
+        console.error("Lỗi khi lấy thông tin sản phẩm:", err);
     }
-
-    updateTotals(cart);
-  } catch (err) {
-    console.error("Lỗi khi lấy thông tin sản phẩm:", err);
-  }
 });
 
-// Hàm cập nhật tổng tiền và số lượng
-function updateTotals(cart) {
-  let subtotal = 0;
-  let totalQuantity = 0;
-  const shippingFee = 10.0;
+window.addEventListener("DOMContentLoaded", async () => {
+    const userName = localStorage.getItem("username"); // Lấy userId từ localStorage
+    const anonymousUserId = localStorage.getItem("anonymousUserId");
 
-  for (const productId in cart) {
-    if (cart.hasOwnProperty(productId)) {
-      const quantity = cart[productId];
-      const price = parseFloat(
-        document
-          .querySelector(`[data-id="${productId}"] .cart-item__price`)
-          .textContent.split(" ")[1]
-      );
-      subtotal += price * quantity;
-      totalQuantity += quantity;
+    if (!userName && !anonymousUserId) {
+        const response = await fetch("/api/v1/setAnonymousSession", {
+            method: "GET",
+        });
+
+        if (response.ok) {
+            const sessionData = await response.json();
+            console.log("Anonymous session data:", sessionData);
+
+            localStorage.setItem("anonymousUserId", sessionData.id);
+        } else {
+            console.error("Failed to set anonymous session");
+        }
+    } else {
+        console.log(
+            "User is logged in or anonymous session already exists:",
+            anonymousUserId
+        );
     }
-  }
-
-  const total = subtotal + shippingFee;
-
-  document.querySelector(".cart-info__row span:nth-child(2)").textContent =
-    totalQuantity;
-  document.querySelector(
-    ".cart-info__subtotal"
-  ).textContent = `$${subtotal.toFixed(2)}`;
-  document.querySelector(
-    ".cart-info__shipping-fee"
-  ).textContent = `$${shippingFee.toFixed(2)}`;
-  document.querySelector(".cart-info__total").textContent = `$${total.toFixed(
-    2
-  )}`;
-}
-
-
-
-function goBack() {
-  window.history.back();
-}
-
-
-
-
-
-
-// window.addEventListener("DOMContentLoaded", () => {
-//     const existingSessionId = localStorage.getItem("sessionid");
-
-//     if (existingSessionId) {
-//         console.log("Session ID đã tồn tại:", existingSessionId);
-//     } else {
-//         fetch("http://localhost:8081/api/v1/session-id")
-//             .then((response) => response.json())
-//             .then((data) => {
-//                 console.log("Session ID:", data.sessionId);
-//                 localStorage.setItem("sessionid", data.sessionId);
-
-//                 setTimeout(() => {
-//                     localStorage.removeItem("sessionid");
-//                     console.log("Session ID đã được xóa sau 1 giờ.");
-//                 }, 3600000);
-//             })
-//             .catch((error) => {
-//                 console.error("Error fetching session ID:", error);
-//             });
-//     }
-// });
-
-// window.addEventListener("DOMContentLoaded", () => {
-//     const sessionId = localStorage.getItem("sessionid");
-
-//     if (sessionId) {
-//         fetch("http://localhost:8081/api/v1/validate-session", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({ sessionId }), // Gửi sessionId
-//         })
-//             .then((response) => {
-//                 if (!response.ok) {
-//                     throw new Error("Network response was not ok");
-//                 }
-//                 return response.json();
-//             })
-//             .then((data) => {
-//                 console.log("Session validation result:", data);
-//             })
-//             .catch((error) => {
-//                 console.error("Error validating session:", error);
-//             });
-//     } else {
-//         console.log("No session ID found in localStorage.");
-//     }
-// });
+});

@@ -11,17 +11,13 @@ registerForm.addEventListener("submit", async (event) => {
     });
 
     try {
-        const response = await fetch(
-            "http://localhost:8081/api/v1/customer/register",
-            {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formDataObject),
-            }
-        );
+        const response = await fetch("/api/v1/customer/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formDataObject),
+        });
 
         if (!response.ok) {
             const errorMessage = await response.text();

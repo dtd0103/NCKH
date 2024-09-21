@@ -8,12 +8,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
     }
 
-    const customerApiUrl = `http://localhost:8081/api/v1/customer/${username}`;
+    const customerApiUrl = `/api/v1/customer/${username}`;
 
     try {
         const response = await fetch(customerApiUrl, {
             method: "GET",
-            credentials: "include",
             headers: {
                 Authorization: `Bearer ${authToken}`,
             },

@@ -7,17 +7,13 @@ loginForm.addEventListener("submit", async (event) => {
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch(
-            "http://localhost:8081/api/v1/customer/login",
-            {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            }
-        );
+        const response = await fetch("/api/v1/customer/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
 
         if (!response.ok) {
             const errorMessage = await response.json();
@@ -28,7 +24,7 @@ loginForm.addEventListener("submit", async (event) => {
         console.log(data.message);
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("username", data.username);
-
+        localStorage.removeItem("anonymousUserId");
         window.location.href = "index.html";
     } catch (error) {
         console.error("Đăng nhập thất bại:", error.message);
