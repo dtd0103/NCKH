@@ -1,2 +1,2 @@
-src/server/node_modules/
-src/server/predict_model/
+/src/server/node_modules/
+/src/server/predict_model/
