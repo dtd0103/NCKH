@@ -22,24 +22,36 @@ const getOrder = async function (req, res) {
 
 const orderCreate = async function (req, res) {
     try {
-        const { orderId, userId, items } = req.body;
+        const { userId, items } = req.body;
 
         let total = 0;
         items.forEach((item) => {
             total += item.price * item.quantity;
         });
 
-        const data = {
-            orderId,
+        const orderData = {
             userId,
             total,
         };
 
-        const result = await OrderModel.create(data);
+        const result = await Order.create(orderData);
+        console.log(result);
+        const orderId = result.insertId;
+
+        const orderDetails = items.map((item) => {
+            return {
+                DH_Ma: orderId,
+                SP_Ma: item.productId,
+                SoLuong: item.quantity,
+                DonGia: item.price,
+            };
+        });
+
+        await Order.createDetail(orderDetails);
 
         res.status(201).json({
             success: true,
-            message: "Đơn hàng được tạo thành công.",
+            message: "Đơn hàng và chi tiết đơn hàng được tạo thành công.",
             data: result,
         });
     } catch (error) {

@@ -815,7 +815,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
-  const userName = localStorage.getItem("username"); // Lấy userId từ localStorage
+  const userName = localStorage.getItem("username"); 
   const anonymousUserId = localStorage.getItem("anonymousUserId");
 
   if (!userName && !anonymousUserId) {

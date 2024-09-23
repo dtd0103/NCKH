@@ -10,7 +10,7 @@ productRouter.get(
     "/product/category/:id",
     productController.getProductByCategoryId
 );
-productRouter.post("/product", productController.createProduct);
+productRouter.post("/product/create", productController.createProduct);
 productRouter.put("/product", productController.updateProduct);
 productRouter.delete("/product/:id", productController.deleteProduct);
 

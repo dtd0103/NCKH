@@ -6,7 +6,7 @@ const orderRouter = express.Router();
 
 orderRouter.get("/orders", orderController.getAllOrder);
 orderRouter.get("/order/:id", orderController.getOrder);
-orderRouter.post("/orders", orderController.orderCreate);
+orderRouter.post("/order/create", orderController.orderCreate);
 orderRouter.put("/order", orderController.orderUpdate);
 orderRouter.delete("/order/:id", orderController.orderDelete);
 
