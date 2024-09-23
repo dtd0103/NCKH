@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Vận chuyển | pussea</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vận chuyển | pussea</title>
 
     <!-- Favicon -->
     <link
@@ -53,121 +53,139 @@
     <script src="./assets/js/scripts.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/main.js"></script>
-    </head>
-    <body>
-        <!-- Header -->
-        <header id="header" class="header"></header>
-        <script>
-            load("#header", "./templates/header2-logined.html");
-        </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header" class="header"></header>
+    <script>
+      load("#header", "./templates/header2-logined.html");
+    </script>
 
-        <!-- MAIN -->
-        <main class="checkout-page">
-            <div class="container">
-                <!-- Search bar -->
-                <div class="checkout-container">
-                    <div class="search-bar d-none d-md-flex">
-                        <input type="text" name="" id="" placeholder="Search for item" class="search-bar__input" />
-                        <button class="search-bar__submit">
-                            <img src="./assets/icons/search.svg" alt="" class="search-bar__icon icon" />
-                        </button>
+    <!-- MAIN -->
+    <main class="checkout-page">
+      <div class="container">
+        <!-- Search bar -->
+        <div class="checkout-container">
+          <div class="search-bar d-none d-md-flex">
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="Search for item"
+              class="search-bar__input"
+            />
+            <button class="search-bar__submit">
+              <img
+                src="./assets/icons/search.svg"
+                alt=""
+                class="search-bar__icon icon"
+              />
+            </button>
+          </div>
+        </div>
+
+        <!-- Breadcrumbs -->
+        <div class="checkout-container">
+          <ul class="breadcrumbs checkout-page__breadcrumbs">
+            <li>
+              <a href="./" class="breadcrumbs__link">
+                Trang chủ
+                <img src="./assets/icons/arrow-right.svg" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="./shoppingcart.html" class="breadcrumbs__link">
+                Giỏ hàng
+                <img src="./assets/icons/arrow-right.svg" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="#!" class="breadcrumbs__link breadcrumbs__link--current"
+                >Vận chuyển</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Checkout content -->
+        <div class="checkout-container">
+          <div class="row gy-xl-3">
+            <div class="col-8 col-xl-12" style="padding-right: 0">
+              <div class="cart-info">
+                <!-- Checkout address -->
+                <div class="user-address">
+                  <div class="user-address__top">
+                    <div>
+                      <h2 class="user-address__title">
+                        Địa chỉ sẽ được giao hàng
+                      </h2>
                     </div>
-                </div>
-
-                <!-- Breadcrumbs -->
-                <div class="checkout-container">
-                    <ul class="breadcrumbs checkout-page__breadcrumbs">
-                        <li>
-                            <a href="./" class="breadcrumbs__link">
-                                Trang chủ
-                                <img src="./assets/icons/arrow-right.svg" alt="" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./shoppingcart.html" class="breadcrumbs__link">
-                                Giỏ hàng
-                                <img src="./assets/icons/arrow-right.svg" alt="" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#!" class="breadcrumbs__link breadcrumbs__link--current">Vận chuyển</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Checkout content -->
-                <div class="checkout-container">
-                    <div class="row gy-xl-3">
-                        <div class="col-8 col-xl-12" style="padding-right: 0;">
-                            <div class="cart-info" >                                
-                                <!-- Checkout address -->
-                                <div class="user-address">
-                                    <div class="user-address__top">
-                                        <div>
-                                            <h2 class="user-address__title">Địa chỉ sẽ được giao hàng</h2>
-                                        </div>
-                                    </div>
-                                    <div class="user-address__list">
-                                        <!-- Empty message -->
-                                        <!-- <p class="user-address__message">
+                  </div>
+                  <div class="user-address__list">
+                    <!-- Empty message -->
+                    <!-- <p class="user-address__message">
                                             Not address yet.
                                             <a class="user-address__link js-toggle" href="#!" toggle-target="#add-new-address">Add a new address</a>
                                         </p> -->
 
-                                        <!-- Address card 1 -->
-                                        <article class="address-card">
-                                            <div class="address-card__left">
-                                                <div class="address-card__choose">
-                                                    <label class="cart-info__checkbox">
-                                                        <input
-                                                            type="radio"
-                                                            name="shipping-adress"
-                                                            checked
-                                                            class="cart-info__checkbox-input"
-                                                        />
-                                                    </label>
-                                                </div>
-                                                <div class="address-card__info">
-                                                    <h3 class="address-card__title">Họ Tên</h3>
-                                                    <p class="address-card__desc">
-                                                        Địa chỉ nhà
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="address-card__right">
-                                                <div class="address-card__ctrl">
-                                                    <a href="./edit-personal-info.html"><button
-                                                        class="cart-info__edit-btn"
-                                                    >
-                                                        <img class="icon" src="./assets/icons/edit.svg" alt="" />
-                                                        Chỉnh sửa
-                                                    </button></a>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    </div>
-                                </div>
+                    <!-- Address card 1 -->
+                    <article class="address-card">
+                      <div class="address-card__left">
+                        <div class="address-card__choose">
+                          <label class="cart-info__checkbox">
+                            <input
+                              type="radio"
+                              name="shipping-adress"
+                              checked
+                              class="cart-info__checkbox-input"
+                            />
+                          </label>
+                        </div>
+                        <div class="address-card__info">
+                          <h3 class="address-card__title">Họ Tên</h3>
+                          <p class="address-card__desc">Địa chỉ nhà</p>
+                        </div>
+                      </div>
+                      <div class="address-card__right">
+                        <div class="address-card__ctrl">
+                          <a href="./edit-personal-info.html"
+                            ><button class="cart-info__edit-btn">
+                              <img
+                                class="icon"
+                                src="./assets/icons/edit.svg"
+                                alt=""
+                              />
+                              Chỉnh sửa
+                            </button></a
+                          >
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
 
-                                <div class="cart-info__separate"></div>
+                <div class="cart-info__separate"></div>
 
-                                <h2 class="cart-info__sub-heading">Chi tiết sản phẩm</h2>
-                                <div class="cart-info__list">
-                                </div>
-                                <div class="cart-info__bottom d-md-none">
-                                    <div class="row">
-                                        <div class="col-8 col-xxl-7">
-                                            <div class="cart-info__continue">
-                                                <a href="./" class="cart-info__continue-link">
-                                                    <img
-                                                        class="cart-info__continue-icon icon"
-                                                        src="./assets/icons/arrow-down-2.svg"
-                                                        alt=""
-                                                    />
-                                                    Tiếp tục mua sắm
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 col-xxl-5" style="position:relative;right: -800px;">
+                <h2 class="cart-info__sub-heading">Chi tiết sản phẩm</h2>
+                <div class="cart-info__list"></div>
+                <div class="cart-info__bottom d-md-none">
+                  <div class="row">
+                    <div class="col-8 col-xxl-7">
+                      <div class="cart-info__continue">
+                        <a href="./" class="cart-info__continue-link">
+                          <img
+                            class="cart-info__continue-icon icon"
+                            src="./assets/icons/arrow-down-2.svg"
+                            alt=""
+                          />
+                          Tiếp tục mua sắm
+                        </a>
+                      </div>
+                    </div>
+                    <div
+                      class="col-4 col-xxl-5"
+                      style="position: relative; right: -800px"
+                    >
                       <div class="cart-info__row">
                         <span>Tạm tính:</span>
                         <span class="cart-info__subtotal">$0.00</span>
@@ -192,40 +210,53 @@
                         >
                       </div>
                     </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        
-                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </main>
-
-        <!-- Footer -->
-        <footer id="footer" class="footer"></footer>
-        <script>
-            load("#footer", "./templates/footer.html");
-        </script>
-
-        <!-- Modal: confirm remove shopping cart item -->
-        <div id="delete-confirm" class="modal modal--small hide">
-            <div class="modal__content">
-                <p class="modal__text">Bạn có chắc muốn xóa sản phẩm khỏi giỏ hàng?</p>
-                <div class="modal__bottom">
-                    <button class="btn btn--small btn--outline modal__btn js-toggle" toggle-target="#delete-confirm">
-                        Hủy bỏ
-                    </button>
-                    <button
-                        class="btn btn--small btn--danger btn--primary modal__btn btn--no-margin js-toggle"
-                        toggle-target="#delete-confirm"
-                    >
-                        Xóa
-                    </button>
-                </div>
-            </div>
-            <div class="modal__overlay js-toggle" toggle-target="#delete-confirm"></div>
+          </div>
         </div>
+      </div>
+    </main>
 
+    <!-- Footer -->
+    <footer id="footer" class="footer"></footer>
+    <script>
+      load("#footer", "./templates/footer.html");
+      async function loadCustomerInfo() {
+        const username = localStorage.getItem("username"); // Lấy username từ localStorage
+        if (!username) {
+          console.error("Không tìm thấy username trong localStorage.");
+          return;
+        }
 
-    </body>
+        const customerApiUrl = `http://localhost:8081/api/v1/customer/${username}`;
+
+        try {
+          const response = await fetch(customerApiUrl);
+          const customer = await response.json();
+
+          // Kiểm tra xem dữ liệu có hợp lệ không
+          if (customer && customer.KH_Ten && customer.KH_DiaChi) {
+            // Tìm phần tử HTML để chèn dữ liệu
+            const nameElement = document.querySelector(".address-card__title");
+            const addressElement = document.querySelector(
+              ".address-card__desc"
+            );
+
+            // Cập nhật nội dung cho tên và địa chỉ
+            nameElement.textContent = customer.KH_Ten;
+            addressElement.textContent = customer.KH_DiaChi;
+          } else {
+            console.error("Không tìm thấy thông tin khách hàng.");
+          }
+        } catch (error) {
+          console.error("Lỗi khi gọi API:", error);
+        }
+      }
+
+      // Gọi hàm để load thông tin khách hàng khi trang được tải
+      loadCustomerInfo();
+    </script>
+  </body>
 </html>

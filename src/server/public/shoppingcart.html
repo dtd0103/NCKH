@@ -126,7 +126,10 @@
                         </a>
                       </div>
                     </div>
-                    <div class="col-4 col-xxl-5" style="position:relative;right: -800px;">
+                    <div
+                      class="col-4 col-xxl-5"
+                      style="position: relative; right: -800px"
+                    >
                       <div class="cart-info__row">
                         <span>Tạm tính:</span>
                         <span class="cart-info__subtotal">$0.00</span>
@@ -164,31 +167,17 @@
     <footer id="footer" class="footer"></footer>
     <script>
       load("#footer", "./templates/footer.html");
-    </script>
+      document
+        .querySelector(".cart-info__next-btn")
+        .addEventListener("click", function (event) {
+          const authToken = localStorage.getItem("authToken");
 
-    <!-- Modal: confirm remove shopping cart item -->
-    <div id="delete-confirm" class="modal modal--small hide">
-      <div class="modal__content">
-        <p class="modal__text">Bạn có chắc muốn xóa sản phẩm khỏi giỏ hàng?</p>
-        <div class="modal__bottom">
-          <button
-            class="btn btn--small btn--outline modal__btn js-toggle"
-            toggle-target="#delete-confirm"
-          >
-            Hủy bỏ
-          </button>
-          <button
-            class="btn btn--small btn--danger btn--primary modal__btn btn--no-margin js-toggle"
-            toggle-target="#delete-confirm"
-          >
-            Xóa
-          </button>
-        </div>
-      </div>
-      <div
-        class="modal__overlay js-toggle"
-        toggle-target="#delete-confirm"
-      ></div>
-    </div>
+          if (!authToken) {
+            // Nếu không có authToken, ngăn chặn chuyển trang và chuyển hướng đến trang đăng nhập
+            event.preventDefault(); // Ngăn điều hướng mặc định
+            window.location.href = "./login.html"; // Điều hướng đến trang đăng nhập
+          }
+        });
+    </script>
   </body>
 </html>
