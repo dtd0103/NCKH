@@ -257,6 +257,33 @@
 
       // Gọi hàm để load thông tin khách hàng khi trang được tải
       loadCustomerInfo();
+
+
+    //   ======kiểm tra giỏ hàng & đăng nhập===
+    document
+        .querySelector(".cart-info__next-btn")
+        .addEventListener("click", function (event) {
+          const authToken = localStorage.getItem("authToken");
+          const productIds = localStorage.getItem("productIds");
+
+          if (!authToken) {
+            // Nếu không có authToken, ngăn chặn chuyển trang và chuyển hướng đến trang đăng nhập
+            event.preventDefault(); // Ngăn điều hướng mặc định
+            window.location.href = "./login.html"; // Điều hướng đến trang đăng nhập
+            alert("Bạn cần đăng nhập để thanh toán sản phẩm");
+            return;
+          }
+
+          // Kiểm tra xem giỏ hàng có sản phẩm nào không
+          if (!productIds || Object.keys(JSON.parse(productIds)).length === 0) {
+            // Nếu không có sản phẩm, hiển thị thông báo và ngăn chặn chuyển trang
+            event.preventDefault();
+            alert("Giỏ hàng của bạn chưa có sản phẩm nào.");
+            return;
+          }
+
+          // Nếu có authToken và sản phẩm, tiếp tục chuyển trang (mặc định)
+        });
     </script>
   </body>
 </html>

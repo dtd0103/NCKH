@@ -250,6 +250,7 @@
                           </p>
                         </div>
                       </div>
+                      
 
                       <div class="form-card__bottom">
                         <a class="btn btn--text" href="./profile.html">Hủy</a>
@@ -427,33 +428,104 @@
     <footer id="footer" class="footer"></footer>
     <script>
       load("#footer", "./templates/footer.html");
-    </script>
+      // =========chỉnh sửa thông tin cá nhân
+      // Khi trang được load, lấy thông tin khách hàng và điền vào form
+window.onload = async function() {
+    const username = localStorage.getItem("username"); // Lấy username từ localStorage, ví dụ "dat0311"
 
-    <!-- Modal: confirm remove shopping cart item -->
-    <div id="delete-confirm" class="modal modal--small hide">
-      <div class="modal__content">
-        <p class="modal__text">
-          Do you want to remove this item from shopping cart?
-        </p>
-        <div class="modal__bottom">
-          <button
-            class="btn btn--small btn--outline modal__btn js-toggle"
-            toggle-target="#delete-confirm"
-          >
-            Cancel
-          </button>
-          <button
-            class="btn btn--small btn--danger btn--primary modal__btn btn--no-margin js-toggle"
-            toggle-target="#delete-confirm"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-      <div
-        class="modal__overlay js-toggle"
-        toggle-target="#delete-confirm"
-      ></div>
-    </div>
+    if (!username) {
+        alert("Không có thông tin username trong localStorage.");
+        return;
+    }
+
+    try {
+        // Fetch thông tin khách hàng từ server dựa trên username
+        const response = await fetch(`http://localhost:8081/api/v1/customer/${username}`);
+        
+        if (!response.ok) {
+            throw new Error(`Lỗi khi lấy thông tin khách hàng: ${response.status}`);
+        }
+
+        const customerData = await response.json();
+
+        // Điền thông tin vào form
+        document.getElementById("full-name").value = customerData.KH_Ten;
+        document.getElementById("address").value = customerData.KH_DiaChi;
+        document.getElementById("username").value = customerData.KH_TaiKhoan;
+        document.getElementById("phone-number").value = customerData.KH_SoDienThoai;
+        document.getElementById("password").value = "";  // Không hiển thị mật khẩu
+    } catch (error) {
+        console.error("Lỗi khi lấy thông tin khách hàng:", error);
+        alert("Không thể lấy thông tin khách hàng. Vui lòng thử lại sau.");
+    }
+};
+
+// Lắng nghe sự kiện submit form để cập nhật thông tin khách hàng
+document.querySelector(".form").addEventListener("submit", async function(event) {
+    event.preventDefault(); // Ngăn không cho form submit mặc định
+
+    const username = localStorage.getItem("username"); // Lấy lại username từ localStorage
+
+    if (!username) {
+        alert("Không có thông tin username trong localStorage.");
+        return;
+    }
+
+    // Lấy giá trị mới từ form
+    const fullName = document.getElementById("full-name").value;
+    const address = document.getElementById("address").value;
+    const newUsername = document.getElementById("username").value;
+    const phoneNumber = document.getElementById("phone-number").value;
+    const password = document.getElementById("password").value;
+
+    // Kiểm tra nếu form có giá trị bị thiếu
+    if (!fullName || !address || !newUsername || !phoneNumber || !password) {
+        alert("Vui lòng điền đầy đủ thông tin.");
+        return;
+    }
+
+    // Chuẩn bị dữ liệu cập nhật
+    const updatedCustomerData = {
+        name: fullName,
+        address: address,
+        username: newUsername,
+        phone: phoneNumber,
+        password: password,
+        id: null // Ta cần fetch lại id của người dùng để gửi lên, có thể lưu vào biến global
+    };
+    // Fetch để lấy id từ username
+    try {
+        const fetchResponse = await fetch(`http://localhost:8081/api/v1/customer/${username}`);
+        const customer = await fetchResponse.json();
+        updatedCustomerData.id = customer.KH_Ma;
+    } catch (error) {
+        console.error("Lỗi khi lấy thông tin khách hàng:", error);
+        alert("Không thể lấy thông tin khách hàng.");
+        return;
+    }
+
+    // Gửi request cập nhật thông tin khách hàng
+    try {
+        const response = await fetch("http://localhost:8081/api/v1/customer", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedCustomerData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Lỗi khi cập nhật thông tin: ${response.status}`);
+        }
+
+        const result = await response.json();
+        alert("Cập nhật thông tin thành công!");
+        window.location.href = "./profile.html"; // Điều hướng về trang profile
+    } catch (error) {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+        alert("Đã xảy ra lỗi khi cập nhật thông tin. Vui lòng thử lại.");
+    }
+});
+    </script>
   </body>
 </html>
