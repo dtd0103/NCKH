@@ -250,7 +250,6 @@
                           </p>
                         </div>
                       </div>
-                      
 
                       <div class="form-card__bottom">
                         <a class="btn btn--text" href="./profile.html">Hủy</a>
@@ -430,8 +429,8 @@
       load("#footer", "./templates/footer.html");
       // =========chỉnh sửa thông tin cá nhân
       // Khi trang được load, lấy thông tin khách hàng và điền vào form
-window.onload = async function() {
-    const username = localStorage.getItem("username"); // Lấy username từ localStorage, ví dụ "dat0311"
+      window.onload = async function () {
+    const username = localStorage.getItem("username"); // Lấy username từ localStorage
 
     if (!username) {
         alert("Không có thông tin username trong localStorage.");
@@ -440,8 +439,10 @@ window.onload = async function() {
 
     try {
         // Fetch thông tin khách hàng từ server dựa trên username
-        const response = await fetch(`http://localhost:8081/api/v1/customer/${username}`);
-        
+        const response = await fetch(
+            `http://localhost:8081/api/v1/customer/${username}`
+        );
+
         if (!response.ok) {
             throw new Error(`Lỗi khi lấy thông tin khách hàng: ${response.status}`);
         }
@@ -453,7 +454,7 @@ window.onload = async function() {
         document.getElementById("address").value = customerData.KH_DiaChi;
         document.getElementById("username").value = customerData.KH_TaiKhoan;
         document.getElementById("phone-number").value = customerData.KH_SoDienThoai;
-        document.getElementById("password").value = "";  // Không hiển thị mật khẩu
+        document.getElementById("password").value = ""; // Không hiển thị mật khẩu
     } catch (error) {
         console.error("Lỗi khi lấy thông tin khách hàng:", error);
         alert("Không thể lấy thông tin khách hàng. Vui lòng thử lại sau.");
@@ -461,7 +462,7 @@ window.onload = async function() {
 };
 
 // Lắng nghe sự kiện submit form để cập nhật thông tin khách hàng
-document.querySelector(".form").addEventListener("submit", async function(event) {
+document.querySelector(".form").addEventListener("submit", async function (event) {
     event.preventDefault(); // Ngăn không cho form submit mặc định
 
     const username = localStorage.getItem("username"); // Lấy lại username từ localStorage
@@ -476,7 +477,7 @@ document.querySelector(".form").addEventListener("submit", async function(event)
     const address = document.getElementById("address").value;
     const newUsername = document.getElementById("username").value;
     const phoneNumber = document.getElementById("phone-number").value;
-    const password = document.getElementById("password").value;
+    const password = document.getElementById("password").value.toString(); // Chỉ chuyển đổi password thành chuỗi
 
     // Kiểm tra nếu form có giá trị bị thiếu
     if (!fullName || !address || !newUsername || !phoneNumber || !password) {
@@ -490,14 +491,17 @@ document.querySelector(".form").addEventListener("submit", async function(event)
         address: address,
         username: newUsername,
         phone: phoneNumber,
-        password: password,
-        id: null // Ta cần fetch lại id của người dùng để gửi lên, có thể lưu vào biến global
+        password: password, // Mật khẩu đã là chuỗi
+        id: null, // Ta cần fetch lại id của người dùng để gửi lên
     };
+
     // Fetch để lấy id từ username
     try {
-        const fetchResponse = await fetch(`http://localhost:8081/api/v1/customer/${username}`);
+        const fetchResponse = await fetch(
+            `http://localhost:8081/api/v1/customer/${username}`
+        );
         const customer = await fetchResponse.json();
-        updatedCustomerData.id = customer.KH_Ma;
+        updatedCustomerData.id = customer.KH_Ma; // Giữ nguyên kiểu của id
     } catch (error) {
         console.error("Lỗi khi lấy thông tin khách hàng:", error);
         alert("Không thể lấy thông tin khách hàng.");
@@ -506,26 +510,40 @@ document.querySelector(".form").addEventListener("submit", async function(event)
 
     // Gửi request cập nhật thông tin khách hàng
     try {
-        const response = await fetch("http://localhost:8081/api/v1/customer", {
+    const response = await fetch(
+        "http://localhost:8081/api/v1/customer",
+        {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatedCustomerData)
-        });
-
-        if (!response.ok) {
-            throw new Error(`Lỗi khi cập nhật thông tin: ${response.status}`);
+            body: JSON.stringify(updatedCustomerData),
         }
+    );
 
-        const result = await response.json();
-        alert("Cập nhật thông tin thành công!");
-        window.location.href = "./profile.html"; // Điều hướng về trang profile
-    } catch (error) {
-        console.error("Lỗi khi cập nhật thông tin:", error);
-        alert("Đã xảy ra lỗi khi cập nhật thông tin. Vui lòng thử lại.");
+    // Kiểm tra nếu phản hồi không phải JSON
+    const responseText = await response.text(); // Đọc phản hồi dưới dạng text
+
+    if (!response.ok) {
+        throw new Error(`Lỗi khi cập nhật thông tin: ${response.status}`);
     }
+
+    // Nếu phản hồi không phải là JSON, kiểm tra xem có thông điệp thành công không
+    try {
+        const result = JSON.parse(responseText); // Thử chuyển đổi sang JSON
+        alert("Cập nhật thông tin thành công!");
+    } catch (jsonError) {
+        // Nếu không thể chuyển đổi, hiển thị thông điệp thành công
+        alert(responseText); // Hiển thị thông điệp từ server
+    }
+
+    window.location.href = "./profile.html"; // Điều hướng về trang profile
+} catch (error) {
+    console.error("Lỗi khi cập nhật thông tin:", error);
+    alert("Đã xảy ra lỗi khi cập nhật thông tin. Vui lòng thử lại.");
+}
 });
+
     </script>
   </body>
 </html>

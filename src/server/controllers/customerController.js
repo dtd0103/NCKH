@@ -132,26 +132,26 @@ const customerLogout = async function (req, res) {
 };
 
 const updateCustomer = async function (req, res) {
-    try {
-        if (req.body.password) {
-            const saltRounds = 10;
-            req.body.password = await bcrypt.hash(
-                req.body.password,
-                saltRounds
-            );
-        }
-
-        const updatedCustomer = await Customer.update(req.body);
-        res.status(200).send(
-            "Thông tin khách hàng đã được cập nhật thành công."
-        );
-    } catch (err) {
-        console.error("Lỗi truy vấn: " + err.message);
-        res.status(500).send(
-            "Lỗi trong quá trình cập nhật thông tin khách hàng."
-        );
+  try {
+    if (req.body.password) {
+      const saltRounds = 10;
+      req.body.password = await bcrypt.hash(req.body.password, saltRounds);
     }
+
+    const updatedCustomer = await Customer.update(req.body);
+
+    // Trả về phản hồi dưới dạng JSON
+    res.status(200).json({
+      message: "Thông tin khách hàng đã được cập nhật thành công.",
+    });
+  } catch (err) {
+    console.error("Lỗi truy vấn: " + err.message);
+    res.status(500).json({
+      error: "Lỗi trong quá trình cập nhật thông tin khách hàng.",
+    });
+  }
 };
+
 
 const deleteCustomer = async function (req, res) {
     try {
