@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vận chuyển | pussea</title>
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="./assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon/favicon-32x32.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/favicon/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+
+    <!-- Styles -->
+
+    <link rel="icon" href="./assets/image/img1.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/header.css" />
+    <link rel="stylesheet" href="./assets/css/grid.css" />
+    <link rel="stylesheet" href="./assets/css/shipping.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/fonts/fontawesome-free-5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Scripts -->
+    <script src="./assets/js/scripts.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header" class="header"></header>
+    <script>
+      load("#header", "./templates/header2-logined.html");
+    </script>
+
+    <!-- MAIN -->
+    <main class="checkout-page">
+      <div class="container">
+        <!-- Search bar -->
+        <div class="checkout-container">
+          <div class="search-bar d-none d-md-flex">
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="Search for item"
+              class="search-bar__input"
+            />
+            <button class="search-bar__submit">
+              <img
+                src="./assets/icons/search.svg"
+                alt=""
+                class="search-bar__icon icon"
+              />
+            </button>
+          </div>
+        </div>
+
+        <!-- Breadcrumbs -->
+        <div class="checkout-container">
+          <ul class="breadcrumbs checkout-page__breadcrumbs">
+            <li>
+              <a href="./" class="breadcrumbs__link">
+                Trang chủ
+                <img src="./assets/icons/arrow-right.svg" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="./shoppingcart.html" class="breadcrumbs__link">
+                Giỏ hàng
+                <img src="./assets/icons/arrow-right.svg" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="#!" class="breadcrumbs__link breadcrumbs__link--current"
+                >Vận chuyển</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Checkout content -->
+        <div class="checkout-container">
+          <div class="row gy-xl-3">
+            <div class="col-8 col-xl-12" style="padding-right: 0">
+              <div class="cart-info">
+                <!-- Checkout address -->
+                <div class="user-address">
+                  <div class="user-address__top">
+                    <div>
+                      <h2 class="user-address__title">
+                        Địa chỉ sẽ được giao hàng
+                      </h2>
+                    </div>
+                  </div>
+                  <div class="user-address__list">
+                    <!-- Empty message -->
+                    <!-- <p class="user-address__message">
+                                            Not address yet.
+                                            <a class="user-address__link js-toggle" href="#!" toggle-target="#add-new-address">Add a new address</a>
+                                        </p> -->
+
+                    <!-- Address card 1 -->
+                    <article class="address-card">
+                      <div class="address-card__left">
+                        <div class="address-card__choose">
+                          <label class="cart-info__checkbox">
+                            <input
+                              type="radio"
+                              name="shipping-adress"
+                              checked
+                              class="cart-info__checkbox-input"
+                            />
+                          </label>
+                        </div>
+                        <div class="address-card__info">
+                          <h3 class="address-card__title">Họ Tên</h3>
+                          <p class="address-card__desc">Địa chỉ nhà</p>
+                        </div>
+                      </div>
+                      <div class="address-card__right">
+                        <div class="address-card__ctrl">
+                          <a href="./edit-personal-info.html"
+                            ><button class="cart-info__edit-btn">
+                              <img
+                                class="icon"
+                                src="./assets/icons/edit.svg"
+                                alt=""
+                              />
+                              Chỉnh sửa
+                            </button></a
+                          >
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <div class="cart-info__separate"></div>
+
+                <h2 class="cart-info__sub-heading">Chi tiết sản phẩm</h2>
+                <div class="cart-info__list"></div>
+                <div class="cart-info__bottom d-md-none">
+                  <div class="row">
+                    <div class="col-8 col-xxl-7">
+                      <div class="cart-info__continue">
+                        <a href="./" class="cart-info__continue-link">
+                          <img
+                            class="cart-info__continue-icon icon"
+                            src="./assets/icons/arrow-down-2.svg"
+                            alt=""
+                          />
+                          Tiếp tục mua sắm
+                        </a>
+                      </div>
+                    </div>
+                    <div
+                      class="col-4 col-xxl-5"
+                      style="position: relative; right: -800px"
+                    >
+                      <div class="cart-info__row">
+                        <span>Tạm tính:</span>
+                        <span class="cart-info__subtotal">$0.00</span>
+                      </div>
+                      <div class="cart-info__row">
+                        <span>Phí vận chuyển:</span>
+                        <span class="cart-info__shipping-fee">$10.00</span>
+                      </div>
+                      <div class="cart-info__separate"></div>
+                      <div class="cart-info__row cart-info__row--bold">
+                        <span>Tổng cộng:</span>
+                        <span class="cart-info__total">$0.00</span>
+                      </div>
+                      <div
+                        class="cart-info__next-btn-container"
+                        style="display: flex; justify-content: center"
+                      >
+                        <a
+                          href="./payment.html"
+                          class="cart-info__next-btn btn btn--primary btn--rounded"
+                          >Thanh toán</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer"></footer>
+    <script>
+      load("#footer", "./templates/footer.html");
+      async function loadCustomerInfo() {
+        const username = localStorage.getItem("username"); // Lấy username từ localStorage
+        if (!username) {
+          console.error("Không tìm thấy username trong localStorage.");
+          return;
+        }
+
+        const customerApiUrl = `http://localhost:8081/api/v1/customer/${username}`;
+
+        try {
+          const response = await fetch(customerApiUrl);
+          const customer = await response.json();
+
+          // Kiểm tra xem dữ liệu có hợp lệ không
+          if (customer && customer.KH_Ten && customer.KH_DiaChi) {
+            // Tìm phần tử HTML để chèn dữ liệu
+            const nameElement = document.querySelector(".address-card__title");
+            const addressElement = document.querySelector(
+              ".address-card__desc"
+            );
+
+            // Cập nhật nội dung cho tên và địa chỉ
+            nameElement.textContent = customer.KH_Ten;
+            addressElement.textContent = customer.KH_DiaChi;
+          } else {
+            console.error("Không tìm thấy thông tin khách hàng.");
+          }
+        } catch (error) {
+          console.error("Lỗi khi gọi API:", error);
+        }
+      }
+
+      // Gọi hàm để load thông tin khách hàng khi trang được tải
+      loadCustomerInfo();
+
+
+    //   ======kiểm tra giỏ hàng & đăng nhập===
+    document
+        .querySelector(".cart-info__next-btn")
+        .addEventListener("click", function (event) {
+          const authToken = localStorage.getItem("authToken");
+          const productIds = localStorage.getItem("productIds");
+
+          if (!authToken) {
+            // Nếu không có authToken, ngăn chặn chuyển trang và chuyển hướng đến trang đăng nhập
+            event.preventDefault(); // Ngăn điều hướng mặc định
+            window.location.href = "./login.html"; // Điều hướng đến trang đăng nhập
+            alert("Bạn cần đăng nhập để thanh toán sản phẩm");
+            return;
+          }
+
+          // Kiểm tra xem giỏ hàng có sản phẩm nào không
+          if (!productIds || Object.keys(JSON.parse(productIds)).length === 0) {
+            // Nếu không có sản phẩm, hiển thị thông báo và ngăn chặn chuyển trang
+            event.preventDefault();
+            alert("Giỏ hàng của bạn chưa có sản phẩm nào.");
+            return;
+          }
+
+          // Nếu có authToken và sản phẩm, tiếp tục chuyển trang (mặc định)
+        });
+    </script>
+  </body>
+</html>

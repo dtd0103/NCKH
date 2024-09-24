@@ -30,8 +30,8 @@ class Order {
     static create(data) {
         return new Promise((resolve, reject) => {
             connection.query(
-                "INSERT INTO don_hang (DH_Ma, KH_Ma, TongTien) VALUES (?, ? ,?)",
-                [data.orderId, data.userId, data.total],
+                "INSERT INTO don_hang (KH_Ma, TongTien) VALUES (? ,?)",
+                [data.userId, data.total],
                 (err, results) => {
                     if (err) {
                         reject(err);
@@ -39,6 +39,25 @@ class Order {
                     resolve(results);
                 }
             );
+        });
+    }
+
+    static createDetail(data) {
+        return new Promise((resolve, reject) => {
+            const query = `INSERT INTO dh_chitiet (DH_Ma, SP_Ma, SoLuong, DonGia) VALUES ?`;
+            const values = data.map((item) => [
+                item.DH_Ma,
+                item.SP_Ma,
+                item.SoLuong,
+                item.DonGia,
+            ]);
+
+            connection.query(query, [values], (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(results);
+            });
         });
     }
 

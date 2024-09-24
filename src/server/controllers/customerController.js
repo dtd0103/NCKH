@@ -43,6 +43,7 @@ const customerRegister = async function (req, res) {
         res.status(201).json({
             message: "Đăng ký tài khoản thành công",
             customer: newCustomer,
+            redirectUrl: "/index.html",
         });
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
@@ -66,37 +67,68 @@ const customerRegister = async function (req, res) {
 
 const customerLogin = async function (req, res) {
     try {
+        console.log("Request body:", req.body);
         const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({
+                message: "Vui lòng nhập đầy đủ tài khoản và mật khẩu.",
+            });
+        }
 
         const customer = await Customer.findCustomerByUsername(username);
         if (!customer) {
             return res
                 .status(400)
-                .json({ message: "Sai thông tin đăng nhập." });
+                .json({ message: "Tài khoản không tồn tại." });
         }
 
-        const validPassword = await bcrypt.compare(
-            password,
-            customer.KH_Password
-        );
+        // console.log("Customer from DB:", customer);
 
-        if (!validPassword) {
-            return res
-                .status(400)
-                .json({ message: "Sai thông tin đăng nhập." });
+        const passwordMatch = await bcrypt.compare(
+            password,
+            customer.KH_MatKhau
+        );
+        // console.log("Password match result:", passwordMatch);
+
+        if (!passwordMatch) {
+            return res.status(400).json({ message: "Sai mật khẩu." });
         }
 
         const token = jwt.sign({ id: customer.KH_Ma }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
 
-        res.status(200).json({ message: "Đăng nhập thành công.", token });
+        if (req.session.anonymousUser) {
+            delete req.session.anonymousUser;
+            console.log("Anonymous user ID đã được xóa.");
+        }
+
+        req.session.userId = customer.KH_Ma;
+
+        res.status(200).json({
+            message: "Đăng nhập thành công.",
+            token: token,
+            sessionId: req.session.id,
+            username: customer.KH_TaiKhoan,
+        });
     } catch (err) {
+        console.error("Login error:", err);
         res.status(500).json({
             message: "Có lỗi trong quá trình đăng nhập.",
             error: err.message,
         });
     }
+};
+
+const customerLogout = async function (req, res) {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ message: "Không thể đăng xuất." });
+        }
+
+        res.status(200).json({ message: "Đăng xuất thành công." });
+    });
 };
 
 const updateCustomer = async function (req, res) {
@@ -126,6 +158,7 @@ export default {
     getCustomer,
     customerRegister,
     customerLogin,
+    customerLogout,
     updateCustomer,
     deleteCustomer,
 };

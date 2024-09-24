@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh toán | pussea</title>
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="./assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon/favicon-32x32.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/favicon/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+
+    <!-- Styles -->
+
+    <link rel="icon" href="./assets/image/img1.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/header.css" />
+    <link rel="stylesheet" href="./assets/css/grid.css" />
+    <link rel="stylesheet" href="./assets/css/shipping.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/fonts/fontawesome-free-5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Scripts -->
+    <script src="./assets/js/scripts.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header" class="header"></header>
+    <script>
+      load("#header", "./templates/header2-logined.html");
+    </script>
+
+    <!-- MAIN -->
+    <main class="checkout-page">
+      <div class="container">
+        <!-- Search bar -->
+        <div class="checkout-container">
+          <div class="search-bar d-none d-md-flex">
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="Search for item"
+              class="search-bar__input"
+            />
+            <button class="search-bar__submit">
+              <img
+                src="./assets/icons/search.svg"
+                alt=""
+                class="search-bar__icon icon"
+              />
+            </button>
+          </div>
+        </div>
+
+        <!-- Breadcrumbs -->
+        <div class="checkout-container">
+          <ul class="breadcrumbs checkout-page__breadcrumbs">
+            <li>
+              <a href="./" class="breadcrumbs__link">
+                Trang chủ
+                <img src="./assets/icons/arrow-right.svg" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="./shoppingcart.html" class="breadcrumbs__link">
+                Giỏ hàng
+                <img src="./assets/icons/arrow-right.svg" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="./shipping.html" class="breadcrumbs__link">
+                Vận chuyển
+                <img src="./assets/icons/arrow-right.svg" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="#!" class="breadcrumbs__link breadcrumbs__link--current"
+                >Phương thức thanh toán</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Checkout content -->
+        <div class="checkout-container">
+          <div class="row gy-xl-3">
+            <div class="col-8 col-xl-8 col-lg-12" style="padding-right: 0">
+              <div class="cart-info">
+                <div class="cart-info__top">
+                  <a class="cart-info__edit-btn" href="./shipping.html">
+                    <img class="icon" src="./assets/icons/edit.svg" alt="" />
+                    Chỉnh sửa
+                  </a>
+                </div>
+
+                <!-- Payment item 1 -->
+                <article class="payment-item">
+                  <div class="payment-item__info">
+                    <h3 class="payment-item__title"></h3>
+                    <p class="payment-item__desc"></p>
+                  </div>
+                </article>
+
+                <!-- Payment item 2 -->
+                <article class="payment-item">
+                  <div class="payment-item__info">
+                    <h3 class="payment-item__title">Chi tiết sản phẩm</h3>
+                  </div>
+                  <a href="./shipping.html" class="payment-item__detail"
+                    >Chi tiết</a
+                  >
+                </article>
+              </div>
+
+              <div class="cart-info" style="margin-top: 0">
+                <h2 class="cart-info__heading cart-info__heading--lv2">
+                  2. Phương thức vận chuyển
+                </h2>
+                <div class="cart-info__separate"></div>
+                <!-- Payment item 4 -->
+                <label>
+                  <article
+                    class="payment-item payment-item--pointer"
+                    style="margin-bottom: 40px;
+                           padding-top: 17px;
+                           padding-bottom: 17px;
+                          "
+                  >
+                    <img
+                      src="./assets/img/payment/delivery-2.png"
+                      alt=""
+                      class="payment-item__thumb"
+                    />
+                    <div class="payment-item__content">
+                      <div class="payment-item__info">
+                        <h3 class="payment-item__title">J&T</h3>
+                        <!-- <p class="payment-item__desc payment-item__desc--low">
+                          Giao trong: 2-3 ngày
+                        </p> -->
+                      </div>
+
+                      <span class="cart-info__checkbox payment-item__checkbox">
+                        <span class="payment-item__cost">$10.00</span>
+                      </span>
+                    </div>
+                  </article>
+                </label>
+                <div
+                  class="col-4 col-xxl-5"
+                  style="position: relative; right: -800px"
+                >
+                  <span style="font-size: 1.8rem; padding-top: 20px"
+                    >Chi tiết hóa đơn thanh toán</span
+                  >
+                  <div class="cart-info__separate"></div>
+                  <div class="cart-info__row">
+                    <span>Tạm tính:</span>
+                    <span class="cart-info__subtotal">$0.00</span>
+                  </div>
+                  <div class="cart-info__row">
+                    <span>Phí vận chuyển:</span>
+                    <span class="cart-info__shipping-fee">$10.00</span>
+                  </div>
+                  <div class="cart-info__separate"></div>
+                  <div class="cart-info__row cart-info__row--bold">
+                    <span>Tổng cộng:</span>
+                    <span class="cart-info__total">$0.00</span>
+                  </div>
+                  <div
+                    class="cart-info__next-btn-container"
+                    style="display: flex; justify-content: center"
+                  >
+                    <a
+                      href="./payment.html"
+                      class="cart-info__next-btn btn btn--primary btn--rounded"
+                      >Thanh toán</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer"></footer>
+    <script>
+      load("#footer", "./templates/footer.html");
+      // ===========
+      // Function to fetch product details by product ID
+      // Function to get product details including price
+      async function getProductPrice(productId) {
+        const response = await fetch(
+          `http://localhost:8081/api/v1/product/id/${productId}`
+        );
+        if (!response.ok) {
+          throw new Error(`Lỗi khi lấy thông tin sản phẩm: ${productId}`);
+        }
+        const productData = await response.json();
+        return productData; // Contains product price in productData.SP_DonGia
+      }
+
+      async function calculateCartTotals() {
+        const cart = JSON.parse(localStorage.getItem("productIds")) || {};
+
+        if (Object.keys(cart).length === 0) {
+          console.log("Giỏ hàng trống");
+          return;
+        }
+
+        let subtotal = 0;
+        const shippingFee = 10;
+
+        // Calculate subtotal by fetching product details and multiplying by quantity
+        try {
+          for (const productId in cart) {
+            if (cart.hasOwnProperty(productId)) {
+              const quantity = cart[productId];
+              const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
+              const response = await fetch(productApiUrl);
+              const product = await response.json();
+
+              subtotal += parseFloat(product.SP_DonGia) * quantity;
+            }
+          }
+
+          const total = subtotal + shippingFee;
+
+          // Update the UI
+          document.querySelector(
+            ".cart-info__subtotal"
+          ).textContent = `$${subtotal.toFixed(2)}`;
+          document.querySelector(
+            ".cart-info__shipping-fee"
+          ).textContent = `$${shippingFee.toFixed(2)}`;
+          document.querySelector(
+            ".cart-info__total"
+          ).textContent = `$${total.toFixed(2)}`;
+
+          // Save the total to localStorage
+          localStorage.setItem("totalAmount", total.toFixed(2));
+        } catch (error) {
+          console.error("Lỗi khi tính toán tổng giỏ hàng:", error);
+        }
+      }
+      // Call the function to calculate and display cart totals
+      calculateCartTotals();
+
+      async function loadPaymentInfo() {
+        const username = localStorage.getItem("username"); // Lấy username từ localStorage
+        if (!username) {
+          console.error("Không tìm thấy username trong localStorage.");
+          return;
+        }
+
+        const customerApiUrl = `http://localhost:8081/api/v1/customer/${username}`;
+
+        try {
+          const response = await fetch(customerApiUrl);
+          const customer = await response.json();
+
+          // Kiểm tra xem dữ liệu có hợp lệ không
+          if (customer && customer.KH_Ten && customer.KH_DiaChi) {
+            // Tìm phần tử HTML để chèn dữ liệu
+            const nameElement = document.querySelector(".payment-item__title");
+            const addressElement = document.querySelector(
+              ".payment-item__desc"
+            );
+
+            // Cập nhật nội dung cho tên và địa chỉ
+            nameElement.textContent = customer.KH_Ten;
+            addressElement.textContent = customer.KH_DiaChi;
+          } else {
+            console.error("Không tìm thấy thông tin khách hàng.");
+          }
+        } catch (error) {
+          console.error("Lỗi khi gọi API:", error);
+        }
+      }
+
+      // Gọi hàm để load thông tin khách hàng khi trang được tải
+      loadPaymentInfo();
+    </script>
+  </body>
+</html>

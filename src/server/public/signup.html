@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        />
+        <link rel="stylesheet" href="./assets/css/dangki.css" />
+        <title>Trang đăng nhập</title>
+    </head>
+
+    <body>
+        <div class="container" id="container">
+            <div class="form-container sign-up">
+                <form
+                    id="registerForm"
+                    action="/api/v1/customer/register"
+                    method="POST"
+                >
+                    <a href="./" class="logo top-bar__logo">
+                        <img
+                            src="./assets/icons/logo.svg"
+                            alt="grocerymart"
+                            class="logo__img top-bar__logo-img"
+                        />
+                        <h1 class="logo__title top-bar__logo-title">pussea</h1>
+                    </a>
+                    <h1>Đăng ký</h1>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Họ và tên"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Tài khoản"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Mật khẩu"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="address"
+                        placeholder="Địa chỉ"
+                        required
+                    />
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Số điện thoại"
+                        required
+                    />
+                    <button type="submit" class="button">Đăng ký</button>
+                </form>
+            </div>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-right">
+                        <h1>Xin chào bạn!</h1>
+                        <p>
+                            Đăng ký thông tin cá nhân của bạn để sử dụng tất cả
+                            các tính năng của trang web
+                        </p>
+                        <p>Hoặc đã có tài khoản:</p>
+                        <a href="./login.html" class="button">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="./assets/js/dangki.js"></script>
+    </body>
+</html>
