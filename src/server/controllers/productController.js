@@ -83,38 +83,94 @@ const deleteProduct = async function (req, res) {
     }
 };
 
+// const productView = async function (req, res) {
+//     console.log("Request body received:", req.body);
+//     console.log("Server Session ID:", req.sessionID);
+
+//     const { productId } = req.body;
+
+//     try {
+//         const sessionId = req.sessionID;
+
+//         const viewedProducts = await redisClient.hGetAll(
+//             `viewedProducts:${sessionId}`
+//         );
+
+//         if (!viewedProducts || Object.keys(viewedProducts).length === 0) {
+//             await redisClient.hSet(`viewedProducts:${sessionId}`, productId, 1);
+//         } else {
+//             const currentViewCount = viewedProducts[productId] || 0;
+//             if (currentViewCount < 6) {
+//                 await redisClient.hSet(
+//                     `viewedProducts:${sessionId}`,
+//                     productId,
+//                     parseInt(currentViewCount) + 1
+//                 );
+//             }
+
+//             console.log("Cookies received:", req.cookies); // Kiểm tra nếu cookie từ client không được gửi
+//             console.log("Session Data:", req.session); // Kiểm tra session có hoạt động không
+//             res.json({
+//                 message: `Sản phẩm với id ${productId} đã được thêm vào danh sách sản phẩm đã xem.`,
+//                 viewedProducts: viewedProducts,
+//             });
+//         }
+//     } catch (err) {
+//         res.status(500).json({ message: "Có lỗi xảy ra.", error: err.message });
+//     }
+// };
+
 const productView = async function (req, res) {
     console.log("Request body received:", req.body);
     console.log("Server Session ID:", req.sessionID);
 
-    const { productId } = req.body;
+    const { productId, username } = req.body; // Nhận username từ body request
 
     try {
-        const sessionId = req.sessionID;
+        // Lấy session gần nhất được lưu bằng username
+        const lastSessionId = await redisClient.get(`lastSession:${username}`);
 
+        // Nếu có phiên mới, xóa phiên cũ
+        if (lastSessionId && lastSessionId !== req.sessionID) {
+            await redisClient.del(`viewedProducts:${lastSessionId}`);
+        }
+
+        // Cập nhật sessionId mới cho username
+        await redisClient.set(`lastSession:${username}`, req.sessionID);
+
+        // Lấy danh sách sản phẩm đã xem trong phiên hiện tại
         const viewedProducts = await redisClient.hGetAll(
-            `viewedProducts:${sessionId}`
+            `viewedProducts:${req.sessionID}`
         );
 
+        // Nếu chưa xem sản phẩm nào hoặc sản phẩm chưa có trong danh sách
         if (!viewedProducts || Object.keys(viewedProducts).length === 0) {
-            await redisClient.hSet(`viewedProducts:${sessionId}`, productId, 1);
+            await redisClient.hSet(
+                `viewedProducts:${req.sessionID}`,
+                productId,
+                1
+            );
         } else {
+            // Tăng số lần xem cho sản phẩm nếu chưa đạt giới hạn
             const currentViewCount = viewedProducts[productId] || 0;
             if (currentViewCount < 6) {
                 await redisClient.hSet(
-                    `viewedProducts:${sessionId}`,
+                    `viewedProducts:${req.sessionID}`,
                     productId,
                     parseInt(currentViewCount) + 1
                 );
             }
-
-            console.log("Cookies received:", req.cookies); // Kiểm tra nếu cookie từ client không được gửi
-            console.log("Session Data:", req.session); // Kiểm tra session có hoạt động không
-            res.json({
-                message: `Sản phẩm với id ${productId} đã được thêm vào danh sách sản phẩm đã xem.`,
-                viewedProducts: viewedProducts,
-            });
         }
+
+        console.log("Cookies received:", req.cookies);
+        console.log("Session Data:", req.session);
+
+        res.json({
+            message: `Sản phẩm với id ${productId} đã được thêm vào danh sách sản phẩm đã xem.`,
+            viewedProducts: await redisClient.hGetAll(
+                `viewedProducts:${req.sessionID}`
+            ),
+        });
     } catch (err) {
         res.status(500).json({ message: "Có lỗi xảy ra.", error: err.message });
     }

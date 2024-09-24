@@ -133,8 +133,18 @@ const customerLogout = async function (req, res) {
 
 const updateCustomer = async function (req, res) {
     try {
+        if (req.body.password) {
+            const saltRounds = 10;
+            req.body.password = await bcrypt.hash(
+                req.body.password,
+                saltRounds
+            );
+        }
+
         const updatedCustomer = await Customer.update(req.body);
-        res.json(updatedCustomer);
+        res.status(200).send(
+            "Thông tin khách hàng đã được cập nhật thành công."
+        );
     } catch (err) {
         console.error("Lỗi truy vấn: " + err.message);
         res.status(500).send(
