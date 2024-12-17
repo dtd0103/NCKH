@@ -11,6 +11,7 @@ import subCategoryRouter from "./routes/subCategoryRoute.js";
 import employeeRouter from "./routes/employeeRoute.js";
 import productRouter from "./routes/productRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import cartRouter from "./routes/cartRoute.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -63,6 +64,7 @@ app.use("/api/v1", categoryRouter);
 app.use("/api/v1", subCategoryRouter);
 app.use("/api/v1", customerRouter);
 app.use("/api/v1", brandRouter);
+app.use("/api/v1", cartRouter);
 app.use("/api/v1", employeeRouter);
 app.use("/api/v1", productRouter);
 app.use("/api/v1", orderRouter);

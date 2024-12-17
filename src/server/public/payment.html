@@ -178,6 +178,75 @@
                     </div>
                   </article>
                 </label>
+                <h2 class="cart-info__heading cart-info__heading--lv2">
+                  3. Phương thức thanh toán
+                </h2>
+                <div class="cart-info__separate"></div>
+                <label>
+                  <article
+                    class="payment-item payment-item--pointer"
+                    style="
+                      margin-bottom: 40px;
+                      padding-top: 17px;
+                      padding-bottom: 17px;
+                    "
+                  >
+                    <img
+                      src="./assets/img/payment/cod (1).png"
+                      alt="Thanh toán khi nhận hàng"
+                      class="payment-item__thumb"
+                    />
+                    <div class="payment-item__content">
+                      <div class="payment-item__info">
+                        <h3 class="payment-item__title">
+                          Thanh toán khi nhận hàng
+                        </h3>
+                      </div>
+
+                      <!-- Input Radio -->
+                      <input
+                        type="radio"
+                        name="payment-method"
+                        id="payment-cod"
+                        value="cod"
+                        class="cart-info__checkbox payment-item__checkbox"
+                      />
+                      <label for="payment-cod"></label>
+                    </div>
+                  </article>
+
+                  <article
+                    class="payment-item payment-item--pointer"
+                    style="
+                      margin-bottom: 40px;
+                      padding-top: 17px;
+                      padding-bottom: 17px;
+                    "
+                  >
+                    <img
+                      src="./assets/img/payment/navcard2.png"
+                      alt="Thanh toán chuyển khoản"
+                      class="payment-item__thumb"
+                    />
+                    <div class="payment-item__content">
+                      <div class="payment-item__info">
+                        <h3 class="payment-item__title">
+                          Thanh toán chuyển khoản
+                        </h3>
+                      </div>
+
+                      <!-- Input Radio -->
+                      <input
+                        type="radio"
+                        name="payment-method"
+                        id="payment-bank-transfer"
+                        value="bank-transfer"
+                        class="cart-info__checkbox payment-item__checkbox"
+                      />
+                      <label for="payment-bank-transfer"></label>
+                    </div>
+                  </article>
+                </label>
                 <div
                   class="col-4 col-xxl-5"
                   style="position: relative; right: -800px"
@@ -316,104 +385,109 @@
       // Gọi hàm để load thông tin khách hàng khi trang được tải
       loadPaymentInfo();
       // =======Tạo đơn hàng
-      document.querySelector(".cart-info__next-btn").addEventListener("click", async function (event) {
-    event.preventDefault(); // Ngăn không cho trang chuyển hướng ngay lập tức
+      document
+        .querySelector(".cart-info__next-btn")
+        .addEventListener("click", async function (event) {
+          event.preventDefault(); // Ngăn không cho trang chuyển hướng ngay lập tức
 
-    // Lấy username từ localStorage
-    const username = localStorage.getItem("username"); // Ví dụ: "dat0311"
+          // Lấy username từ localStorage
+          const username = localStorage.getItem("username"); // Ví dụ: "dat0311"
 
-    if (!username) {
-        alert("Không có thông tin username trong localStorage.");
-        return;
-    }
+          if (!username) {
+            alert("Không có thông tin username trong localStorage.");
+            return;
+          }
 
-    // Fetch thông tin userId (KH_Ma) từ server dựa trên username
-    let userId;
-    try {
-        const userResponse = await fetch(`/api/v1/customer/${username}`);
+          // Fetch thông tin userId (KH_Ma) từ server dựa trên username
+          let userId;
+          try {
+            const userResponse = await fetch(`/api/v1/customer/${username}`);
 
-        // Kiểm tra nếu phản hồi không thành công (không phải mã 200)
-        if (!userResponse.ok) {
-            throw new Error(`Lỗi server: ${userResponse.status}`);
-        }
+            // Kiểm tra nếu phản hồi không thành công (không phải mã 200)
+            if (!userResponse.ok) {
+              throw new Error(`Lỗi server: ${userResponse.status}`);
+            }
 
-        const userData = await userResponse.json();
-        userId = userData.KH_Ma; // Lấy mã khách hàng (userId) từ kết quả trả về
-    } catch (error) {
-        console.error("Lỗi khi lấy thông tin người dùng:", error);
-        alert("Không thể lấy thông tin người dùng. Vui lòng kiểm tra lại.");
-        return;
-    }
+            const userData = await userResponse.json();
+            userId = userData.KH_Ma; // Lấy mã khách hàng (userId) từ kết quả trả về
+          } catch (error) {
+            console.error("Lỗi khi lấy thông tin người dùng:", error);
+            alert("Không thể lấy thông tin người dùng. Vui lòng kiểm tra lại.");
+            return;
+          }
 
-    // Lấy danh sách sản phẩm từ localStorage
-    const productIds = JSON.parse(localStorage.getItem("productIds")); // {"12100605":10, "33700007":10}
+          // Lấy danh sách sản phẩm từ localStorage
+          const productIds = JSON.parse(localStorage.getItem("productIds")); // {"12100605":10, "33700007":10}
 
-    if (!productIds) {
-        alert("Không có sản phẩm nào trong giỏ hàng.");
-        return;
-    }
+          if (!productIds) {
+            alert("Không có sản phẩm nào trong giỏ hàng.");
+            return;
+          }
 
-    const items = [];
+          const items = [];
 
-    // Hàm lấy giá của sản phẩm từ server
-    async function fetchProductPrice(productId) {
-        const response = await fetch(`/api/v1/product/id/${productId}`);
+          // Hàm lấy giá của sản phẩm từ server
+          async function fetchProductPrice(productId) {
+            const response = await fetch(`/api/v1/product/id/${productId}`);
 
-        // Kiểm tra nếu phản hồi không thành công (không phải mã 200)
-        if (!response.ok) {
-            throw new Error(`Lỗi server khi lấy giá sản phẩm: ${response.status}`);
-        }
+            // Kiểm tra nếu phản hồi không thành công (không phải mã 200)
+            if (!response.ok) {
+              throw new Error(
+                `Lỗi server khi lấy giá sản phẩm: ${response.status}`
+              );
+            }
 
-        const product = await response.json();
-        return product.SP_DonGia;
-    }
+            const product = await response.json();
+            return product.SP_DonGia;
+          }
 
-    // Tạo promise để fetch giá cho từng sản phẩm
-    for (let productId in productIds) {
-        const quantity = productIds[productId];
-        const price = await fetchProductPrice(productId);
+          // Tạo promise để fetch giá cho từng sản phẩm
+          for (let productId in productIds) {
+            const quantity = productIds[productId];
+            const price = await fetchProductPrice(productId);
 
-        items.push({
-            productId: productId,
-            price: price,
-            quantity: quantity
+            items.push({
+              productId: productId,
+              price: price,
+              quantity: quantity,
+            });
+          }
+
+          // Chuẩn bị dữ liệu để gửi đi
+          const orderData = {
+            userId: userId,
+            items: items,
+          };
+
+          // Gửi thông tin đơn hàng đến server
+          try {
+            const response = await fetch("/api/v1/order/create", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(orderData),
+            });
+
+            if (!response.ok) {
+              throw new Error(
+                `Lỗi server khi tạo đơn hàng: ${response.status}`
+              );
+            }
+
+            const result = await response.json();
+
+            if (result.success) {
+              alert("Đơn hàng đã được tạo thành công!");
+              window.location.href = "./payment.html"; // Chuyển hướng đến trang thanh toán
+            } else {
+              alert("Lỗi khi tạo đơn hàng: " + result.message);
+            }
+          } catch (error) {
+            console.error("Lỗi kết nối với server:", error);
+            alert("Đã xảy ra lỗi khi tạo đơn hàng.");
+          }
         });
-    }
-
-    // Chuẩn bị dữ liệu để gửi đi
-    const orderData = {
-        userId: userId,
-        items: items
-    };
-
-    // Gửi thông tin đơn hàng đến server
-    try {
-        const response = await fetch("/api/v1/order/create", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(orderData)
-        });
-
-        if (!response.ok) {
-            throw new Error(`Lỗi server khi tạo đơn hàng: ${response.status}`);
-        }
-
-        const result = await response.json();
-
-        if (result.success) {
-            alert("Đơn hàng đã được tạo thành công!");
-            window.location.href = "./payment.html"; // Chuyển hướng đến trang thanh toán
-        } else {
-            alert("Lỗi khi tạo đơn hàng: " + result.message);
-        }
-    } catch (error) {
-        console.error("Lỗi kết nối với server:", error);
-        alert("Đã xảy ra lỗi khi tạo đơn hàng.");
-    }
-});
-
     </script>
   </body>
 </html>

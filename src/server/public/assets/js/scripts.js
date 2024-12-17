@@ -550,6 +550,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     console.error("Lỗi khi tìm kiếm sản phẩm:", err);
   }
 });
+// ===tìm kiếm====
 document.addEventListener("DOMContentLoaded", function () {
   const searchForm = document.getElementById("search-form");
   const searchInput = document.getElementById("search-input");
@@ -842,3 +843,36 @@ window.addEventListener("DOMContentLoaded", async () => {
     );
   }
 });
+// ====
+async function syncCartWithServer() {
+  const username = localStorage.getItem("username");
+  const productIds = JSON.parse(localStorage.getItem("productIds")) || {};
+
+  if (!username || Object.keys(productIds).length === 0) return;
+
+  try {
+    const response = await fetch("/api/cart/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, productIds }),
+    });
+
+    if (response.ok) {
+      console.log("Đồng bộ giỏ hàng thành công.");
+    } else {
+      console.error("Lỗi đồng bộ giỏ hàng.");
+    }
+  } catch (error) {
+    console.error("Lỗi kết nối tới server:", error);
+  }
+}
+
+// Theo dõi thay đổi trong localStorage
+window.addEventListener("storage", (event) => {
+  if (event.key === "productIds") {
+    syncCartWithServer();
+  }
+});
+
+// Gọi hàm lần đầu khi trang được load
+syncCartWithServer();

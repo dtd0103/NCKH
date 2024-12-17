@@ -49,27 +49,27 @@ class Customer {
         });
     }
 
-    static update(data) {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                "UPDATE khach_hang SET KH_Ten = ?, KH_TaiKhoan = ?, KH_MatKhau = ?, KH_SoDienThoai = ?, KH_DiaChi = ? WHERE KH_Ma = ?",
-                [
-                    data.name,
-                    data.username,
-                    data.password,
-                    data.phone,
-                    data.address,
-                    data.id,
-                ],
-                (err, results) => {
-                    if (err) {
-                        return reject(err);
+        static update(data) {
+            return new Promise((resolve, reject) => {
+                connection.query(
+                    "UPDATE khach_hang SET KH_Ten = ?, KH_TaiKhoan = ?, KH_MatKhau = ?, KH_SoDienThoai = ?, KH_DiaChi = ? WHERE KH_Ma = ?",
+                    [
+                        data.name,
+                        data.username,
+                        data.password,
+                        data.phone,
+                        data.address,
+                        data.id,
+                    ],
+                    (err, results) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        resolve(results);
                     }
-                    resolve(results);
-                }
-            );
-        });
-    }
+                );
+            });
+        }
 
     static delete(id) {
         return new Promise((resolve, reject) => {
