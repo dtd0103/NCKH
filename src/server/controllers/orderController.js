@@ -84,11 +84,37 @@ const orderDelete = async function (req, res) {
         res.status(500).send("Lỗi trong quá trình xóa đơn hàng.");
     }
 };
+const getOrdersByCusId = async function (req, res) {
+  try {
+    const customerId = req.params.customerId;
+
+    const orders = await Order.getByCustomerId(customerId);
+    if (orders.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy đơn hàng nào cho khách hàng này.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: orders,
+    });
+  } catch (err) {
+    console.error("Lỗi truy vấn: " + err.message);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi trong quá trình lấy danh sách đơn hàng.",
+      error: err.message,
+    });
+  }
+};
 
 export default {
-    getAllOrder,
-    getOrder,
-    orderCreate,
-    orderUpdate,
-    orderDelete,
+  getAllOrder,
+  getOrder,
+  orderCreate,
+  orderUpdate,
+  orderDelete,
+  getOrdersByCusId
 };
