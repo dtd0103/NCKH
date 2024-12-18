@@ -1,11 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đơn hàng đã đặt</title>
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="./assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon/favicon-32x32.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/favicon/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+
+    <!-- Styles -->
+
+    <link rel="icon" href="./assets/image/img1.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/header.css" />
+    <link rel="stylesheet" href="./assets/css/grid.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/fonts/fontawesome-free-5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Scripts -->
+    <script src="./assets/js/scripts.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
+  </head>
+  <style>
+    table {
+      background-color: #ffffff;
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    h1{
+        font-size: 2.6rem;
+    }
+    table th,
+    table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    table th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+    .status-pending {
+      color: orange;
+    }
+    .status-accepted {
+      color: blue;
+    }
+    .status-shipping {
+      color: cadetblue;
+    }
+    .status-completed {
+      color: green;
+    }
+    .status-canceled {
+      color: red;
+    }
+  </style>
+  <body>
+    <!-- Header -->
+    <header id="header" class="header"></header>
+    <script>
+      load("#header", "./templates/header2.html");
+    </script>
+    <div class="container home">
+      <h1>Danh sách đơn hàng đã đặt</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã đơn hàng</th>
+            <th>Ngày đặt</th>
+            <th>Trạng thái</th>
+            <th>Tổng tiền</th>
+            <th>Ngày giao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#001234</td>
+            <td>2024-12-01</td>
+            <td class="status-pending">Chưa xác nhận</td>
+            <td>500,000 VNĐ</td>
+            <td>2024-12-05</td>
+          </tr>
+          <tr>
+            <td>#001234</td>
+            <td>2024-12-01</td>
+            <td class="status-accepted">Đã xác nhận</td>
+            <td>500,000 VNĐ</td>
+            <td>2024-12-05</td>
+          </tr>
+          <tr>
+            <td>#001234</td>
+            <td>2024-12-01</td>
+            <td class="status-shipping">Vận chuyển</td>
+            <td>500,000 VNĐ</td>
+            <td>2024-12-05</td>
+          </tr>
+          <tr>
+            <td>#001235</td>
+            <td>2024-11-28</td>
+            <td class="status-completed">Hoàn thành</td>
+            <td>1,200,000 VNĐ</td>
+            <td>2024-12-03</td>
+          </tr>
+          <tr>
+            <td>#001236</td>
+            <td>2024-11-25</td>
+            <td class="status-canceled">Đã hủy</td>
+            <td>300,000 VNĐ</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Footer -->
+    <footer id="footer" class="footer"></footer>
+    <script>
+      load("#footer", "./templates/footer.html");
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+  const renderOrders = async () => {
+    try {
+      // Lấy username từ localStorage
+      const username = localStorage.getItem("username");
+      if (!username) {
+        console.error("Username not found in localStorage");
+        return;
+      }
+
+      // Lấy thông tin khách hàng từ API
+      const customerResponse = await fetch(`http://localhost:8081/api/v1/customer/${username}`);
+      if (!customerResponse.ok) {
+        throw new Error("Failed to fetch customer information");
+      }
+      const customerData = await customerResponse.json();
+      const customerId = customerData.KH_Ma;
+
+      // Lấy danh sách đơn hàng theo customerId
+      const ordersResponse = await fetch(`http://localhost:8081/api/v1/orders/customer/${customerId}`);
+      if (!ordersResponse.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+      const ordersData = await ordersResponse.json();
+
+      // Hiển thị đơn hàng trong bảng
+      const tableBody = document.querySelector("table tbody");
+      tableBody.innerHTML = ""; // Xóa nội dung cũ
+
+      ordersData.data.forEach((order) => {
+        const row = document.createElement("tr");
+
+        const statusClass = {
+          "": "status-pending",
+          "Chưa xác nhận": "status-pending",
+          "Đã xác nhận": "status-accepted",
+          "Vận chuyển": "status-shipping",
+          "Hoàn thành": "status-completed",
+          "Đã hủy": "status-canceled",
+        }[order.TrangThai] || "";
+
+        row.innerHTML = `
+          <td>#${order.DH_Ma.toString().padStart(6, "0")}</td>
+          <td>${new Date(order.NgayTao).toLocaleDateString()}</td>
+          <td class="${statusClass}">${order.TrangThai || "Chưa xác nhận"}</td>
+          <td>${order.TongTien.toLocaleString("vi-VN")} VNĐ</td>
+          <td>${order.NgayGiao ? new Date(order.NgayGiao).toLocaleDateString() : "-"}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error("Error loading orders:", error);
+    }
+  };
+
+  await renderOrders();
+});
+
+    </script>
+    <script src="./assets/js/product.js"></script>
+    <script src="./assets/js/search.js"></script>
+  </body>
 </html>

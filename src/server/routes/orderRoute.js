@@ -9,5 +9,6 @@ orderRouter.get("/order/:id", orderController.getOrder);
 orderRouter.post("/order/create", orderController.orderCreate);
 orderRouter.put("/order", orderController.orderUpdate);
 orderRouter.delete("/order/:id", orderController.orderDelete);
+orderRouter.get("/orders/customer/:customerId",orderController.getOrdersByCusId);
 
 export default orderRouter;
