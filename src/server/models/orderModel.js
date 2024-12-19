@@ -36,7 +36,8 @@ class Order {
           if (err) {
             reject(err);
           }
-          resolve(results);
+            resolve({ insertId: results.insertId });
+          
         }
       );
     });
