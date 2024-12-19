@@ -1,19 +1,19 @@
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-// const authenticateJWT = (req, res, next) => {
-//     const token = req.headers["authorization"]?.split(" ")[1]; // Lấy token từ header
+const authenticateJWT = (req, res, next) => {
+    const token = req.headers["authorization"]?.split(" ")[1];
 
-//     if (token) {
-//         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-//             if (err) {
-//                 return res.sendStatus(403); // Forbidden
-//             }
-//             req.user = user; // Lưu thông tin user vào req
-//             next(); // Chuyển tiếp đến middleware tiếp theo
-//         });
-//     } else {
-//         res.sendStatus(401); // Unauthorized
-//     }
-// };
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+            req.user = user;
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+    }
+};
 
-// export default authenticateJWT;
+export default authenticateJWT;

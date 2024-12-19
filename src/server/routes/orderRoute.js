@@ -1,14 +1,22 @@
 import express from "express";
-
 import orderController from "../controllers/orderController.js";
+import authenticateJWT from "../services/jwtAuth.js";
+import authenticateAdminJWT from "../services/adminAuth.js";
 
 const orderRouter = express.Router();
 
 orderRouter.get("/orders", orderController.getAllOrder);
 orderRouter.get("/order/:id", orderController.getOrder);
-orderRouter.post("/order/create", orderController.orderCreate);
-orderRouter.put("/order", orderController.orderUpdate);
-orderRouter.delete("/order/:id", orderController.orderDelete);
-orderRouter.get("/orders/customer/:customerId",orderController.getOrdersByCusId);
+orderRouter.post("/order/create", authenticateJWT, orderController.orderCreate);
+orderRouter.put("/order", authenticateAdminJWT, orderController.orderUpdate);
+orderRouter.delete(
+    "/order/:id",
+    authenticateAdminJWT,
+    orderController.orderDelete
+);
+orderRouter.get(
+    "/orders/customer/:customerId",
+    orderController.getOrdersByCusId
+);
 
 export default orderRouter;

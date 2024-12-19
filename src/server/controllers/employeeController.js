@@ -78,8 +78,18 @@ const employeeLogin = async function (req, res) {
             });
         }
 
-        const token = jwt.sign({ id: employee.NV_Ma }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
+        const token = jwt.sign(
+            { id: employee.NV_Ma, role: "admin" },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "3h",
+            }
+        );
+
+        res.status(200).json({
+            message: "Đăng nhập thành công.",
+            token: token,
+            username: employee.NV_TaiKhoan,
         });
     } catch (err) {
         res.status(500).json({
