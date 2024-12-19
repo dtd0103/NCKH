@@ -27,21 +27,20 @@ class Order {
         });
     }
 
-  static create(data) {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        "INSERT INTO don_hang (KH_Ma, TongTien) VALUES (? ,?)",
-        [data.userId, data.total],
-        (err, results) => {
-          if (err) {
-            reject(err);
-          }
-            resolve({ insertId: results.insertId });
-          
-        }
-      );
-    });
-  }
+    static create(data) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                "INSERT INTO don_hang (KH_Ma, TongTien) VALUES (? ,?)",
+                [data.userId, data.total],
+                (err, results) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve({ insertId: results.insertId });
+                }
+            );
+        });
+    }
 
     static createDetail(data) {
         return new Promise((resolve, reject) => {
@@ -181,7 +180,7 @@ class Order {
             );
         });
     }
-    
+
     static getByCustomerId(customerId) {
         return new Promise((resolve, reject) => {
             const query = "SELECT * FROM don_hang WHERE KH_Ma = ?";
