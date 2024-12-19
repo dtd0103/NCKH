@@ -21,47 +21,53 @@ const getOrder = async function (req, res) {
 };
 
 const orderCreate = async function (req, res) {
-    try {
-        const { userId, items } = req.body;
+  try {
+    const { userId, items } = req.body;
 
-        let total = 0;
-        items.forEach((item) => {
-            total += item.price * item.quantity;
-        });
+    let total = 0;
+    items.forEach((item) => {
+      total += item.price * item.quantity;
+    });
 
-        const orderData = {
-            userId,
-            total,
-        };
+    // Cộng phí ship vào tổng giá trị đơn hàng
+    const shippingFee = 10; // Phí ship cố định là 10
+    total += shippingFee; // Cộng thêm phí ship vào tổng giá trị đơn hàng
 
-        const result = await Order.create(orderData);
-        console.log(result);
-        const orderId = result.insertId;
+    const orderData = {
+      userId,
+      total,
+    };
 
-        const orderDetails = items.map((item) => {
-            return {
-                DH_Ma: orderId,
-                SP_Ma: item.productId,
-                SoLuong: item.quantity,
-                DonGia: item.price,
-            };
-        });
+    const result = await Order.create(orderData);
+    console.log(result);
+    const orderId = result.insertId;
 
-        await Order.createDetail(orderDetails);
+    const orderDetails = items.map((item) => {
+      return {
+        DH_Ma: orderId,
+        SP_Ma: item.productId,
+        SoLuong: item.quantity,
+        DonGia: item.price,
+      };
+    });
 
-        res.status(201).json({
-            success: true,
-            message: "Đơn hàng và chi tiết đơn hàng được tạo thành công.",
-            data: result,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Lỗi trong quá trình tạo đơn hàng mới.",
-            error: error.message,
-        });
-    }
+    await Order.createDetail(orderDetails);
+
+    res.status(201).json({
+      success: true,
+      message: "Đơn hàng và chi tiết đơn hàng được tạo thành công.",
+      orderId: orderId,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Lỗi trong quá trình tạo đơn hàng mới.",
+      error: error.message,
+    });
+  }
 };
+
 
 const orderUpdate = async function (req, res) {
     try {

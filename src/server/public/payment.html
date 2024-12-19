@@ -146,7 +146,7 @@
 
               <div class="cart-info" style="margin-top: 0">
                 <h2 class="cart-info__heading cart-info__heading--lv2">
-                  2. Phương thức vận chuyển
+                  2. Hình thức vận chuyển
                 </h2>
                 <div class="cart-info__separate"></div>
                 <!-- Payment item 4 -->
@@ -240,7 +240,7 @@
                         type="radio"
                         name="payment-method"
                         id="payment-bank-transfer"
-                        value="bank-transfer"
+                        value="transfer"
                         class="cart-info__checkbox payment-item__checkbox"
                       />
                       <label for="payment-bank-transfer"></label>
@@ -390,6 +390,18 @@
         .addEventListener("click", async function (event) {
           event.preventDefault(); // Ngăn không cho trang chuyển hướng ngay lập tức
 
+          // Kiểm tra phương thức thanh toán đã chọn
+          const selectedPaymentMethod = document.querySelector(
+            'input[name="payment-method"]:checked'
+          );
+
+          if (!selectedPaymentMethod) {
+            alert("Vui lòng chọn phương thức thanh toán.");
+            return;
+          }
+
+          const paymentMethod = selectedPaymentMethod.value; // Lấy giá trị của phương thức thanh toán (e.g., "cod", "transfer")
+
           // Lấy username từ localStorage
           const username = localStorage.getItem("username"); // Ví dụ: "dat0311"
 
@@ -425,6 +437,7 @@
           }
 
           const items = [];
+          let total = 0;
 
           // Hàm lấy giá của sản phẩm từ server
           async function fetchProductPrice(productId) {
@@ -441,7 +454,7 @@
             return product.SP_DonGia;
           }
 
-          // Tạo promise để fetch giá cho từng sản phẩm
+          // Tính tổng giá trị đơn hàng và chuẩn bị dữ liệu
           for (let productId in productIds) {
             const quantity = productIds[productId];
             const price = await fetchProductPrice(productId);
@@ -451,12 +464,19 @@
               price: price,
               quantity: quantity,
             });
+
+            total += price * quantity; // Cộng dồn tổng giá trị đơn hàng
           }
+
+          // Thêm phí ship vào tổng giá trị đơn hàng
+          const shippingFee = 10; // Phí ship cố định là 10
+          total += shippingFee; // Cộng thêm phí ship vào tổng giá trị đơn hàng
 
           // Chuẩn bị dữ liệu để gửi đi
           const orderData = {
             userId: userId,
             items: items,
+            total: total, // Gửi tổng giá trị bao gồm phí ship
           };
 
           // Gửi thông tin đơn hàng đến server
@@ -479,7 +499,17 @@
 
             if (result.success) {
               alert("Đơn hàng đã được tạo thành công!");
-              window.location.href = "./payment.html"; // Chuyển hướng đến trang thanh toán
+
+              const orderId = result.orderId; // Lấy orderId từ phản hồi
+              console.log("Order ID:", orderId); // Kiểm tra orderId có phải là undefined không
+              // Chuyển hướng dựa trên phương thức thanh toán
+              if (paymentMethod === "transfer") {
+                window.location.href = `./qr.html?orderId=${orderId}`; // Chuyển sang trang QR với orderId
+                localStorage.removeItem("productIds");
+              } else {
+                window.location.href = "./orders.html"; // Chuyển sang trang orders nếu thanh toán COD
+                localStorage.removeItem("productIds");
+              }
             } else {
               alert("Lỗi khi tạo đơn hàng: " + result.message);
             }
