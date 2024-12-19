@@ -26,7 +26,6 @@ const app = express();
 
 // Cấu hình CORS
 app.use(cors());
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,7 +33,6 @@ app.use(express.urlencoded({ extended: true }));
 // Cấu hình session với Redis
 app.use(
     session({
-        store: new RedisStore({ client: redisClient }),
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,

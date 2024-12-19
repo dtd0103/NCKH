@@ -1,3 +1,17 @@
+function base64Decode(str) {
+    return decodeURIComponent(escape(atob(str)));
+}
+
+function decodeJWT(token) {
+    const parts = token.split(".");
+    if (parts.length !== 3) throw new Error("Invalid JWT format");
+
+    const header = JSON.parse(base64Decode(parts[0]));
+    const payload = JSON.parse(base64Decode(parts[1]));
+
+    return { header, payload };
+}
+
 const loginForm = document.getElementById("loginForm");
 
 loginForm.addEventListener("submit", async (event) => {
@@ -23,7 +37,8 @@ loginForm.addEventListener("submit", async (event) => {
         const data = await response.json();
         console.log(data.message);
         localStorage.setItem("authToken", data.token);
-        localStorage.setItem("username", data.username);
+        const decoded = decodeJWT(data.token);
+        localStorage.setItem("username", decoded.payload.username);
         localStorage.removeItem("anonymousUserId");
         window.location.href = "index.html";
     } catch (error) {

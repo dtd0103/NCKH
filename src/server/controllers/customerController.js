@@ -95,9 +95,13 @@ const customerLogin = async function (req, res) {
             return res.status(400).json({ message: "Sai mật khẩu." });
         }
 
-        const token = jwt.sign({ id: customer.KH_Ma }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
-        });
+        const token = jwt.sign(
+            { id: customer.KH_Ma, username: customer.KH_TaiKhoan },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "3h",
+            }
+        );
 
         if (req.session.anonymousUser) {
             delete req.session.anonymousUser;
@@ -132,26 +136,28 @@ const customerLogout = async function (req, res) {
 };
 
 const updateCustomer = async function (req, res) {
-  try {
-    if (req.body.password) {
-      const saltRounds = 10;
-      req.body.password = await bcrypt.hash(req.body.password, saltRounds);
+    try {
+        if (req.body.password) {
+            const saltRounds = 10;
+            req.body.password = await bcrypt.hash(
+                req.body.password,
+                saltRounds
+            );
+        }
+
+        const updatedCustomer = await Customer.update(req.body);
+
+        // Trả về phản hồi dưới dạng JSON
+        res.status(200).json({
+            message: "Thông tin khách hàng đã được cập nhật thành công.",
+        });
+    } catch (err) {
+        console.error("Lỗi truy vấn: " + err.message);
+        res.status(500).json({
+            error: "Lỗi trong quá trình cập nhật thông tin khách hàng.",
+        });
     }
-
-    const updatedCustomer = await Customer.update(req.body);
-
-    // Trả về phản hồi dưới dạng JSON
-    res.status(200).json({
-      message: "Thông tin khách hàng đã được cập nhật thành công.",
-    });
-  } catch (err) {
-    console.error("Lỗi truy vấn: " + err.message);
-    res.status(500).json({
-      error: "Lỗi trong quá trình cập nhật thông tin khách hàng.",
-    });
-  }
 };
-
 
 const deleteCustomer = async function (req, res) {
     try {

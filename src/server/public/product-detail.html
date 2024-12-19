@@ -466,15 +466,17 @@
                 }
             });
         </script>
-        <!-- <script>
+        <script>
             document.addEventListener("DOMContentLoaded", async function () {
                 const params = new URLSearchParams(window.location.search);
                 const productId = params.get("id");
 
                 // Giả sử username đã có hoặc được truyền từ backend sau khi đăng nhập
-                const username =
-                    localStorage.getItem("username") ||
-                    prompt("Please enter your username:");
+                if (localStorage.getItem("username")) {
+                    const username =
+                        localStorage.getItem("username") ||
+                        prompt("Please enter your username:");
+                }
 
                 if (productId) {
                     console.log("Product ID:", productId);
@@ -507,6 +509,6 @@
                     }
                 }
             });
-        </script> -->
+        </script>
     </body>
 </html>

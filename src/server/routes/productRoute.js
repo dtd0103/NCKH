@@ -1,5 +1,7 @@
 import express from "express";
 import productController from "../controllers/productController.js";
+import authenticateJWT from "../services/jwtAuth.js";
+import authenticateAdminJWT from "../services/adminAuth.js";
 
 const productRouter = express.Router();
 
@@ -10,10 +12,21 @@ productRouter.get(
     "/product/category/:id",
     productController.getProductByCategoryId
 );
-productRouter.post("/product/create", productController.createProduct);
-productRouter.put("/product", productController.updateProduct);
-productRouter.delete("/product/:id", productController.deleteProduct);
-
+productRouter.post(
+    "/product/create",
+    authenticateAdminJWT,
+    productController.createProduct
+);
+productRouter.put(
+    "/product",
+    authenticateAdminJWT,
+    productController.updateProduct
+);
+productRouter.delete(
+    "/product/:id",
+    authenticateAdminJWT,
+    productController.deleteProduct
+);
 productRouter.post("/product/view", productController.productView);
 
 export default productRouter;
