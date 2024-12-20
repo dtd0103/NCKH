@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   try {
     const response = await fetch(customerApiUrl, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
     });
 
     if (!response.ok) {

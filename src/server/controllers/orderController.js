@@ -115,13 +115,33 @@ const getOrdersByCusId = async function (req, res) {
             error: err.message,
         });
     }
+    
+};
+const getOrderDetails = async (req, res) => {
+  const { orderId } = req.params;
+
+  try {
+    const orderDetails = await Order.getOrderDetails(orderId);
+
+    if (!orderDetails || orderDetails.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy chi tiết đơn hàng." });
+    }
+
+    res.status(200).json({ data: orderDetails });
+  } catch (error) {
+    console.error("Error fetching order details:", error);
+    res.status(500).json({ message: "Lỗi máy chủ nội bộ." });
+  }
 };
 
 export default {
-    getAllOrder,
-    getOrder,
-    orderCreate,
-    orderUpdate,
-    orderDelete,
-    getOrdersByCusId,
+  getAllOrder,
+  getOrder,
+  orderCreate,
+  orderUpdate,
+  orderDelete,
+  getOrdersByCusId,
+  getOrderDetails,
 };
