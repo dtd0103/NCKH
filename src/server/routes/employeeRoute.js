@@ -7,11 +7,7 @@ const employeeRouter = express.Router();
 
 employeeRouter.get("/employees", employeeController.getAllEmployee);
 employeeRouter.get("/employee/:username", employeeController.getEmployee);
-employeeRouter.post(
-    "/employee/create",
-    authenticateAdminJWT,
-    employeeController.employeeCreate
-);
+employeeRouter.post("/employee/create", employeeController.employeeCreate);
 employeeRouter.post("/employee/login", employeeController.employeeLogin);
 employeeRouter.put(
     "/employee",

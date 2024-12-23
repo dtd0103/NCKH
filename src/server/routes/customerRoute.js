@@ -4,7 +4,7 @@ import authenticateJWT from "../services/jwtAuth.js";
 import authenticateAdminJWT from "../services/adminAuth.js";
 
 const customerRouter = express.Router();
-
+customerRouter.get("/customer", customerController.getAllCustomer);
 customerRouter.post("/customer/register", customerController.customerRegister);
 customerRouter.post("/customer/login", customerController.customerLogin);
 customerRouter.post("/customer/logout", customerController.customerLogout);
