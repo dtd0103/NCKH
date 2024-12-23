@@ -471,20 +471,28 @@
                 const params = new URLSearchParams(window.location.search);
                 const productId = params.get("id");
 
-                // Giả sử username đã có hoặc được truyền từ backend sau khi đăng nhập
-                if (localStorage.getItem("username")) {
-                    const username =
-                        localStorage.getItem("username") ||
-                        prompt("Please enter your username:");
+                // Lấy username từ localStorage nếu tồn tại
+                let userId = localStorage.getItem("username");
+
+                // Nếu không có username, kiểm tra anonymousUserId trong sessionStorage
+                if (!userId) {
+                    userId = sessionStorage.getItem("anonymousUserId");
+
+                    // Nếu anonymousUserId không tồn tại, tạo mới
+                    if (!userId) {
+                        userId = "anon-" + Date.now();
+                        sessionStorage.setItem("anonymousUserId", userId);
+                    }
                 }
 
+                // Nếu có productId, gửi request để lưu lịch sử xem sản phẩm
                 if (productId) {
                     console.log("Product ID:", productId);
-                    await trackProductView(productId);
+                    await trackProductView(productId, userId);
                 }
 
-                async function trackProductView(productId) {
-                    console.log("Request body:", { productId, username }); // Log the request body with username
+                async function trackProductView(productId, userId) {
+                    console.log("Request body:", { productId, userId });
 
                     try {
                         const response = await fetch("/api/v1/product/view", {
@@ -492,7 +500,7 @@
                             headers: {
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify({ productId, username }), // Gửi cả productId và username đến server
+                            body: JSON.stringify({ productId, userId }),
                         });
 
                         if (!response.ok) {

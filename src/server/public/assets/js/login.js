@@ -39,7 +39,7 @@ loginForm.addEventListener("submit", async (event) => {
         localStorage.setItem("authToken", data.token);
         const decoded = decodeJWT(data.token);
         localStorage.setItem("username", decoded.payload.username);
-        localStorage.removeItem("anonymousUserId");
+        sessionStorage.removeItem("anonymousUserId");
         window.location.href = "index.html";
     } catch (error) {
         console.error("Đăng nhập thất bại:", error.message);
