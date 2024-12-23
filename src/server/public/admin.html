@@ -30,19 +30,31 @@
                 </a>
                 <a href="#" class="active">
                     <span class="material-icons-sharp">person_outline</span>
-                    <h3>Customers</h3>
+                    <h3>Khách hàng</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">receipt_long</span>
-                    <h3>Orders</h3>
+                    <h3>Đơn hàng</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">inventory</span>
-                    <h3>Products</h3>
+                    <h3>Sản phẩm</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings_accessibility</span>
+                    <h3>Nhân viên</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">category</span>
+                    <h3>Danh mục</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">trending_up</span>
+                    <h3>Thương hiệu</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">logout</span>
-                    <h3>Logout</h3>
+                    <h3>Đăng xuất</h3>
                 </a>
             </div>
         </aside>
@@ -58,7 +70,7 @@
                     <span class="material-icons-sharp">analytics</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Total Sales</h3>
+                            <h3>Tổng doanh thu</h3>
                             <h1>$25</h1>
                         </div>
                         <div class="progress">
@@ -70,34 +82,16 @@
                             </div>
                         </div>
                     </div>
-                    <small class="text-muted">Last 24 Hours</small>
+                    <small class="text-muted">24h trước</small>
                 </div>
                 <!----------END OF SALES---------->
-                <div class="expenses">
-                    <span class="material-icons-sharp">bar_chart</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total Expenses</h3>
-                            <h1>$15</h1>
-                        </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>62%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <small class="text-muted">Last 24 Hours</small>
-                </div>
-                <!----------END OF EXPENSES---------->
+                
 
                 <div class="income">
                     <span class="material-icons-sharp">stacked_line_chart</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Total Income</h3>
+                            <h3>Tổng thu nhập</h3>
                             <h1>$10</h1>
                         </div>
                         <div class="progress">
@@ -116,15 +110,16 @@
             <!------END OF INSIGHTS------>
 
             <div class="recent-orders">
-                <h2>Recent Orders</h2>
+                <h2>Đơn hàng hiện tại</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Product ID</th>
-                            <th>Payment</th>
-                            <th>Status</th>
-                            <th></th>
+                            <th>Mã đơn hàng</th>
+                            <th>Mã Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày tạo</th>
+                            <th>Ngày giao</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -181,6 +176,24 @@
                 </table>
                 <a href="#">Show All</a>
             </div>
+
+            <div class="recent-customers">
+    <h2>Danh sách khách hàng</h2>
+    <table id="customers-table">
+        <thead>
+            <tr>
+                <th>Mã Khách Hàng</th>
+                <th>Tên</th>
+                <th>Tài Khoản</th>
+                <th>Số Điện Thoại</th>
+                <th>Địa Chỉ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dữ liệu sẽ được điền vào đây bằng JavaScript -->
+        </tbody>
+    </table>
+</div>
         </main>
         <!---------------END OF MAIN---------------->
 

@@ -252,8 +252,10 @@ main .date input[type="date"] {
 
 main .insights {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.6rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0 2rem;
+    justify-content: space-between;
 }
 
 main .insights > div {
@@ -275,10 +277,6 @@ main .insights > div span {
     border-radius: 50%;
     color: var(--color-white);
     font-size: 2rem;
-}
-
-main .insights > div.expenses span {
-    background: var(--color-danger);
 }
 
 main .insights > div.income span {
@@ -695,4 +693,6 @@ main .recent-orders a {
     .right .top button span {
         font-size: 2rem;
     }
+
+    
 }
