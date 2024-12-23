@@ -18,5 +18,6 @@ orderRouter.get(
     "/orders/customer/:customerId",
     orderController.getOrdersByCusId
 );
+orderRouter.get("/order/:orderId/details", orderController.getOrderDetails);
 
 export default orderRouter;
