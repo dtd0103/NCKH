@@ -79,7 +79,11 @@ const employeeLogin = async function (req, res) {
         }
 
         const token = jwt.sign(
-            { id: employee.NV_Ma, role: "admin" },
+            {
+                id: employee.NV_Ma,
+                role: "admin",
+                username: employee.NV_TaiKhoan,
+            },
             process.env.JWT_SECRET,
             {
                 expiresIn: "3h",
@@ -89,7 +93,6 @@ const employeeLogin = async function (req, res) {
         res.status(200).json({
             message: "Đăng nhập thành công.",
             token: token,
-            username: employee.NV_TaiKhoan,
         });
     } catch (err) {
         res.status(500).json({

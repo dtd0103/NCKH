@@ -26,7 +26,26 @@ const getCategory = async function (req, res) {
 
 const createCategory = async function (req, res) {
     try {
-        const newCategory = await Category.create(req.body);
+        // Kiểm tra xem hình ảnh có được tải lên không
+        if (!req.file) {
+            return res
+                .status(400)
+                .json({ message: "Vui lòng tải lên hình ảnh cho danh mục!" });
+        }
+
+        // Lấy đường dẫn hình ảnh
+        const imagePath = `/images/categories/${req.file.filename}`;
+
+        // Thêm đường dẫn hình ảnh vào dữ liệu danh mục
+        const categoryData = {
+            ...req.body,
+            image: imagePath, // Thêm đường dẫn hình ảnh vào dữ liệu danh mục
+        };
+
+        // Tạo danh mục mới trong cơ sở dữ liệu
+        const newCategory = await Category.create(categoryData);
+
+        // Trả về danh mục mới đã tạo
         res.status(201).json(newCategory);
     } catch (err) {
         console.error("Lỗi truy vấn: " + err.message);

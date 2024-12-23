@@ -2,6 +2,7 @@ import express from "express";
 import productController from "../controllers/productController.js";
 import authenticateJWT from "../services/jwtAuth.js";
 import authenticateAdminJWT from "../services/adminAuth.js";
+import { uploadProduct } from "../services/imgUpload.js";
 
 const productRouter = express.Router();
 
@@ -15,6 +16,7 @@ productRouter.get(
 productRouter.post(
     "/product/create",
     authenticateAdminJWT,
+    uploadProduct,
     productController.createProduct
 );
 productRouter.put(

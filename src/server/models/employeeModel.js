@@ -15,14 +15,13 @@ class Employee {
     static createEmployeeAccount(data) {
         return new Promise((resolve, reject) => {
             connection.query(
-                "INSERT INTO nhan_vien (NV_Ten, NV_TaiKhoan, NV_MatKhau, NV_SoDienThoai, NV_DiaChi, NV_ChucVu) VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO nhan_vien (NV_Ten, NV_TaiKhoan, NV_MatKhau, NV_SoDienThoai, NV_DiaChi) VALUES (?, ?, ?, ?, ?)",
                 [
                     data.name,
                     data.username,
                     data.password,
                     data.phone,
                     data.address,
-                    data.role,
                 ],
                 (err, results) => {
                     if (err) {

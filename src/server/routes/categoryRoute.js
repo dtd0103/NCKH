@@ -2,6 +2,7 @@ import express from "express";
 import categoryController from "../controllers/categoryController.js";
 import authenticateJWT from "../services/jwtAuth.js";
 import authenticateAdminJWT from "../services/adminAuth.js";
+import { uploadCategory } from "../services/imgUpload.js";
 
 const categoryRouter = express.Router();
 
@@ -10,6 +11,7 @@ categoryRouter.get("/categories/:name", categoryController.getCategory);
 categoryRouter.post(
     "/categories",
     authenticateAdminJWT,
+    uploadCategory,
     categoryController.createCategory
 );
 categoryRouter.put(

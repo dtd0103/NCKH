@@ -5,10 +5,8 @@ function base64Decode(str) {
 function decodeJWT(token) {
     const parts = token.split(".");
     if (parts.length !== 3) throw new Error("Invalid JWT format");
-
     const header = JSON.parse(base64Decode(parts[0]));
     const payload = JSON.parse(base64Decode(parts[1]));
-
     return { header, payload };
 }
 
@@ -21,7 +19,7 @@ loginForm.addEventListener("submit", async (event) => {
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch("/api/v1/customer/login", {
+        const response = await fetch("/api/v1/employee/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -37,10 +35,13 @@ loginForm.addEventListener("submit", async (event) => {
         const data = await response.json();
         console.log(data.message);
         localStorage.setItem("authToken", data.token);
+        console.log(data.token)
         const decoded = decodeJWT(data.token);
+        console.log(decoded);
+        console.log(decoded.payload.username);
         localStorage.setItem("username", decoded.payload.username);
         sessionStorage.removeItem("anonymousUserId");
-        window.location.href = "index.html";
+        // window.location.href = "admin.html";
     } catch (error) {
         console.error("Đăng nhập thất bại:", error.message);
     }

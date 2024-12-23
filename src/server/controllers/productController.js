@@ -53,7 +53,21 @@ const getProductById = async function (req, res) {
 
 const createProduct = async function (req, res) {
     try {
-        const newProduct = await Product.create(req.body);
+        if (!req.file) {
+            return res
+                .status(400)
+                .json({ message: "Vui lòng tải lên hình ảnh cho sản phẩm!" });
+        }
+
+        const imagePath = `/images/products/${req.file.filename}`;
+
+        const productData = {
+            ...req.body,
+            image: imagePath,
+        };
+
+        const newProduct = await Product.create(productData);
+
         res.status(201).json(newProduct);
     } catch (err) {
         console.error("Lỗi truy vấn: " + err.message);
@@ -122,54 +136,39 @@ const deleteProduct = async function (req, res) {
 
 const productView = async function (req, res) {
     console.log("Request body received:", req.body);
-    console.log("Server Session ID:", req.sessionID);
 
-    const { productId, username } = req.body; // Nhận username từ body request
+    const { productId, userId } = req.body; // Nhận userId từ request body
+    const isAuthenticated = !!userId; // Kiểm tra xem người dùng có đăng nhập không
+
+    if (!userId) {
+        return res.status(400).json({ message: "UserId is required" }); // Kiểm tra xem userId có được cung cấp không
+    }
 
     try {
-        // Lấy session gần nhất được lưu bằng username
-        const lastSessionId = await redisClient.get(`lastSession:${username}`);
+        // Key Redis cho người dùng đã đăng nhập
+        const key = `viewedProducts:${userId}`;
 
-        // Nếu có phiên mới, xóa phiên cũ
-        if (lastSessionId && lastSessionId !== req.sessionID) {
-            await redisClient.del(`viewedProducts:${lastSessionId}`);
-        }
+        // Lấy danh sách sản phẩm đã xem từ Redis
+        const viewedProducts = await redisClient.lRange(key, 0, -1);
 
-        // Cập nhật sessionId mới cho username
-        await redisClient.set(`lastSession:${username}`, req.sessionID);
+        // Nếu sản phẩm chưa được lưu
+        if (!viewedProducts.includes(productId)) {
+            // Thêm sản phẩm vào danh sách
+            await redisClient.rPush(key, productId);
 
-        // Lấy danh sách sản phẩm đã xem trong phiên hiện tại
-        const viewedProducts = await redisClient.hGetAll(
-            `viewedProducts:${req.sessionID}`
-        );
-
-        // Nếu chưa xem sản phẩm nào hoặc sản phẩm chưa có trong danh sách
-        if (!viewedProducts || Object.keys(viewedProducts).length === 0) {
-            await redisClient.hSet(
-                `viewedProducts:${req.sessionID}`,
-                productId,
-                1
-            );
-        } else {
-            // Tăng số lần xem cho sản phẩm nếu chưa đạt giới hạn
-            const currentViewCount = viewedProducts[productId] || 0;
-            if (currentViewCount < 6) {
-                await redisClient.hSet(
-                    `viewedProducts:${req.sessionID}`,
-                    productId,
-                    parseInt(currentViewCount) + 1
-                );
+            // Giới hạn danh sách tối đa 6 sản phẩm
+            const productCount = await redisClient.lLen(key);
+            if (productCount > 6) {
+                await redisClient.lPop(key); // Xóa sản phẩm cũ nhất
             }
         }
 
-        console.log("Cookies received:", req.cookies);
-        console.log("Session Data:", req.session);
+        // Lấy danh sách sản phẩm đã xem sau khi cập nhật
+        const updatedViewedProducts = await redisClient.lRange(key, 0, -1);
 
         res.json({
             message: `Sản phẩm với id ${productId} đã được thêm vào danh sách sản phẩm đã xem.`,
-            viewedProducts: await redisClient.hGetAll(
-                `viewedProducts:${req.sessionID}`
-            ),
+            viewedProducts: updatedViewedProducts,
         });
     } catch (err) {
         res.status(500).json({ message: "Có lỗi xảy ra.", error: err.message });

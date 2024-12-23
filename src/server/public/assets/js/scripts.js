@@ -840,8 +840,8 @@ function updateTotals(cart) {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-    const userName = localStorage.getItem("username");
-    const anonymousUserId = localStorage.getItem("anonymousUserId");
+    const userName = sessionStorage.getItem("username");
+    const anonymousUserId = sessionStorage.getItem("anonymousUserId");
 
     if (!userName && !anonymousUserId) {
         const response = await fetch("/api/v1/setAnonymousSession", {
@@ -852,7 +852,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             const sessionData = await response.json();
             console.log("Anonymous session data:", sessionData);
 
-            localStorage.setItem("anonymousUserId", sessionData.id);
+            sessionStorage.setItem("anonymousUserId", sessionData.id);
         } else {
             console.error("Failed to set anonymous session");
         }
