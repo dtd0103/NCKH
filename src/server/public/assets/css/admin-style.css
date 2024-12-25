@@ -435,6 +435,66 @@ main .recent-orders a {
     text-align: right;
 }
 
+/* CUSTOMER */
+#customer-section .table-container table {
+    border: none;
+    /* Xóa viền bên ngoài bảng */
+    border-collapse: separate;
+    /* Ngăn không dính ô */
+    width: 100%;
+    /* Đảm bảo bảng chiếm toàn bộ chiều rộng */
+    background-color: #f9f9f9;
+    /* Màu nền bảng */
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    /* Thêm hiệu ứng bóng */
+    padding: var(--card-padding);
+    /* Khoảng cách bên trong */
+    margin-top: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+/* Xóa viền của ô */
+#customer-section .table-container th,
+#customer-section .table-container td {
+    border: none;
+    /* Xóa viền giữa các ô */
+    text-align: left;
+    /* Căn lề trái */
+    padding: 1rem;
+    /* Khoảng cách nội dung */
+    margin-top: 1rem;
+}
+
+/* Màu nền cho từng hàng */
+#customer-section .table-container tr:nth-child(even) {
+    background-color: #ffffff;
+    /* Màu trắng cho hàng chẵn */
+}
+
+#customer-section .table-container tr:nth-child(odd) {
+    background-color: #f2f2f2;
+    /* Màu xám nhạt cho hàng lẻ */
+}
+
+/* Hiệu ứng hover */
+#customer-section .table-container tr:hover {
+    background-color: #eaeaea;
+    /* Màu nền khi hover */
+    transition: background-color 0.3s ease;
+}
+
+/* Tiêu đề bảng */
+#customer-section .table-container th {
+    background-color: #f4f4f4;
+    /* Màu nền tiêu đề */
+    font-weight: bold;
+    /* Chữ đậm */
+    color: #333;
+    /* Màu chữ */
+    margin-top: auto;
+}
+
 /* ================ RECENT UPDATES ============== */
 .right .recent-updates {
     margin-top: 1rem;
@@ -462,6 +522,7 @@ main .recent-orders a {
     gap: 1rem;
     margin-bottom: 1rem;
 }
+
 
 /* ========= SALES ANALYTICS =========*/
 .right .sales-analytics {
@@ -694,5 +755,6 @@ main .recent-orders a {
         font-size: 2rem;
     }
 
-    
+
+ 
 }
