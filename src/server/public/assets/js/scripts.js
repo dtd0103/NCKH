@@ -520,7 +520,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <a href="product-detail.html?id=${product.SP_Ma}">
                                 <article class="product-card">
                                     <div class="product-card__img-wrap">
-                                        <img src="/images/product/${
+                                        <img src="/images/products/${
                                             product.SP_HinhAnh
                                         }" alt="" class="product-card__thumb" />
                                     </div>
@@ -629,7 +629,7 @@ async function updateCartPreview() {
                 productElement.innerHTML = `
                     <article class="cart-preview-item">
                         <div class="cart-preview-item__img-wrap">
-                            <img src="http://localhost:8081/images/product/${product.SP_HinhAnh}" 
+                            <img src="http://localhost:8081/images/products/${product.SP_HinhAnh}" 
                                  alt="${product.SP_Ten}" 
                                  class="cart-preview-item__thumb" />
                         </div>
@@ -685,7 +685,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 productElement.innerHTML = `
                     <a href="./product-detail.html?id=${productId}">
-                        <img src="http://localhost:8081/images/product/${
+                        <img src="http://localhost:8081/images/products/${
                             product.SP_HinhAnh
                         }" 
                              alt="${product.SP_Ten}" 

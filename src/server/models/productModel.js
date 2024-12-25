@@ -61,15 +61,14 @@ class Product {
     static create(data) {
         return new Promise((resolve, reject) => {
             connection.query(
-                "INSERT INTO san_pham (SP_Ma, SP_Ten, SP_HinhAnh, SP_SoLuong, SP_ThongTin, DM_Ma, DMP_Ma, TH_Ma) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO san_pham (SP_Ten, SP_HinhAnh, SP_SoLuong, SP_DonGia, SP_ThongTin, DM_Ma, TH_Ma) VALUES ( ?, ?, ?, ?, ?, ?, ?)",
                 [
-                    data.id,
                     data.name,
                     data.image,
                     data.quantity,
+                    data.price,
                     data.desc,
                     data.categoryId,
-                    data.subCategoryId || null,
                     data.brandId,
                 ],
                 (err, results) => {
@@ -83,7 +82,7 @@ class Product {
         });
     }
 
-    static update(data) {
+    static update(data, id) {
         return new Promise((resolve, reject) => {
             const query = `
                 UPDATE san_pham
@@ -91,9 +90,9 @@ class Product {
                     SP_Ten = ?,
                     SP_HinhAnh = ?,
                     SP_SoLuong = ?,
+                    SP_DonGia = ?,
                     SP_ThongTin = ?,
                     DM_Ma = ?,
-                    DMP_Ma = ?,
                     TH_Ma = ?
                 WHERE SP_Ma = ?;
             `;
@@ -101,11 +100,11 @@ class Product {
                 data.name,
                 data.image,
                 data.quantity,
+                data.price,
                 data.desc,
                 data.categoryId,
-                data.subCategoryId || null, // Nếu data.subCategoryId là null thì sẽ truyền null
                 data.brandId,
-                data.id,
+                id,
             ];
 
             connection.query(query, values, (err, results) => {

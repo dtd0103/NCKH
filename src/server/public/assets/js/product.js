@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <a href="product-detail.html?id=${product.SP_Ma}">
                         <article class="product-card">
                             <div class="product-card__img-wrap">
-                                <img src="/images/product/${
+                                <img src="/images/products/${
                                     product.SP_HinhAnh
                                 }" alt="" class="product-card__thumb" />
                             </div>

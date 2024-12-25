@@ -55,8 +55,8 @@ const createCategory = async function (req, res) {
 
 const updateCategory = async function (req, res) {
     try {
-        console.log("Body:", req.body); // Kiểm tra body
-        console.log("File:", req.file); // Kiểm tra file
+        // console.log("Body:", req.body); // Kiểm tra body
+        // console.log("File:", req.file); // Kiểm tra file
 
         const existingCategory = await Category.getById(req.params.id);
         if (!existingCategory) {

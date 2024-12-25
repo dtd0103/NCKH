@@ -12,6 +12,21 @@ class Brand {
         });
     }
 
+    static getById(id) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                "SELECT * FROM thuong_hieu WHERE TH_Ma = ?",
+                [id],
+                (err, results) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results[0]);
+                }
+            );
+        });
+    }
+
     static get(name) {
         return new Promise((resolve, reject) => {
             const brandName = `%${name}%`;
@@ -31,27 +46,23 @@ class Brand {
     static create(data) {
         return new Promise((resolve, reject) => {
             const query =
-                "INSERT INTO thuong_hieu (TH_Ma, TH_Ten, TH_HinhAnh) VALUES (?, ?, ?)";
-            connection.query(
-                query,
-                [data.id, data.ten, data.hinh_anh],
-                (err, results) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    resolve(results);
+                "INSERT INTO thuong_hieu (TH_Ten, TH_HinhAnh) VALUES (?, ?)";
+            connection.query(query, [data.name, data.image], (err, results) => {
+                if (err) {
+                    return reject(err);
                 }
-            );
+                resolve(results);
+            });
         });
     }
 
-    static update(data) {
+    static update(data, id) {
         return new Promise((resolve, reject) => {
             const query =
                 "UPDATE thuong_hieu SET TH_Ten = ?, TH_HinhAnh = ? WHERE TH_Ma = ?";
             connection.query(
                 query,
-                [data.ten, data.hinh_anh, data],
+                [data.name, data.image, id],
                 (err, results) => {
                     if (err) {
                         return reject(err);

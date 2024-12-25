@@ -26,7 +26,21 @@ const getBrand = async function (req, res) {
 
 const createBrand = async function (req, res) {
     try {
-        const newBrand = await Brand.create(req.body);
+        // Kiểm tra xem hình ảnh có được tải lên không
+        if (!req.file) {
+            return res
+                .status(400)
+                .json({ message: "Vui lòng tải lên hình ảnh cho danh mục!" });
+        }
+
+        const imagePath = `${req.file.filename}`;
+
+        const brandData = {
+            ...req.body,
+            image: imagePath, // Thêm đường dẫn hình ảnh vào dữ liệu danh mục
+        };
+
+        const newBrand = await Brand.create(brandData);
         res.status(201).json(newBrand);
     } catch (err) {
         console.error("Lỗi truy vấn: " + err.message);
@@ -36,8 +50,26 @@ const createBrand = async function (req, res) {
 
 const updateBrand = async function (req, res) {
     try {
-        const updatedBrand = await Brand.update(req.body);
-        res.json(updatedBrand);
+        const existingBrand = await Brand.getById(req.params.id);
+        if (!existingBrand) {
+            return res
+                .status(404)
+                .json({ message: "Thương hiệu không tồn tại" });
+        }
+
+        let imagePath = existingCategory.TH_HinhAnh; // Mặc định giữ ảnh cũ
+        if (req.file) {
+            imagePath = `${req.file.filename}`; // Sử dụng ảnh mới nếu có
+        }
+
+        // Tạo dữ liệu cần cập nhật
+        const updatedData = {
+            ...req.body, // Giữ nguyên các trường khác
+            ...(imagePath && { image: imagePath }), // Chỉ thêm trường `image` nếu có file
+        };
+
+        const updatedBrand = await Brand.update(updatedData, req.params.id);
+        res.status(200).json(updatedBrand);
     } catch (err) {
         console.error("Lỗi truy vấn: " + err.message);
         res.status(500).send(

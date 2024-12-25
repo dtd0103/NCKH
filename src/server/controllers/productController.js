@@ -59,7 +59,7 @@ const createProduct = async function (req, res) {
                 .json({ message: "Vui lòng tải lên hình ảnh cho sản phẩm!" });
         }
 
-        const imagePath = `/images/products/${req.file.filename}`;
+        const imagePath = `${req.file.filename}`;
 
         const productData = {
             ...req.body,
@@ -77,8 +77,27 @@ const createProduct = async function (req, res) {
 
 const updateProduct = async function (req, res) {
     try {
-        const updatedProduct = await Product.update(req.body);
-        res.json(updateProduct);
+        console.log("Body:", req.body); // Kiểm tra body
+        console.log("File:", req.file); // Kiểm tra file
+
+        const existingProduct = await Product.getById(req.params.id);
+        if (!existingProduct) {
+            return res.status(404).json({ message: "Sản phẩm không tồn tại" });
+        }
+
+        let imagePath = existingProduct.SP_HinhAnh; // Mặc định giữ ảnh cũ
+        if (req.file) {
+            imagePath = `${req.file.filename}`; // Sử dụng ảnh mới nếu có
+        }
+
+        const updatedData = {
+            ...req.body, // Giữ nguyên các trường khác
+            ...(imagePath && { image: imagePath }), // Chỉ thêm trường `image` nếu có file
+        };
+
+        const updatedProduct = await Product.update(updatedData, req.params.id);
+
+        res.status(200).json(updatedProduct);
     } catch (err) {
         console.error("Lỗi truy vấn: " + err.message);
         res.status(500).send(

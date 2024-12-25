@@ -14,14 +14,15 @@ productRouter.get(
     productController.getProductByCategoryId
 );
 productRouter.post(
-    "/product/create",
+    "/product",
     authenticateAdminJWT,
     uploadProduct,
     productController.createProduct
 );
 productRouter.put(
-    "/product",
+    "/product/:id",
     authenticateAdminJWT,
+    uploadProduct,
     productController.updateProduct
 );
 productRouter.delete(
