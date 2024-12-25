@@ -34,7 +34,7 @@ const createCategory = async function (req, res) {
         }
 
         // Lấy đường dẫn hình ảnh
-        const imagePath = `/images/categories/${req.file.filename}`;
+        const imagePath = `${req.file.filename}`;
 
         // Thêm đường dẫn hình ảnh vào dữ liệu danh mục
         const categoryData = {
@@ -55,8 +55,34 @@ const createCategory = async function (req, res) {
 
 const updateCategory = async function (req, res) {
     try {
-        const updatedCategory = await Category.update(req.body);
-        res.json(updatedCategory);
+        console.log("Body:", req.body); // Kiểm tra body
+        console.log("File:", req.file); // Kiểm tra file
+
+        const existingCategory = await Category.getById(req.params.id);
+        if (!existingCategory) {
+            return res.status(404).json({ message: "Danh mục không tồn tại" });
+        }
+
+        // Kiểm tra nếu có file mới được tải lên
+        let imagePath = existingCategory.DM_HinhAnh; // Mặc định giữ ảnh cũ
+        if (req.file) {
+            imagePath = `${req.file.filename}`; // Sử dụng ảnh mới nếu có
+        }
+
+        // Tạo dữ liệu cần cập nhật
+        const updatedData = {
+            ...req.body, // Giữ nguyên các trường khác
+            ...(imagePath && { image: imagePath }), // Chỉ thêm trường `image` nếu có file
+        };
+
+        // Gọi update trên model Category
+        const updatedCategory = await Category.update(
+            updatedData,
+            req.params.id
+        );
+
+        // Trả về danh mục đã cập nhật
+        res.status(200).json(updatedCategory);
     } catch (err) {
         console.error("Lỗi truy vấn: " + err.message);
         res.status(500).send("Lỗi trong quá trình cập nhật danh mục");

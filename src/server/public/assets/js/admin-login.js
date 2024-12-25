@@ -41,7 +41,7 @@ loginForm.addEventListener("submit", async (event) => {
         console.log(decoded.payload.username);
         localStorage.setItem("username", decoded.payload.username);
         sessionStorage.removeItem("anonymousUserId");
-        // window.location.href = "admin.html";
+        window.location.href = "admin.html";
     } catch (error) {
         console.error("Đăng nhập thất bại:", error.message);
     }

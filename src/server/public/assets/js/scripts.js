@@ -840,7 +840,7 @@ function updateTotals(cart) {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-    const userName = sessionStorage.getItem("username");
+    const userName = localStorage.getItem("username");
     const anonymousUserId = sessionStorage.getItem("anonymousUserId");
 
     if (!userName && !anonymousUserId) {

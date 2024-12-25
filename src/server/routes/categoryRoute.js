@@ -7,20 +7,21 @@ import { uploadCategory } from "../services/imgUpload.js";
 const categoryRouter = express.Router();
 
 categoryRouter.get("/categories", categoryController.getAllCategory);
-categoryRouter.get("/categories/:name", categoryController.getCategory);
+categoryRouter.get("/category/:name", categoryController.getCategory);
 categoryRouter.post(
-    "/categories",
+    "/category",
     authenticateAdminJWT,
     uploadCategory,
     categoryController.createCategory
 );
 categoryRouter.put(
-    "/categories",
+    "/category/:id",
     authenticateAdminJWT,
+    uploadCategory,
     categoryController.updateCategory
 );
 categoryRouter.delete(
-    "/categories/:id",
+    "/category/:id",
     authenticateAdminJWT,
     categoryController.deleteCategory
 );
