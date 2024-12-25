@@ -17,7 +17,6 @@ class Cart {
     }
 
     static createCart(customerId) {
-        console.log(customerId);
         return new Promise((resolve, reject) => {
             this.getByCustomerId(customerId)
                 .then((existingCart) => {
@@ -60,7 +59,11 @@ class Cart {
                                 if (updateErr) {
                                     return reject(updateErr);
                                 }
-                                resolve(updateResults);
+
+                                // Cập nhật lại tổng tiền trong giỏ hàng
+                                this.updateTotalAmount(data.GH_Ma)
+                                    .then(() => resolve(updateResults))
+                                    .catch(reject);
                             }
                         );
                     } else {
@@ -72,10 +75,50 @@ class Cart {
                                 if (insertErr) {
                                     return reject(insertErr);
                                 }
-                                resolve(insertResults);
+
+                                // Cập nhật lại tổng tiền trong giỏ hàng
+                                this.updateTotalAmount(data.GH_Ma)
+                                    .then(() => resolve(insertResults))
+                                    .catch(reject);
                             }
                         );
                     }
+                }
+            );
+        });
+    }
+
+    // Hàm cập nhật tổng tiền trong giỏ hàng
+    static updateTotalAmount(GH_Ma) {
+        return new Promise((resolve, reject) => {
+            // Tính tổng tiền trong giỏ hàng
+            connection.query(
+                "SELECT SUM(SoLuong * DonGia) AS TotalAmount FROM gio_hang_chitiet WHERE GH_Ma = ?",
+                [GH_Ma],
+                (err, results) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    console.log(results[0]);
+                    console.log("Query Results: ", results);
+                    const totalAmount =
+                        results[0].TotalAmount !== null
+                            ? results[0].TotalAmount
+                            : 0;
+                    console.log("Calculated TotalAmount: ", totalAmount);
+
+                    // Cập nhật cột TongTien trong bảng gio_hang
+                    connection.query(
+                        "UPDATE gio_hang SET TongTien = ? WHERE GH_Ma = ?",
+                        [totalAmount, GH_Ma],
+                        (updateErr) => {
+                            if (updateErr) {
+                                return reject(updateErr);
+                            }
+                            
+                            resolve();
+                        }
+                    );
                 }
             );
         });
@@ -129,6 +172,34 @@ class Cart {
                         reject(err);
                     }
                     resolve(results);
+                }
+            );
+        });
+    }
+
+    static getCartById(cartId) {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM gio_hang WHERE GH_Ma = ?`;
+            connection.query(query, [cartId], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results); // Trả về kết quả nếu tìm thấy
+                }
+            });
+        });
+    }
+
+    static getItemDetails(itemId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                "SELECT * FROM gio_hang_chitiet WHERE GHCT_Ma = ?",
+                [itemId],
+                (err, results) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(results[0]);
                 }
             );
         });

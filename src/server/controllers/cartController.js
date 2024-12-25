@@ -48,6 +48,9 @@ const addToCart = async (req, res) => {
 
         await Cart.addItem(cartItem);
 
+        // Cập nhật lại tổng tiền giỏ hàng
+        await Cart.updateTotalAmount(cart.GH_Ma);
+
         // Lấy thông tin giỏ hàng mới nhất
         const updatedCartDetails = await Cart.getCartDetails(cart.GH_Ma);
 
@@ -67,12 +70,40 @@ const addToCart = async (req, res) => {
 
 const updateCartItem = async (req, res) => {
     try {
-        const { itemId, quantity } = req.body;
+        const { customerId, itemId, quantity } = req.body;
 
+        // Bước 1: Tìm giỏ hàng của người dùng
+        const cart = await Cart.getByCustomerId(customerId);
+        if (!cart) {
+            return res.status(404).json({
+                success: false,
+                message: "Giỏ hàng không tìm thấy.",
+            });
+        }
+
+        // Bước 2: Tìm chi tiết sản phẩm trong giỏ hàng dựa trên SP_Ma và GH_Ma
+        const itemDetails = await Cart.getCartDetails(cart.GH_Ma); // Lấy tất cả sản phẩm trong giỏ hàng
+        console.log(itemDetails);
+        const itemToUpdate = itemDetails.find((item) => {
+            // Kiểm tra kiểu dữ liệu để đảm bảo so sánh chính xác
+            return item.SP_Ma === parseInt(itemId); // Cố gắng chuyển itemId về kiểu int nếu nó là chuỗi
+        }); // Tìm sản phẩm theo SP_Ma
+        console.log(itemToUpdate);
+        if (!itemToUpdate) {
+            return res.status(404).json({
+                success: false,
+                message: "Sản phẩm không tìm thấy trong giỏ hàng của bạn.",
+            });
+        }
+
+        // Bước 3: Cập nhật số lượng sản phẩm
         await Cart.updateItem({
-            GHCT_Ma: itemId,
-            SoLuong: quantity,
+            GHCT_Ma: itemToUpdate.GHCT_Ma, // Lấy GHCT_Ma của sản phẩm tìm được
+            SoLuong: quantity, // Cập nhật số lượng
         });
+
+        // Bước 4: Cập nhật lại tổng tiền giỏ hàng
+        await Cart.updateTotalAmount(cart.GH_Ma);
 
         res.status(200).json({
             success: true,
@@ -92,7 +123,31 @@ const updateCartItem = async (req, res) => {
 
 const removeCartItem = async (req, res) => {
     try {
-        await Cart.removeItem(req.params.id);
+        const cartId = req.params.cartId; // Lấy cartId và itemId từ body (hoặc req.params nếu truyền qua URL)
+        const itemId = req.params.itemId;
+        console.log(cartId, itemId);
+        // Tìm GHCT_Ma bằng cartId và itemId
+        const itemDetails = await Cart.getCartDetails(cartId); // Lấy tất cả chi tiết sản phẩm trong giỏ hàng
+        console.log(itemDetails);
+        const itemToRemove = itemDetails.find(
+            (item) => item.SP_Ma === Number(itemId)
+        );
+        // Tìm sản phẩm theo mã sản phẩm (SP_Ma)
+        console.log(itemToRemove);
+        if (!itemToRemove) {
+            return res.status(404).json({
+                success: false,
+                message: "Sản phẩm không tồn tại trong giỏ hàng.",
+            });
+        }
+
+        // Xóa sản phẩm khỏi giỏ hàng bằng GHCT_Ma
+        await Cart.removeItem(itemToRemove.GHCT_Ma);
+
+        // Cập nhật lại tổng tiền giỏ hàng sau khi xóa sản phẩm
+        const cart = await Cart.getCartById(cartId); // Lấy giỏ hàng từ cartId
+        await Cart.updateTotalAmount(cart.GH_Ma);
+
         res.status(200).json({
             success: true,
             message: "Xóa sản phẩm khỏi giỏ hàng thành công.",
@@ -101,6 +156,27 @@ const removeCartItem = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Lỗi trong quá trình xóa sản phẩm khỏi giỏ hàng.",
+            error: error.message,
+        });
+    }
+};
+
+const clearCart = async (req, res) => {
+    try {
+        const cartId = req.params.cartId;
+        await Cart.clearCart(cartId);
+
+        // Cập nhật lại tổng tiền giỏ hàng (đặt về 0 sau khi xóa tất cả sản phẩm)
+        await Cart.updateTotalAmount(cartId);
+
+        res.status(200).json({
+            success: true,
+            message: "Đã xóa tất cả sản phẩm trong giỏ hàng.",
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Lỗi trong quá trình xóa giỏ hàng.",
             error: error.message,
         });
     }
@@ -127,24 +203,6 @@ const getCartDetails = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Lỗi trong quá trình lấy chi tiết giỏ hàng.",
-            error: error.message,
-        });
-    }
-};
-
-const clearCart = async (req, res) => {
-    try {
-        const cartId = req.params.cartId;
-        await Cart.clearCart(cartId);
-
-        res.status(200).json({
-            success: true,
-            message: "Đã xóa tất cả sản phẩm trong giỏ hàng.",
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Lỗi trong quá trình xóa giỏ hàng.",
             error: error.message,
         });
     }

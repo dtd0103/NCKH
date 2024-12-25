@@ -8,7 +8,7 @@ cartRouter.get("/cart/:customerId", authenticateJWT, cartController.getCart);
 cartRouter.post("/cart", authenticateJWT, cartController.addToCart);
 cartRouter.put("/cart", authenticateJWT, cartController.updateCartItem);
 cartRouter.delete(
-    "/cart/item/:id",
+    "/cart/:cartId/item/:itemId",
     authenticateJWT,
     cartController.removeCartItem
 );
