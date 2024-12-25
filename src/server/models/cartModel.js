@@ -1,27 +1,15 @@
 import connection from "../services/mysqlConnection.js";
 
 class Cart {
-  // Lấy thông tin tất cả giỏ hàng
-  static getAll() {
+  static getByCustomerId(customerId) {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM gio_hang", (err, results) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(results);
-      });
-    });
-  }
-
-  // Lấy thông tin một giỏ hàng theo ID
-  static get(cartId) {
-    return new Promise((resolve, reject) => {
+      // Thêm LIMIT 1 vì mỗi khách hàng chỉ có 1 giỏ hàng
       connection.query(
-        "SELECT * FROM gio_hang WHERE GH_Ma = ?",
-        [cartId],
+        "SELECT * FROM gio_hang WHERE KH_Ma = ? LIMIT 1",
+        [customerId],
         (err, results) => {
           if (err) {
-            return reject(err);
+            reject(err);
           }
           resolve(results[0]);
         }
@@ -29,83 +17,93 @@ class Cart {
     });
   }
 
-  // Tạo mới một giỏ hàng
-  static create(customerId) {
+  static createCart(customerId) {
     return new Promise((resolve, reject) => {
-      connection.query(
-        "INSERT INTO gio_hang (KH_Ma) VALUES (?)",
-        [customerId],
-        (err, results) => {
-          if (err) {
-            reject(err);
+      // Trước khi tạo, kiểm tra xem khách hàng đã có giỏ hàng chưa
+      this.getByCustomerId(customerId)
+        .then((existingCart) => {
+          if (existingCart) {
+            resolve(existingCart);
+          } else {
+            connection.query(
+              "INSERT INTO gio_hang (KH_Ma) VALUES (?)",
+              [customerId],
+              (err, results) => {
+                if (err) {
+                  reject(err);
+                }
+                resolve({ GH_Ma: results.insertId, KH_Ma: customerId });
+              }
+            );
           }
-          resolve(results);
-        }
-      );
+        })
+        .catch(reject);
     });
   }
-  static updateCart(cartId, customerId) {
+
+  static addItem(data) {
     return new Promise((resolve, reject) => {
-      const query = "UPDATE gio_hang SET KH_Ma = ? WHERE GH_Ma = ?";
-      connection.query(query, [customerId, cartId], (err, results) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve(results);
-      });
-    });
-  }
-  // Thêm sản phẩm vào giỏ hàng
-  static addItemToCart(data) {
-    return new Promise((resolve, reject) => {
-      const query = `INSERT INTO gio_hang_chitiet (GH_Ma, SP_Ma, SoLuong, DonGia) VALUES (?, ?, ?, ?)`;
+      // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
       connection.query(
-        query,
-        [data.GH_Ma, data.SP_Ma, data.SoLuong, data.DonGia],
+        "SELECT * FROM gio_hang_chitiet WHERE GH_Ma = ? AND SP_Ma = ?",
+        [data.GH_Ma, data.SP_Ma],
         (err, results) => {
           if (err) {
             return reject(err);
           }
-          resolve(results);
-        }
-      );
-    });
-  }
 
-  // Lấy danh sách sản phẩm trong giỏ hàng
-  static getCartItems(cartId) {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        `SELECT * FROM gio_hang_chitiet WHERE GH_Ma = ?`,
-        [cartId],
-        (err, results) => {
-          if (err) {
-            reject(err);
+          if (results.length > 0) {
+            // Cập nhật số lượng nếu sản phẩm đã tồn tại
+            connection.query(
+              "UPDATE gio_hang_chitiet SET SoLuong = SoLuong + ? WHERE GH_Ma = ? AND SP_Ma = ?",
+              [data.SoLuong, data.GH_Ma, data.SP_Ma],
+              (updateErr, updateResults) => {
+                if (updateErr) {
+                  return reject(updateErr);
+                }
+                resolve(updateResults);
+              }
+            );
+          } else {
+            // Thêm sản phẩm mới vào giỏ hàng
+            connection.query(
+              "INSERT INTO gio_hang_chitiet (GH_Ma, SP_Ma, SoLuong, DonGia) VALUES (?, ?, ?, ?)",
+              [data.GH_Ma, data.SP_Ma, data.SoLuong, data.DonGia],
+              (insertErr, insertResults) => {
+                if (insertErr) {
+                  return reject(insertErr);
+                }
+                resolve(insertResults);
+              }
+            );
           }
-          resolve(results);
         }
       );
     });
   }
 
-  // Cập nhật số lượng sản phẩm trong giỏ hàng
-  static updateCartItem(itemId, data) {
+  static updateItem(data) {
     return new Promise((resolve, reject) => {
-      connection.query(
-        `UPDATE gio_hang_chitiet SET SoLuong = ?, DonGia = ? WHERE GHCT_Ma = ?`,
-        [data.SoLuong, data.DonGia, itemId],
-        (err, results) => {
-          if (err) {
-            reject(err);
+      if (data.SoLuong <= 0) {
+        // Nếu số lượng <= 0, xóa sản phẩm khỏi giỏ hàng
+        this.removeItem(data.GHCT_Ma).then(resolve).catch(reject);
+      } else {
+        // Cập nhật số lượng sản phẩm
+        connection.query(
+          "UPDATE gio_hang_chitiet SET SoLuong = ? WHERE GHCT_Ma = ?",
+          [data.SoLuong, data.GHCT_Ma],
+          (err, results) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(results);
           }
-          resolve(results);
-        }
-      );
+        );
+      }
     });
   }
 
-  // Xóa một sản phẩm trong giỏ hàng
-  static deleteCartItem(itemId) {
+  static removeItem(itemId) {
     return new Promise((resolve, reject) => {
       connection.query(
         "DELETE FROM gio_hang_chitiet WHERE GHCT_Ma = ?",
@@ -120,40 +118,35 @@ class Cart {
     });
   }
 
-  // Xóa toàn bộ giỏ hàng và chi tiết
-  static delete(cartId) {
+  static getCartDetails(cartId) {
     return new Promise((resolve, reject) => {
-      connection.beginTransaction((err) => {
-        if (err) return reject(err);
-
-        // Xóa chi tiết giỏ hàng trước
-        connection.query(
-          "DELETE FROM gio_hang_chitiet WHERE GH_Ma = ?",
-          [cartId],
-          (err) => {
-            if (err) {
-              return connection.rollback(() => reject(err));
-            }
-
-            // Xóa giỏ hàng
-            connection.query(
-              "DELETE FROM gio_hang WHERE GH_Ma = ?",
-              [cartId],
-              (err, results) => {
-                if (err) {
-                  return connection.rollback(() => reject(err));
-                }
-                connection.commit((err) => {
-                  if (err) {
-                    return connection.rollback(() => reject(err));
-                  }
-                  resolve(results);
-                });
-              }
-            );
+      connection.query(
+        "SELECT ghct.*, sp.TenSP, sp.HinhAnh FROM gio_hang_chitiet ghct " +
+          "JOIN san_pham sp ON ghct.SP_Ma = sp.SP_Ma " +
+          "WHERE ghct.GH_Ma = ?",
+        [cartId],
+        (err, results) => {
+          if (err) {
+            reject(err);
           }
-        );
-      });
+          resolve(results);
+        }
+      );
+    });
+  }
+
+  static clearCart(cartId) {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        "DELETE FROM gio_hang_chitiet WHERE GH_Ma = ?",
+        [cartId],
+        (err, results) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(results);
+        }
+      );
     });
   }
 }

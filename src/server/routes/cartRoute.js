@@ -1,18 +1,26 @@
 import express from "express";
 import cartController from "../controllers/cartController.js";
+import authenticateJWT from "../services/jwtAuth.js";
 
 const cartRouter = express.Router();
 
-// Cart routes
-cartRouter.post("/cart/create", cartController.createCart);
-cartRouter.get("/cart/:cartId", cartController.getCart);
-cartRouter.put("/cart/:cartId", cartController.updateCart);
-cartRouter.delete("/cart/:cartId", cartController.deleteCart);
-
-// Cart item routes
-cartRouter.post("/cart/:cartId/item", cartController.addItemToCart);
-cartRouter.get("/cart/:cartId/items", cartController.getCartItems);
-cartRouter.put("/cart/:cartId/item/:itemId", cartController.updateCartItem);
-cartRouter.delete("/cart/:cartId/item/:itemId", cartController.deleteCartItem);
+cartRouter.get("/cart/:customerId", authenticateJWT, cartController.getCart);
+cartRouter.post("/cart/add", authenticateJWT, cartController.addToCart);
+cartRouter.put("/cart/update", authenticateJWT, cartController.updateCartItem);
+cartRouter.delete(
+  "/cart/item/:id",
+  authenticateJWT,
+  cartController.removeCartItem
+);
+cartRouter.get(
+  "/cart/:cartId/details",
+  authenticateJWT,
+  cartController.getCartDetails
+);
+cartRouter.delete(
+  "/cart/:cartId/clear",
+  authenticateJWT,
+  cartController.clearCart
+);
 
 export default cartRouter;
