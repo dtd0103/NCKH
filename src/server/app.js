@@ -56,6 +56,10 @@ app.use(
     "/images/products",
     express.static(path.join(__dirname, "images/products"))
 );
+app.use(
+    "/images/brands",
+    express.static(path.join(__dirname, "/images/brands"))
+);
 
 // API routes
 app.use("/api/v1", categoryRouter);

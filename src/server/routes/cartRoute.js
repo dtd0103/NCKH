@@ -5,22 +5,22 @@ import authenticateJWT from "../services/jwtAuth.js";
 const cartRouter = express.Router();
 
 cartRouter.get("/cart/:customerId", authenticateJWT, cartController.getCart);
-cartRouter.post("/cart/add", authenticateJWT, cartController.addToCart);
-cartRouter.put("/cart/update", authenticateJWT, cartController.updateCartItem);
+cartRouter.post("/cart", authenticateJWT, cartController.addToCart);
+cartRouter.put("/cart", authenticateJWT, cartController.updateCartItem);
 cartRouter.delete(
-  "/cart/item/:id",
-  authenticateJWT,
-  cartController.removeCartItem
+    "/cart/:cartId/item/:itemId",
+    authenticateJWT,
+    cartController.removeCartItem
 );
 cartRouter.get(
-  "/cart/:cartId/details",
-  authenticateJWT,
-  cartController.getCartDetails
+    "/cart/:cartId/details",
+    authenticateJWT,
+    cartController.getCartDetails
 );
 cartRouter.delete(
-  "/cart/:cartId/clear",
-  authenticateJWT,
-  cartController.clearCart
+    "/cart/:cartId/clear",
+    authenticateJWT,
+    cartController.clearCart
 );
 
 export default cartRouter;
