@@ -51,14 +51,12 @@ class Employee {
     static update(data) {
         return new Promise((resolve, reject) => {
             connection.query(
-                "UPDATE nhan_vien SET NV_Ten = ?, NV_TaiKhoan = ?, NV_MatKhau = ?, NV_SoDienThoai = ?, NV_DiaChi = ?, NV_ChucVu = ? WHERE NV_Ma = ?",
+                "UPDATE nhan_vien SET NV_Ten = ?, NV_TaiKhoan = ?, NV_SoDienThoai = ?, NV_DiaChi = ? WHERE NV_Ma = ?",
                 [
                     data.name,
                     data.username,
-                    data.password,
                     data.phone,
                     data.address,
-                    data.role,
                     data.id,
                 ],
                 (err, results) => {
