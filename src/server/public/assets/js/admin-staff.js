@@ -84,52 +84,83 @@ function displayEmployees(employees) {
   );
 }
 
-function editEmployee(employeeId) {
-  const overlay = document.getElementById("editEmployeeOverlay");
-  overlay.style.display = "block";
+async function editEmployee(employeeId) {
+  const token = localStorage.getItem("authToken");
 
-  // Lấy thông tin nhân viên qua API
-  fetch(`http://localhost:8081/api/v1/employees/${employeeId}`)
-    .then((response) => response.json())
-    .then((employee) => {
-      document.getElementById("editEmployeeId").value = employee.NV_Ma;
-      document.getElementById("editEmployeeName").value = employee.NV_Ten;
-      document.getElementById("editEmployeeUsername").value =
-        employee.NV_TaiKhoan;
-      document.getElementById("editEmployeePhone").value =
-        employee.NV_SoDienThoai;
-      document.getElementById("editEmployeeAddress").value = employee.NV_DiaChi;
-    })
-    .catch((error) => console.error("Lỗi lấy thông tin nhân viên: ", error));
+  // Mở form overlay để chỉnh sửa thông tin nhân viên
+  // Lấy thông tin nhân viên từ API
+  try {
+    const response = await fetch(
+      `http://localhost:8081/api/v1/employee/${employeeId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Không thể tải thông tin nhân viên.");
+    }
+
+    const employee = await response.json();
+
+    // Điền dữ liệu vào form overlay
+    document.getElementById("employeeID").value = employee.NV_Ma;
+    document.getElementById("employeeName").value = employee.NV_Ten;
+    document.getElementById("employeeUsername").value = employee.NV_TaiKhoan;
+    document.getElementById("employeePhone").value = employee.NV_SoDienThoai;
+    document.getElementById("employeeAddress").value = employee.NV_DiaChi;
+
+    // Hiển thị overlay chỉnh sửa
+    document.getElementById("editEmployeeOverlay").style.display = "block";
+
+    // Xử lý sự kiện khi submit form chỉnh sửa
+    const editEmployeeForm = document.getElementById("editEmployeeForm");
+    editEmployeeForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const id = document.getElementById("employeeID").value;
+      const name = document.getElementById("employeeName").value;
+      const username = document.getElementById("employeeUsername").value;
+      const phone = document.getElementById("employeePhone").value;
+      const address = document.getElementById("employeeAddress").value;
+
+      const updatedEmployee = { id, name, username, phone, address };
+
+      try {
+        const updateResponse = await fetch(
+          `http://localhost:8081/api/v1/employee`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedEmployee),
+          }
+        );
+
+        if (!updateResponse.ok) {
+          throw new Error(await updateResponse.text());
+        }
+
+        alert("Chỉnh sửa nhân viên thành công!");
+        fetchEmployees(); // Tải lại danh sách nhân viên
+        document.getElementById("editEmployeeOverlay").style.display = "none"; // Đóng overlay
+      } catch (error) {
+        console.error("Lỗi khi chỉnh sửa nhân viên: ", error.message);
+        alert("Không thể chỉnh sửa nhân viên: " + error.message);
+      }
+    });
+  } catch (error) {
+    console.error("Lỗi khi lấy thông tin nhân viên: ", error.message);
+    alert("Lỗi khi lấy thông tin nhân viên: " + error.message);
+  }
 }
 
-// Lưu chỉnh sửa
-document.getElementById("editEmployeeForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const id = document.getElementById("editEmployeeId").value;
-  const name = document.getElementById("editEmployeeName").value;
-  const username = document.getElementById("editEmployeeUsername").value;
-  const phone = document.getElementById("editEmployeePhone").value;
-  const address = document.getElementById("editEmployeeAddress").value;
 
-  fetch(`http://localhost:8081/api/v1/employees/${id}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, username, phone, address }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Cập nhật thất bại");
-      }
-      alert("Cập nhật thành công!");
-      fetchEmployees();
-      document.getElementById("editEmployeeOverlay").style.display = "none";
-    })
-    .catch((error) => alert("Lỗi: " + error.message));
-});
 
 async function deleteEmployee(employeeId) {
   const token = localStorage.getItem("authToken");
