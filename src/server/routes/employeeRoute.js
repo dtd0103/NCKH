@@ -6,6 +6,7 @@ import authenticateAdminJWT from "../services/adminAuth.js";
 const employeeRouter = express.Router();
 
 employeeRouter.get("/employees", employeeController.getAllEmployee);
+employeeRouter.get("/employee/:id", employeeController.getEmployeeById);
 employeeRouter.get("/employee/:username", employeeController.getEmployee);
 employeeRouter.post(
     "/employee",
