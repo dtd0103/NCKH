@@ -12,6 +12,16 @@ const getAllEmployee = async function (req, res) {
     }
 };
 
+const getEmployeeById = async function (req, res) {
+    try {
+        const employee = await Employee.findEmployeeById(req.params.id);
+        res.status(200).json(employee);
+    } catch (err) {
+        console.error("Lỗi truy vấn: " + err.message);
+        res.status(500).send("Lỗi trong quá trình lấy thông tin nhân viên.");
+    }
+};
+
 const getEmployee = async function (req, res) {
     try {
         const employee = await Employee.findEmployeeByUsername(
@@ -127,6 +137,7 @@ const employeeDelete = async function (req, res) {
 export default {
     getAllEmployee,
     getEmployee,
+    getEmployeeById,
     employeeCreate,
     employeeLogin,
     employeeUpdate,

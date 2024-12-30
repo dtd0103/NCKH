@@ -33,6 +33,21 @@ class Employee {
         });
     }
 
+    static findEmployeeById(id) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                "SELECT * FROM nhan_vien WHERE NV_TaiKhoan = ?",
+                [id],
+                (err, results) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results[0]);
+                }
+            );
+        });
+    }
+
     static findEmployeeByUsername(username) {
         return new Promise((resolve, reject) => {
             connection.query(
@@ -52,13 +67,7 @@ class Employee {
         return new Promise((resolve, reject) => {
             connection.query(
                 "UPDATE nhan_vien SET NV_Ten = ?, NV_TaiKhoan = ?, NV_SoDienThoai = ?, NV_DiaChi = ? WHERE NV_Ma = ?",
-                [
-                    data.name,
-                    data.username,
-                    data.phone,
-                    data.address,
-                    data.id,
-                ],
+                [data.name, data.username, data.phone, data.address, data.id],
                 (err, results) => {
                     if (err) {
                         return reject(err);
