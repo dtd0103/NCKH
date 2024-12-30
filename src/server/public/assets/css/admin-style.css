@@ -495,6 +495,85 @@ main .recent-orders a {
     margin-top: auto;
 }
 
+/* ================ STAFF ============== */
+
+/* ================ STAFF ============== */
+#employeeTable {
+    border: none;
+    /* Xóa viền bên ngoài bảng */
+    border-collapse: separate;
+    /* Ngăn không dính ô */
+    width: 100%;
+    /* Đảm bảo bảng chiếm toàn bộ chiều rộng */
+    background-color: #f9f9f9;
+    /* Màu nền bảng */
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    /* Thêm hiệu ứng bóng */
+    padding: var(--card-padding);
+    /* Khoảng cách bên trong */
+    margin-top: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+/* Xóa viền của ô */
+#employeeTable th,
+#employeeTable td {
+    border: none;
+    /* Xóa viền giữa các ô */
+    text-align: left;
+    /* Căn lề trái */
+    padding: 1rem;
+    /* Khoảng cách nội dung */
+}
+
+/* Màu nền cho từng hàng */
+#employeeTable tr:nth-child(even) {
+    background-color: #ffffff;
+    /* Màu trắng cho hàng chẵn */
+}
+
+#employeeTable tr:nth-child(odd) {
+    background-color: #f2f2f2;
+    /* Màu xám nhạt cho hàng lẻ */
+}
+
+/* Hiệu ứng hover */
+#employeeTable tr:hover {
+    background-color: #eaeaea;
+    /* Màu nền khi hover */
+    transition: background-color 0.3s ease;
+}
+
+/* Tiêu đề bảng */
+#employeeTable th {
+    background-color: #f4f4f4;
+    /* Màu nền tiêu đề */
+    font-weight: bold;
+    /* Chữ đậm */
+    color: #333;
+    /* Màu chữ */
+}
+
+/* Đảm bảo chỉ ảnh hưởng đến nút thêm nhân viên */
+.add-employee-btn {
+    background-color: #28a745; /* Màu nền xanh lá */
+    color: white; /* Màu chữ */
+    border: none; /* Bỏ viền */
+    padding: 10px 15px; /* Kích thước */
+    font-size: 14px; /* Cỡ chữ */
+    border-radius: 5px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột */
+    transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng khi hover */
+.add-employee-btn:hover {
+    background-color: #218838; /* Màu xanh đậm hơn */
+}
+
+
+
 /* ================ RECENT UPDATES ============== */
 .right .recent-updates {
     margin-top: 1rem;

@@ -28,7 +28,7 @@
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="#" class="active">
+                <a href="./admin-customer.html" class="active">
                     <span class="material-icons-sharp">person_outline</span>
                     <h3>Khách hàng</h3>
                 </a>
@@ -40,7 +40,7 @@
                     <span class="material-icons-sharp">inventory</span>
                     <h3>Sản phẩm</h3>
                 </a>
-                <a href="./admin-staff.html">
+                <a href="#">
                     <span class="material-icons-sharp">settings_accessibility</span>
                     <h3>Nhân viên</h3>
                 </a>
@@ -59,29 +59,34 @@
             </div>
         </aside>
         <!------END OF ASIDE------>
-<main>                
-    <section id="customer-section">
-        <h2>Danh sách khách hàng</h2>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên</th>
-                        <th>Tài khoản</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Ngày Tạo</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody id="customer-table-body">
-                    <!-- Thông tin khách hàng sẽ được thêm vào đây -->
-                </tbody>
-            </table>
-        </div>
-    </section>
+<main>
+    <h1>Quản lý nhân viên</h1>
+    <form id="addEmployeeForm">
+        <input type="text" id="employeeName" placeholder="Tên nhân viên" required />
+        <input type="text" id="employeeUsername" placeholder="Tài khoản" required />
+        <input type="password" id="employeePassword" placeholder="Mật khẩu" required />
+        <input type="text" id="employeePhone" placeholder="Số điện thoại" required />
+        <input type="text" id="employeeAddress" placeholder="Địa chỉ" required />
+        <button type="submit">Thêm nhân viên</button>
+    </form>
+    
+    <table id="employeeTable">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Tên</th>
+                <th>Tài khoản</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dữ liệu sẽ được thêm ở đây -->
+        </tbody>
+    </table>
 </main>
+
         <!---------------END OF MAIN---------------->
 
         <div class="right">
@@ -190,7 +195,7 @@
             </div>
         </div>
     </div>
-    <script src="./assets/js/admin-customer.js"></script>
+    <script src="./assets/js/admin-staff.js"></script>
 </body>
 </html>
     
