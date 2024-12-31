@@ -105,7 +105,6 @@ class Cart {
                         results[0].TotalAmount !== null
                             ? results[0].TotalAmount
                             : 0;
-                    console.log("Calculated TotalAmount: ", totalAmount);
 
                     // Cập nhật cột TongTien trong bảng gio_hang
                     connection.query(
@@ -115,7 +114,7 @@ class Cart {
                             if (updateErr) {
                                 return reject(updateErr);
                             }
-                            
+
                             resolve();
                         }
                     );
