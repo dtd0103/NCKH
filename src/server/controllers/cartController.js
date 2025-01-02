@@ -125,7 +125,7 @@ const removeCartItem = async (req, res) => {
     try {
         const cartId = req.params.cartId; // Lấy cartId và itemId từ body (hoặc req.params nếu truyền qua URL)
         const itemId = req.params.itemId;
-        console.log(cartId, itemId);
+
         // Tìm GHCT_Ma bằng cartId và itemId
         const itemDetails = await Cart.getCartDetails(cartId); // Lấy tất cả chi tiết sản phẩm trong giỏ hàng
         console.log(itemDetails);
@@ -133,7 +133,7 @@ const removeCartItem = async (req, res) => {
             (item) => item.SP_Ma === Number(itemId)
         );
         // Tìm sản phẩm theo mã sản phẩm (SP_Ma)
-        console.log(itemToRemove);
+
         if (!itemToRemove) {
             return res.status(404).json({
                 success: false,
@@ -146,7 +146,7 @@ const removeCartItem = async (req, res) => {
 
         // Cập nhật lại tổng tiền giỏ hàng sau khi xóa sản phẩm
         const cart = await Cart.getCartById(cartId); // Lấy giỏ hàng từ cartId
-        await Cart.updateTotalAmount(cart.GH_Ma);
+        await Cart.updateTotalAmount(cart[0].GH_Ma);
 
         res.status(200).json({
             success: true,
@@ -166,7 +166,6 @@ const clearCart = async (req, res) => {
         const cartId = req.params.cartId;
         await Cart.clearCart(cartId);
 
-        // Cập nhật lại tổng tiền giỏ hàng (đặt về 0 sau khi xóa tất cả sản phẩm)
         await Cart.updateTotalAmount(cartId);
 
         res.status(200).json({
