@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- MATERIAL CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="./assets/css/admin-style.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="./assets/icons/logo.svg" alt="grocerymart">
+                    <h2 class="text-muted">pus<span class="danger">sea</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="./admin.html">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="./admin-customer.html" class="active">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Khách hàng</h3>
+                </a>
+                <a href="./admin-order.html">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Đơn hàng</h3>
+                </a>
+                <a href="./admin-product.html">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Sản phẩm</h3>
+                </a>
+                <a href="./admin-staff.html">
+                    <span class="material-icons-sharp">settings_accessibility</span>
+                    <h3>Nhân viên</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">category</span>
+                    <h3>Danh mục</h3>
+                </a>
+                <a href="./admin-brand.html">
+                    <span class="material-icons-sharp">trending_up</span>
+                    <h3>Thương hiệu</h3>
+                </a>
+                <a href="./admin-login.html">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Đăng xuất</h3>
+                </a>
+            </div>
+        </aside>
+        <!------END OF ASIDE------>
+
+
+
+
+        <!---------------END OF MAIN---------------->
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hello, <b>Thanh Dat Do</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="//fonts.googleapis.com/icon">
+                    </div>
+                </div>
+            </div>
+            <!----END OF TOP---->
+            <div class="recent-updates">
+                <h2>Recent Updates</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="./assets/icons/logo.svg">
+                        </div>
+                        <div class="message">
+                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
+                            <small class="text-muted">2 minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="./assets/icons/logo.svg">
+                        </div>
+                        <div class="message">
+                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
+                            <small class="text-muted">2 minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="./assets/icons/logo.svg">
+                        </div>
+                        <div class="message">
+                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
+                            <small class="text-muted">2 minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="./assets/icons/logo.svg">
+                        </div>
+                        <div class="message">
+                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
+                            <small class="text-muted">2 minutes ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-------END OF RECENT UPDATES-------->
+
+        <div class="sales-analytics">
+            <h2>Sale Analytics</h2>
+            <div class="item online">
+                <div class="icon">
+                    <span class="material-icons-sharp">shopping_cart</span>
+                </div>
+                <div class="right">
+                    <div class="info">
+                        <h3>ONLINE ORDERS</h3>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                    <h5 class="success">+39%</h5>
+                    <h3>3849</h3>
+                </div>
+            </div>
+            <div class="item offline">
+                <div class="icon">
+                    <span class="material-icons-sharp">local_mall</span>
+                </div>
+                <div class="right">
+                    <div class="info">
+                        <h3>OFFLINE ORDERS</h3>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                    <h5 class="danger">-17%</h5>
+                    <h3>1100</h3>
+                </div>
+            </div>
+            <div class="item customers">
+                <div class="icon">
+                    <span class="material-icons-sharp">person</span>
+                </div>
+                <div class="right">
+                    <div class="info">
+                        <h3>NEW CUSTOMERS</h3>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                    <h5 class="success">+25%</h5>
+                    <h3>849</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/js/admin-category.js"></script>
+</body>
+</html>
+    

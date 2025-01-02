@@ -70,30 +70,28 @@
         <button type="submit">Thêm nhân viên</button>
     </form>
     
-   <!-- Form cập nhật nhân viên -->
-<div id="updateEmployeeOverlay" class="overlay">
+    <div id="editEmployeeOverlay" class="overlay">
   <div class="overlay-content">
-    <h2>Cập nhật thông tin nhân viên</h2>
-    <form id="updateEmployeeForm">
-      <input type="hidden" id="updateEmployeeId" />
-      <label for="updateEmployeeName">Tên:</label>
-      <input type="text" id="updateEmployeeName" required />
-
-      <label for="updateEmployeeUsername">Tài khoản:</label>
-      <input type="text" id="updateEmployeeUsername" required />
-
-      <label for="updateEmployeePhone">Số điện thoại:</label>
-      <input type="text" id="updateEmployeePhone" required />
-
-      <label for="updateEmployeeAddress">Địa chỉ:</label>
-      <input type="text" id="updateEmployeeAddress" required />
-
+    <h3>Chỉnh sửa thông tin nhân viên</h3>
+    <form id="editEmployeeForm">
+      <label for="editEmployeeName">Tên nhân viên:</label>
+      <input type="text" id="editEmployeeName" required>
+      
+      <label for="editEmployeeUsername">Tên đăng nhập:</label>
+      <input type="text" id="editEmployeeUsername" required>
+      
+      <label for="editEmployeePhone">Số điện thoại:</label>
+      <input type="text" id="editEmployeePhone" required>
+      
+      <label for="editEmployeeAddress">Địa chỉ:</label>
+      <input type="text" id="editEmployeeAddress" required>
+      
       <button type="submit">Cập nhật</button>
-      <button type="button" id="closeOverlay">Đóng</button>
+      <button type="button" id="closeEditOverlay">Đóng</button>
     </form>
   </div>
 </div>
-
+    
 
     <table id="employeeTable">
         <thead>

@@ -1,3 +1,26 @@
+const sideMenu = document.querySelector("aside");
+const menuBtn = document.querySelector("#menu-btn");
+const closeBtn = document.querySelector("#close-btn");
+const themeToggler = document.querySelector(".theme-toggler");
+
+//show sidebar
+menuBtn.addEventListener("click", () => {
+  sideMenu.style.display = "block";
+});
+
+//close sidebar
+closeBtn.addEventListener("click", () => {
+  sideMenu.style.display = "none";
+});
+
+//change theme
+themeToggler.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme-variables");
+
+  themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
+  themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   fetchEmployees();
   const token = localStorage.getItem("authToken");
@@ -76,7 +99,7 @@ function displayEmployees(employees) {
   const deleteButtons = document.querySelectorAll(".delete-btn");
 
   editButtons.forEach((btn) =>
-    btn.addEventListener("click", () => editEmployee(btn.dataset.id))
+    btn.addEventListener("click", () => updateEmployee(btn.dataset.id))
   );
 
   deleteButtons.forEach((btn) =>
@@ -84,16 +107,14 @@ function displayEmployees(employees) {
   );
 }
 
-async function editEmployee(employeeId) {
+async function updateEmployee(employeeId) {
   const token = localStorage.getItem("authToken");
 
-  // Mở form overlay để chỉnh sửa thông tin nhân viên
-  // Lấy thông tin nhân viên từ API
   try {
+    // Lấy thông tin nhân viên từ backend
     const response = await fetch(
       `http://localhost:8081/api/v1/employee/${employeeId}`,
       {
-        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -106,32 +127,33 @@ async function editEmployee(employeeId) {
 
     const employee = await response.json();
 
-    // Điền dữ liệu vào form overlay
-    document.getElementById("employeeID").value = employee.NV_Ma;
-    document.getElementById("employeeName").value = employee.NV_Ten;
-    document.getElementById("employeeUsername").value = employee.NV_TaiKhoan;
-    document.getElementById("employeePhone").value = employee.NV_SoDienThoai;
-    document.getElementById("employeeAddress").value = employee.NV_DiaChi;
+    // Điền dữ liệu vào form
+    document.getElementById("editEmployeeName").value = employee.NV_Ten;
+    document.getElementById("editEmployeeUsername").value =
+      employee.NV_TaiKhoan;
+    document.getElementById("editEmployeePhone").value =
+      employee.NV_SoDienThoai;
+    document.getElementById("editEmployeeAddress").value = employee.NV_DiaChi;
 
-    // Hiển thị overlay chỉnh sửa
-    document.getElementById("editEmployeeOverlay").style.display = "block";
+    // Hiển thị form overlay
+    document.getElementById("editEmployeeOverlay").style.display = "flex";
 
-    // Xử lý sự kiện khi submit form chỉnh sửa
+    // Thêm sự kiện submit form để cập nhật thông tin nhân viên
     const editEmployeeForm = document.getElementById("editEmployeeForm");
-    editEmployeeForm.addEventListener("submit", async (event) => {
+    editEmployeeForm.onsubmit = async (event) => {
       event.preventDefault();
 
-      const id = document.getElementById("employeeID").value;
-      const name = document.getElementById("employeeName").value;
-      const username = document.getElementById("employeeUsername").value;
-      const phone = document.getElementById("employeePhone").value;
-      const address = document.getElementById("employeeAddress").value;
-
-      const updatedEmployee = { id, name, username, phone, address };
+      const updatedEmployee = {
+        id: employeeId,
+        name: document.getElementById("editEmployeeName").value,
+        username: document.getElementById("editEmployeeUsername").value,
+        phone: document.getElementById("editEmployeePhone").value,
+        address: document.getElementById("editEmployeeAddress").value,
+      };
 
       try {
         const updateResponse = await fetch(
-          `http://localhost:8081/api/v1/employee`,
+          "http://localhost:8081/api/v1/employee",
           {
             method: "PUT",
             headers: {
@@ -146,20 +168,28 @@ async function editEmployee(employeeId) {
           throw new Error(await updateResponse.text());
         }
 
-        alert("Chỉnh sửa nhân viên thành công!");
+        alert("Cập nhật thông tin nhân viên thành công!");
         fetchEmployees(); // Tải lại danh sách nhân viên
         document.getElementById("editEmployeeOverlay").style.display = "none"; // Đóng overlay
       } catch (error) {
-        console.error("Lỗi khi chỉnh sửa nhân viên: ", error.message);
-        alert("Không thể chỉnh sửa nhân viên: " + error.message);
+        console.error("Lỗi cập nhật nhân viên: ", error.message);
+        alert("Không thể cập nhật nhân viên: " + error.message);
       }
-    });
+    };
+
+    // Đóng form overlay khi nhấn vào nút "Đóng"
+    document.getElementById("closeEditOverlay").onclick = () => {
+      document.getElementById("editEmployeeOverlay").style.display = "none";
+    };
   } catch (error) {
     console.error("Lỗi khi lấy thông tin nhân viên: ", error.message);
-    alert("Lỗi khi lấy thông tin nhân viên: " + error.message);
+    alert("Không thể tải thông tin nhân viên.");
   }
 }
-
+const editButtons = document.querySelectorAll(".edit-btn");
+editButtons.forEach((btn) =>
+  btn.addEventListener("click", () => updateEmployee(btn.dataset.id))
+);
 
 
 async function deleteEmployee(employeeId) {

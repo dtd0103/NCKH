@@ -193,8 +193,6 @@ aside .sidebar a span {
 }
 
 aside .sidebar a.active {
-    background: var(--color-light);
-    color: var(--color-primary);
     margin-left: 0;
 }
 
@@ -202,11 +200,9 @@ aside .sidebar a.active:before {
     content: "";
     width: 6px;
     height: 100%;
-    background: var(--color-primary);
 }
 
 aside .sidebar a.active span {
-    color: var(--color-primary);
     margin-left: calc(1rem - 3px);
 }
 
@@ -435,208 +431,226 @@ main .recent-orders a {
     text-align: right;
 }
 
-/* CUSTOMER */
-#customer-section .table-container table {
-    border: none;
-    /* Xóa viền bên ngoài bảng */
-    border-collapse: separate;
-    /* Ngăn không dính ô */
-    width: 100%;
-    /* Đảm bảo bảng chiếm toàn bộ chiều rộng */
-    background-color: #f9f9f9;
-    /* Màu nền bảng */
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--box-shadow);
-    /* Thêm hiệu ứng bóng */
-    padding: var(--card-padding);
-    /* Khoảng cách bên trong */
-    margin-top: 1rem;
-    margin-bottom: 0.8rem;
+/* CUSTOMER SECTION */
+/* Chỉnh kiểu cho tiêu đề trong customer-section */
+#customer-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
 }
 
-/* Xóa viền của ô */
+#customer-section .table-container table {
+    width: 100%;
+    padding: var(--card-padding);
+    margin: 1rem 0;
+    overflow: hidden;
+    font-size: 0.5rem;
+    /* Đồng nhất font-size với form */
+    color: var(--color-dark);
+    /* Đồng nhất màu chữ */
+}
+
 #customer-section .table-container th,
 #customer-section .table-container td {
     border: none;
-    /* Xóa viền giữa các ô */
     text-align: left;
-    /* Căn lề trái */
-    padding: 1rem;
-    /* Khoảng cách nội dung */
-    margin-top: 1rem;
+    padding: 0.5rem;
+    /* Đồng nhất padding */
+    font-size: 0.9rem;
+    /* Đồng nhất font-size */
+    color: var(--color-dark);
 }
 
-/* Màu nền cho từng hàng */
+/* Header của bảng */
+#customer-section .table-container th {
+    background-color: var(--color-primary-variant);
+    color: var(--color-white);
+    letter-spacing: 0.1rem;
+    font-weight: 700;
+    /* Đồng nhất độ đậm */
+}
+
+/* Hàng chẵn và lẻ */
 #customer-section .table-container tr:nth-child(even) {
-    background-color: #ffffff;
-    /* Màu trắng cho hàng chẵn */
+    background-color: var(--color-info-light);
 }
 
 #customer-section .table-container tr:nth-child(odd) {
-    background-color: #f2f2f2;
-    /* Màu xám nhạt cho hàng lẻ */
+    background-color: var(--color-white);
 }
 
-/* Hiệu ứng hover */
+/* Hiệu ứng hover cho các hàng */
 #customer-section .table-container tr:hover {
-    background-color: #eaeaea;
-    /* Màu nền khi hover */
+    background-color: var(--color-light-hover);
     transition: background-color 0.3s ease;
 }
 
-/* Tiêu đề bảng */
-#customer-section .table-container th {
-    background-color: #f4f4f4;
-    /* Màu nền tiêu đề */
-    font-weight: bold;
-    /* Chữ đậm */
-    color: #333;
-    /* Màu chữ */
-    margin-top: auto;
-}
-
-/* ================ STAFF ============== */
-
-/* ================ STAFF ============== */
-#employeeTable {
+button.delete {
+    padding: 1rem 2rem;
+    /* Đồng nhất padding */
+    font-size: 1rem;
+    /* Đồng nhất font-size */
     border: none;
-    /* Xóa viền bên ngoài bảng */
-    border-collapse: separate;
-    /* Ngăn không dính ô */
-    width: 100%;
-    /* Đảm bảo bảng chiếm toàn bộ chiều rộng */
-    background-color: #f9f9f9;
-    /* Màu nền bảng */
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--box-shadow);
-    /* Thêm hiệu ứng bóng */
-    padding: var(--card-padding);
-    /* Khoảng cách bên trong */
-    margin-top: 1rem;
-    margin-bottom: 0.8rem;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Xóa viền của ô */
+button.delete {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+}
+
+button.delete:hover {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+}
+/* ================ STAFF ============== */
+/* Cải thiện giao diện của tiêu đề và form */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+}
+
+form input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--color-info-light);
+    border-radius: var(--border-radius-2);
+    font-size: 1rem;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+}
+
+form button {
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: var(--color-primary-variant);
+}
+
+/* Cải thiện giao diện bảng nhân viên */
+#employeeTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
 #employeeTable th,
 #employeeTable td {
-    border: none;
-    /* Xóa viền giữa các ô */
-    text-align: left;
-    /* Căn lề trái */
     padding: 1rem;
-    /* Khoảng cách nội dung */
+    text-align: left;
+    border: 1px solid var(--color-info-light);
 }
 
-/* Màu nền cho từng hàng */
-#employeeTable tr:nth-child(even) {
-    background-color: #ffffff;
-    /* Màu trắng cho hàng chẵn */
-}
-
-#employeeTable tr:nth-child(odd) {
-    background-color: #f2f2f2;
-    /* Màu xám nhạt cho hàng lẻ */
-}
-
-/* Hiệu ứng hover */
-#employeeTable tr:hover {
-    background-color: #eaeaea;
-    /* Màu nền khi hover */
-    transition: background-color 0.3s ease;
-}
-
-/* Tiêu đề bảng */
 #employeeTable th {
-    background-color: #f4f4f4;
-    /* Màu nền tiêu đề */
-    font-weight: bold;
-    /* Chữ đậm */
-    color: #333;
-    /* Màu chữ */
+    background-color: var(--color-primary-variant);
+    color: var(--color-white);
 }
 
-/* Đảm bảo chỉ ảnh hưởng đến nút thêm nhân viên */
-.add-employee-btn {
-    background-color: #28a745; /* Màu nền xanh lá */
-    color: white; /* Màu chữ */
-    border: none; /* Bỏ viền */
-    padding: 10px 15px; /* Kích thước */
-    font-size: 14px; /* Cỡ chữ */
-    border-radius: 5px; /* Bo góc */
-    cursor: pointer; /* Con trỏ chuột */
+#employeeTable tr:nth-child(even) {
+    background-color: var(--color-info-light);
+}
+
+#employeeTable tr:hover {
+    background-color: var(--color-light);
+}
+
+/* Hiệu ứng hover cho các nút hành động */
+button.edit,
+button.delete {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-/* Hiệu ứng khi hover */
-.add-employee-btn:hover {
-    background-color: #218838; /* Màu xanh đậm hơn */
+button.edit:hover {
+    background-color: var(--color-success);
 }
 
-/* Overlay Background */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Nền mờ */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+button.delete:hover {
+    background-color: var(--color-danger);
 }
 
-/* Overlay container */
-.overlay {
+/* Cải thiện Overlay chỉnh sửa nhân viên */
+#editEmployeeOverlay {
     display: none;
-    /* Ẩn mặc định */
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    z-index: 1000;
 }
 
-/* Nội dung form trong overlay */
-.overlay-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.overlay input {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-}
-
-.overlay button {
-    padding: 10px;
-    margin: 10px 5px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-}
-
-.overlay button[type="button"] {
-    background-color: #f44336;
-}
-
-/* Hiện overlay */
-.overlay.show {
+#editEmployeeOverlay.active {
     display: flex;
 }
 
+.overlay-content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--border-radius-2);
+    width: 50%;
+    margin: 0 auto;
+}
+
+.overlay-content h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.overlay-content .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    /* Khoảng cách giữa các nút */
+    margin-top: 1rem;
+}
+
+.overlay-content button {
+    width: auto;
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+}
+
+.overlay-content button:hover {
+    background-color: var(--color-primary-variant);
+}
+
+/* Nút đóng có màu đỏ */
+#closeEditOverlay {
+    background-color: var(--color-danger);
+}
+
+#closeEditOverlay:hover {
+    background-color: var(--color-danger);
+}
 
 /* ================ RECENT UPDATES ============== */
 .right .recent-updates {

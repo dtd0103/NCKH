@@ -36,7 +36,7 @@ class Employee {
     static findEmployeeById(id) {
         return new Promise((resolve, reject) => {
             connection.query(
-                "SELECT * FROM nhan_vien WHERE NV_TaiKhoan = ?",
+                "SELECT * FROM nhan_vien WHERE NV_Ma = ?",
                 [id],
                 (err, results) => {
                     if (err) {
