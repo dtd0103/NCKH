@@ -188,24 +188,34 @@
         const orderApiUrl = `/api/v1/order/${orderId}`;
 
         try {
+          // Gửi yêu cầu lấy thông tin đơn hàng từ API
           const orderResponse = await fetch(orderApiUrl);
-          if (!orderResponse.ok)
+
+          // Kiểm tra phản hồi
+          if (!orderResponse.ok) {
             throw new Error("Không thể lấy thông tin đơn hàng");
+          }
+
+          // Lấy dữ liệu JSON từ phản hồi
           const orderInfo = await orderResponse.json();
 
-          // Lấy tổng tiền từ localStorage
-          const totalAmount = localStorage.getItem("totalAmount") || 0;
+          // Kiểm tra dữ liệu trả về
+          if (!orderInfo || !orderInfo.DH_Ma || !orderInfo.TongTien) {
+            throw new Error("Thông tin đơn hàng không đầy đủ");
+          }
 
-          // Cập nhật thông tin vào bảng
+          // Hiển thị tổng tiền vào bảng
           document.querySelector(
             ".order-details span:nth-of-type(1)"
-          ).textContent = `Tổng tiền: $${parseFloat(totalAmount).toFixed(2)}`;
+          ).textContent = `Tổng tiền: $${parseFloat(orderInfo.TongTien).toFixed(
+            2
+          )}`;
 
-          // Cập nhật nội dung mã đơn vào ghi chú
+          // Hiển thị mã đơn hàng vào ghi chú
           document.getElementById(
             "orderIdNote"
           ).textContent = `#${orderInfo.DH_Ma.toString().padStart(6, "0")}`;
-        } catch (error) {   
+        } catch (error) {
           console.error(error.message);
           alert("Lỗi khi tải thông tin đơn hàng");
         }
