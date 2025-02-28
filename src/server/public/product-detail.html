@@ -290,120 +290,101 @@
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get("id");
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
 
-        if (productId) {
-          try {
+    if (productId) {
+        try {
             const productApiUrl = `/api/v1/product/id/${productId}`;
-            const productResponse = await fetch(productApiUrl, {
-              method: "GET",
-            });
+            const productResponse = await fetch(productApiUrl, { method: "GET" });
+
+            if (!productResponse.ok) {
+                throw new Error(`Lỗi khi lấy sản phẩm: ${productResponse.status}`);
+            }
+
             const product = await productResponse.json();
 
             document.getElementById("product-category").textContent =
-              product.DM_Ten.charAt(0).toUpperCase() + product.DM_Ten.slice(1);
+                product.DM_Ten.charAt(0).toUpperCase() + product.DM_Ten.slice(1);
 
             document.querySelectorAll(".product-name").forEach((element) => {
-              element.textContent =
-                product.SP_Ten.charAt(0).toUpperCase() +
-                product.SP_Ten.slice(1);
+                element.textContent =
+                    product.SP_Ten.charAt(0).toUpperCase() + product.SP_Ten.slice(1);
             });
 
-            document.getElementById(
-              "product-price"
-            ).textContent = `${product.SP_DonGia}$`;
-            const productImg = `/images/products/${product.SP_HinhAnh}`;
+            document.getElementById("product-price").textContent = `${product.SP_DonGia}$`;
+
             const imgElement = document.querySelector(".prod-preview__img");
-            imgElement.src = productImg;
+            imgElement.src = `/images/products/${product.SP_HinhAnh}`;
 
-            document.getElementById("product-description").textContent =
-              product.SP_ThongTin;
+            document.getElementById("product-description").textContent = product.SP_ThongTin;
+            document.getElementById("prod-prop__desc").textContent = `Còn lại ${product.SP_SoLuong} sản phẩm`;
+            document.getElementById("category").textContent =
+                product.DM_Ten.charAt(0).toUpperCase() + product.DM_Ten.slice(1);
+            document.getElementById("product-brand").textContent =
+                product.TH_Ten.charAt(0).toUpperCase() + product.TH_Ten.slice(1);
 
-            document.getElementById(
-              "prod-prop__desc"
-            ).textContent = `Còn lại ${product.SP_SoLuong} sản phẩm`;
-
-            document.getElementById(
-              "category"
-            ).textContent = `${product.DM_Ten.charAt(
-              0
-            ).toUpperCase()}${product.DM_Ten.slice(1)}`;
-
-            document.getElementById(
-              "product-brand"
-            ).textContent = `${product.TH_Ten.charAt(
-              0
-            ).toUpperCase()}${product.TH_Ten.slice(1)}`;
-
-            // Lấy username từ localStorage
-            const username = localStorage.getItem("username");
-            if (!username) {
-              alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
-              return;
-            }
-
-            // Fetch thông tin khách hàng
-            const customerApiUrl = `/api/v1/customer/${username}`;
-            const customerResponse = await fetch(customerApiUrl, {
-              method: "GET",
-            });
-
-            if (!customerResponse.ok) {
-              throw new Error(
-                `Lỗi khi lấy thông tin khách hàng: ${customerResponse.status}`
-              );
-            }
-
-            const customer = await customerResponse.json();
-            const customerId = customer.KH_Ma;
-
-            // Thêm sự kiện click vào nút "Thêm vào giỏ hàng"
-            const addToCartButton = document.querySelector(
-              ".prod-info__add-to-cart"
-            );
+            // Xử lý khi bấm nút "Thêm vào giỏ hàng"
+            const addToCartButton = document.querySelector(".prod-info__add-to-cart");
             addToCartButton.addEventListener("click", async function (event) {
-              event.preventDefault(); // Ngăn chặn hành động mặc định
+                event.preventDefault(); // Ngăn chặn hành động mặc định
 
-              try {
-                const response = await fetch("/api/v1/cart", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem(
-                      "authToken"
-                    )}`, // Nếu có xác thực JWT
-                  },
-                  body: JSON.stringify({
-                    customerId: customerId, // Sử dụng customerId từ dữ liệu khách hàng
-                    productId: product.SP_Ma,
-                    quantity: 1,
-                    price: product.SP_DonGia,
-                  }),
-                });
-
-                if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
+                // Lấy username từ localStorage
+                const username = localStorage.getItem("username");
+                if (!username) {
+                    alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                    return;
                 }
 
-                const result = await response.json(); // Kiểm tra dữ liệu JSON trả về
-                console.log("Kết quả thêm giỏ hàng:", result);
+                try {
+                    // Fetch thông tin khách hàng
+                    const customerApiUrl = `/api/v1/customer/${username}`;
+                    const customerResponse = await fetch(customerApiUrl, { method: "GET" });
 
-                // Gọi lại hàm updateCartPreview() để cập nhật giỏ hàng ngay lập tức
-                await updateCartPreview();
+                    if (!customerResponse.ok) {
+                        throw new Error(`Lỗi khi lấy thông tin khách hàng: ${customerResponse.status}`);
+                    }
 
-                // Cập nhật giao diện sau khi thêm giỏ hàng thành công
-                alert("Thêm vào giỏ hàng thành công!");
-              } catch (err) {
-                console.error("Lỗi khi thêm vào giỏ hàng:", err);
-                alert("Lỗi khi thêm vào giỏ hàng. Vui lòng thử lại!");
-              }
+                    const customer = await customerResponse.json();
+                    const customerId = customer.KH_Ma;
+
+                    // Gửi yêu cầu thêm vào giỏ hàng
+                    const response = await fetch("/api/v1/cart", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Nếu có xác thực JWT
+                        },
+                        body: JSON.stringify({
+                            customerId: customerId,
+                            productId: product.SP_Ma,
+                            quantity: 1,
+                            price: product.SP_DonGia,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log("Kết quả thêm giỏ hàng:", result);
+
+                    // Cập nhật giỏ hàng ngay lập tức
+                    await updateCartPreview();
+
+                    alert("Thêm vào giỏ hàng thành công!");
+                } catch (err) {
+                    console.error("Lỗi khi thêm vào giỏ hàng:", err);
+                    alert("Lỗi khi thêm vào giỏ hàng. Vui lòng thử lại!");
+                }
             });
-          } catch (err) {
+        } catch (err) {
             console.error("Lỗi: ", err);
-          }
         }
-      });
+    }
+});
+
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
