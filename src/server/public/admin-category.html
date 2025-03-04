@@ -59,6 +59,35 @@
             </div>
         </aside>
         <!------END OF ASIDE------>
+<main>
+    <h1>Quản lý danh mục</h1>
+    <form id="addCategoryForm">
+        <input type="text" id="categoryName" placeholder="Tên danh mục" required />
+        <input type="file" id="categoryImage" accept="image/*" required />
+        <button type="submit">Thêm danh mục</button>
+    </form>
+
+    <table id="categoryTable">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Tên</th>
+                <th>Hình ảnh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dữ liệu từ backend sẽ được chèn vào đây -->
+        </tbody>
+    </table>
+
+<div class="pagination">
+  <button id="prevPage" class="pagination-btn">Trước</button>
+  <span id="pageNumbers" class="page-numbers"></span>
+  <button id="nextPage" class="pagination-btn">Sau</button>
+</div>
+
+</main>
 
 
 

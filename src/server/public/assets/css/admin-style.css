@@ -652,6 +652,269 @@ button.delete:hover {
     background-color: var(--color-danger);
 }
 
+/*Phân trang*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination-btn {
+    background-color: var(--color-primary-variant);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-btn:hover {
+    color: var(--color-primary-variant)
+}
+
+.page-numbers {
+    font-size: 16px;
+}
+
+
+/* ================ BRANDS ============== */
+/* Cải thiện giao diện của tiêu đề và form */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+}
+
+form input,
+form button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--color-info-light);
+    border-radius: var(--border-radius-2);
+    font-size: 1rem;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+}
+
+form button {
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: var(--color-primary-variant);
+}
+
+/* Bảng thương hiệu */
+#brandTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+#brandTable th,
+#brandTable td {
+    padding: 1rem;
+    text-align: center;
+    /* Căn giữa nội dung */
+    border: 1px solid var(--color-info-light);
+    vertical-align: middle;
+    /* Căn giữa nội dung theo chiều dọc */
+    text-transform: uppercase;
+}
+
+#brandTable th {
+    background-color: var(--color-primary-variant);
+    color: var(--color-white);
+    font-weight: bold;
+}
+
+#brandTable tr:nth-child(even) {
+    background-color: var(--color-info-light);
+}
+
+#brandTable tr:hover {
+    background-color: var(--color-light);
+}
+
+/* Hình ảnh trong bảng */
+#brandTable img {
+    max-width: 100%;
+    /* Đảm bảo hình ảnh không vượt quá chiều rộng cột */
+    max-height: 80px;
+    /* Giới hạn chiều cao để vừa với khung */
+    object-fit: contain;
+    /* Đảm bảo giữ nguyên tỉ lệ hình ảnh */
+    border-radius: var(--border-radius-2);
+    /* Bo góc cho hình ảnh */
+    padding: 5px;
+    /* Khoảng cách giữa hình và viền khung */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Thêm hiệu ứng bóng */
+}
+
+/* Hiệu ứng hover trên hàng */
+#brandTable tr:hover img {
+    transform: scale(1.1);
+    /* Phóng to ảnh khi hover */
+    transition: transform 0.3s ease;
+}
+
+/* Đảm bảo khoảng cách hợp lý giữa các nút hành động */
+button.edit,
+button.delete {
+    margin: 0 5px;
+    /* Khoảng cách giữa các nút */
+}
+
+/* Overlay chỉnh sửa thương hiệu */
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination-btn {
+    background-color: var(--color-primary-variant);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-btn:hover {
+    color: var(--color-primary-variant)
+}
+
+.page-numbers {
+    font-size: 16px;
+}
+
+
+
+/*======Category======*/
+/* Cải thiện giao diện của tiêu đề và form */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+}
+
+/* Form thêm danh mục */
+form input,
+form button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--color-info-light);
+    border-radius: var(--border-radius-2);
+    font-size: 1rem;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+}
+
+form button {
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: var(--color-primary-variant);
+}
+
+/* Bảng danh mục */
+/* Bảng danh mục */
+#categoryTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+#categoryTable th,
+#categoryTable td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid var(--color-info-light);
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+#categoryTable th {
+    background-color: var(--color-primary-variant);
+    color: var(--color-white);
+    font-weight: bold;
+}
+
+#categoryTable tr:nth-child(even) {
+    background-color: var(--color-info-light);
+}
+
+#categoryTable tr:hover {
+    background-color: var(--color-light);
+}
+
+/* Hình ảnh trong bảng danh mục */
+#categoryTable img {
+    width: 100%;
+    /* Đảm bảo hình ảnh không vượt quá chiều rộng cột */
+    height: 100%;
+    /* Đảm bảo chiều cao ảnh bằng chiều cao của ô */
+    object-fit: cover;
+    /* Phóng to ảnh để lấp đầy ô mà không bị cắt */
+    border-radius: var(--border-radius-2);
+    /* Bo góc cho ảnh */
+    padding: 5px;
+    /* Khoảng cách giữa ảnh và viền khung */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng bóng */
+}
+
+/* Hiệu ứng hover trên ảnh */
+#categoryTable tr:hover img {
+    transform: scale(1.1);
+    /* Phóng to ảnh khi hover */
+    transition: transform 0.3s ease;
+    /* Hiệu ứng chuyển đổi mượt mà */
+}
+/* Ô chứa ảnh */
+#categoryTable td {
+    height: 120px;
+    /* Giảm chiều cao của ô chứa ảnh */
+    vertical-align: middle;
+    /* Căn giữa nội dung theo chiều dọc */
+}
+
+/* Khoảng cách giữa các nút hành động */
+button.edit,
+button.delete {
+    margin: 0 5px;
+    /* Khoảng cách giữa các nút */
+}
+
 /* ================ RECENT UPDATES ============== */
 .right .recent-updates {
     margin-top: 1rem;

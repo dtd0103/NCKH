@@ -59,7 +59,52 @@
             </div>
         </aside>
         <!------END OF ASIDE------>
+<main>
+    <h1>Quản lý thương hiệu</h1>
+    <form id="addBrandForm">
+        <input type="text" id="brandName" placeholder="Tên thương hiệu" required />
+        <input type="file" id="brandImage" accept="image/*" required />
+        <button type="submit">Thêm thương hiệu</button>
+    </form>
 
+    <!-- Form chỉnh sửa thương hiệu -->
+    <div id="editBrandOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <h3>Chỉnh sửa thương hiệu</h3>
+            <form id="editBrandForm">
+                <label for="editBrandName">Tên thương hiệu:</label>
+                <input type="text" id="editBrandName" required />
+
+                <label for="editBrandImage">Hình ảnh:</label>
+                <input type="file" id="editBrandImage" accept="image/*" />
+
+                <button type="submit">Cập nhật</button>
+                <button type="button" id="closeEditOverlay">Đóng</button>
+            </form>
+        </div>
+    </div>
+
+    <table id="brandTable">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Tên thương hiệu</th>
+                <th>Hình ảnh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dữ liệu sẽ được thêm ở đây -->
+        </tbody>
+    </table>
+
+<div class="pagination">
+  <button id="prevPage" class="pagination-btn">Trước</button>
+  <span id="pageNumbers" class="page-numbers"></span>
+  <button id="nextPage" class="pagination-btn">Sau</button>
+</div>
+
+</main>
 
 
 
