@@ -134,7 +134,7 @@ const removeCartItem = async (req, res) => {
         );
         // Tìm sản phẩm theo mã sản phẩm (SP_Ma)
 
-        if (!itemToRemove) {
+        if (itemToRemove === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Sản phẩm không tồn tại trong giỏ hàng.",
@@ -197,6 +197,7 @@ const getCartDetails = async (req, res) => {
         res.status(200).json({
             success: true,
             data: cartDetails,
+            
         });
     } catch (error) {
         res.status(500).json({

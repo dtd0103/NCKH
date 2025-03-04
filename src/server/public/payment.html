@@ -294,231 +294,281 @@
       // Function to fetch product details by product ID
       // Function to get product details including price
       async function getProductPrice(productId) {
-        const response = await fetch(
-          `http://localhost:8081/api/v1/product/id/${productId}`
+  const response = await fetch(
+    `http://localhost:8081/api/v1/product/id/${productId}`
+  );
+  if (!response.ok) {
+    throw new Error(`Lỗi khi lấy thông tin sản phẩm: ${productId}`);
+  }
+  const productData = await response.json();
+  return productData; // Contains product price in productData.SP_DonGia
+}
+
+async function calculateCartTotals() {
+  const username = localStorage.getItem("username");
+  if (!username) {
+    console.log("Người dùng chưa đăng nhập");
+    return;
+  }
+
+  try {
+    // Lấy thông tin khách hàng từ API
+    const customerResponse = await fetch(
+      `http://localhost:8081/api/v1/customer/${username}`
+    );
+    if (!customerResponse.ok) {
+      throw new Error("Không thể lấy thông tin khách hàng.");
+    }
+    const customerData = await customerResponse.json();
+    const customerId = customerData.KH_Ma;
+
+    // Lấy giỏ hàng của khách hàng từ API
+    const cartResponse = await fetch(
+      `http://localhost:8081/api/v1/cart/${customerId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      }
+    );
+
+    if (!cartResponse.ok) {
+      throw new Error("Không thể lấy thông tin giỏ hàng.");
+    }
+
+    const cartData = await cartResponse.json();
+
+    if (
+      !cartData.success ||
+      !cartData.data ||
+      !cartData.data.items ||
+      cartData.data.items.length === 0
+    ) {
+      console.log("Giỏ hàng trống");
+      return;
+    }
+
+    let subtotal = 0;
+    let totalQuantity = 0;
+    const shippingFee = 10.0;
+
+    // Tính tổng tiền từ các sản phẩm trong giỏ hàng
+    cartData.data.items.forEach((item) => {
+      const quantity = item.SoLuong || 0;
+      const productPrice = parseFloat(item.DonGia) || 0;
+      subtotal += productPrice * quantity;
+      totalQuantity += quantity;
+    });
+
+    const total = subtotal + shippingFee;
+
+    // Cập nhật giao diện
+    document.querySelector(
+      ".cart-info__subtotal"
+    ).textContent = `${subtotal.toFixed(2)}đ`;
+    document.querySelector(
+      ".cart-info__shipping-fee"
+    ).textContent = `${shippingFee.toFixed(2)}đ`;
+    document.querySelector(
+      ".cart-info__total"
+    ).textContent = `${total.toFixed(2)}đ`;
+
+    // Lưu tổng tiền vào localStorage
+    localStorage.setItem("totalAmount", total.toFixed(2));
+  } catch (error) {
+    console.error("Lỗi khi tính toán tổng giỏ hàng:", error);
+  }
+}
+
+// Gọi hàm để tính toán và hiển thị tổng giỏ hàng
+calculateCartTotals();
+
+async function loadPaymentInfo() {
+  const username = localStorage.getItem("username"); // Lấy username từ localStorage
+  if (!username) {
+    console.error("Không tìm thấy username trong localStorage.");
+    return;
+  }
+
+  const customerApiUrl = `http://localhost:8081/api/v1/customer/${username}`;
+
+  try {
+    const response = await fetch(customerApiUrl);
+    const customer = await response.json();
+
+    // Kiểm tra xem dữ liệu có hợp lệ không
+    if (customer && customer.KH_Ten && customer.KH_DiaChi) {
+      // Tìm phần tử HTML để chèn dữ liệu
+      const nameElement = document.querySelector(".payment-item__title");
+      const addressElement = document.querySelector(
+        ".payment-item__desc"
+      );
+
+      // Cập nhật nội dung cho tên và địa chỉ
+      nameElement.textContent = customer.KH_Ten;
+      addressElement.textContent = customer.KH_DiaChi;
+    } else {
+      console.error("Không tìm thấy thông tin khách hàng.");
+    }
+  } catch (error) {
+    console.error("Lỗi khi gọi API:", error);
+  }
+}
+
+// Hàm để xóa giỏ hàng sau khi đặt hàng thành công
+async function clearCart(cartId) {
+  try {
+    const response = await fetch(
+      `http://localhost:8081/api/v1/cart/${cartId}/clear`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Không thể xóa giỏ hàng.");
+    }
+
+    console.log("Đã xóa toàn bộ giỏ hàng sau khi đặt hàng thành công");
+    return true;
+  } catch (error) {
+    console.error("Lỗi khi xóa giỏ hàng:", error);
+    return false;
+  }
+}
+
+// Gọi hàm để load thông tin khách hàng khi trang được tải
+loadPaymentInfo();
+
+// =======Tạo đơn hàng
+document
+  .querySelector(".cart-info__next-btn")
+  .addEventListener("click", async function (event) {
+    event.preventDefault(); // Ngăn không cho trang chuyển hướng ngay lập tức
+
+    // Kiểm tra phương thức thanh toán đã chọn
+    const selectedPaymentMethod = document.querySelector(
+      'input[name="payment-method"]:checked'
+    );
+
+    if (!selectedPaymentMethod) {
+      alert("Vui lòng chọn phương thức thanh toán.");
+      return;
+    }
+
+    const paymentMethod = selectedPaymentMethod.value; // Giá trị của phương thức thanh toán (e.g., "cod", "transfer")
+
+    // Lấy username từ localStorage
+    const username = localStorage.getItem("username");
+    if (!username) {
+      alert("Vui lòng đăng nhập để tiếp tục.");
+      window.location.href = "./login.html";
+      return;
+    }
+
+    // Lấy thông tin userId từ server
+    let userId;
+    try {
+      const userResponse = await fetch(`http://localhost:8081/api/v1/customer/${username}`);
+      if (!userResponse.ok)
+        throw new Error(`Lỗi server: ${userResponse.status}`);
+      const userData = await userResponse.json();
+      userId = userData.KH_Ma;
+    } catch (error) {
+      console.error("Lỗi khi lấy thông tin người dùng:", error);
+      alert("Không thể lấy thông tin người dùng.");
+      return;
+    }
+
+    // Lấy thông tin giỏ hàng từ API
+    let cartData;
+    try {
+      const cartResponse = await fetch(`http://localhost:8081/api/v1/cart/${userId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!cartResponse.ok)
+        throw new Error(`Lỗi server: ${cartResponse.status}`);
+      const cartJson = await cartResponse.json();
+      cartData = cartJson.data;
+      
+      // Lưu cartId để xóa giỏ hàng sau khi đặt hàng thành công
+      const cartId = cartData.cart.GH_Ma;
+      localStorage.setItem("cartId", cartId);
+    } catch (error) {
+      console.error("Lỗi khi lấy thông tin giỏ hàng:", error);
+      alert("Không thể lấy thông tin giỏ hàng.");
+      return;
+    }
+
+    const cartItems = cartData.items;
+    const total = cartData.cart.TongTien; // Tổng tiền lấy từ API
+
+    if (!cartItems || cartItems.length === 0) {
+      alert("Giỏ hàng rỗng.");
+      return;
+    }
+
+    // Chuẩn bị dữ liệu để gửi đi
+    const items = cartItems.map((item) => ({
+      productId: item.SP_Ma,
+      price: item.DonGia,
+      quantity: item.SoLuong,
+    }));
+
+    const orderData = {
+      userId: userId,
+      items: items,
+    };
+
+    // Gửi thông tin đơn hàng đến server
+    try {
+      const response = await fetch("http://localhost:8081/api/v1/order/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok)
+        throw new Error(
+          `Lỗi server khi tạo đơn hàng: ${response.status}`
         );
-        if (!response.ok) {
-          throw new Error(`Lỗi khi lấy thông tin sản phẩm: ${productId}`);
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Xóa giỏ hàng sau khi đặt hàng thành công
+        const cartId = localStorage.getItem("cartId");
+        await clearCart(cartId);
+        
+        alert("Đơn hàng đã được tạo thành công!");
+        const orderId = result.orderId;
+
+        // Chuyển hướng dựa trên phương thức thanh toán
+        if (paymentMethod === "transfer") {
+          window.location.href = `./qr.html?orderId=${orderId}`;
+        } else {
+          window.location.href = "./orders.html";
         }
-        const productData = await response.json();
-        return productData; // Contains product price in productData.SP_DonGia
+      } else {
+        alert("Lỗi khi tạo đơn hàng: " + result.message);
       }
-
-      async function calculateCartTotals() {
-        const cart = JSON.parse(localStorage.getItem("productIds")) || {};
-
-        if (Object.keys(cart).length === 0) {
-          console.log("Giỏ hàng trống");
-          return;
-        }
-
-        let subtotal = 0;
-        const shippingFee = 10;
-
-        // Calculate subtotal by fetching product details and multiplying by quantity
-        try {
-          for (const productId in cart) {
-            if (cart.hasOwnProperty(productId)) {
-              const quantity = cart[productId];
-              const productApiUrl = `http://localhost:8081/api/v1/product/id/${productId}`;
-              const response = await fetch(productApiUrl);
-              const product = await response.json();
-
-              subtotal += parseFloat(product.SP_DonGia) * quantity;
-            }
-          }
-
-          const total = subtotal + shippingFee;
-
-          // Update the UI
-          document.querySelector(
-            ".cart-info__subtotal"
-          ).textContent = `$${subtotal.toFixed(2)}`;
-          document.querySelector(
-            ".cart-info__shipping-fee"
-          ).textContent = `$${shippingFee.toFixed(2)}`;
-          document.querySelector(
-            ".cart-info__total"
-          ).textContent = `$${total.toFixed(2)}`;
-
-          // Save the total to localStorage
-          localStorage.setItem("totalAmount", total.toFixed(2));
-        } catch (error) {
-          console.error("Lỗi khi tính toán tổng giỏ hàng:", error);
-        }
-      }
-      // Call the function to calculate and display cart totals
-      calculateCartTotals();
-
-      async function loadPaymentInfo() {
-        const username = localStorage.getItem("username"); // Lấy username từ localStorage
-        if (!username) {
-          console.error("Không tìm thấy username trong localStorage.");
-          return;
-        }
-
-        const customerApiUrl = `http://localhost:8081/api/v1/customer/${username}`;
-
-        try {
-          const response = await fetch(customerApiUrl);
-          const customer = await response.json();
-
-          // Kiểm tra xem dữ liệu có hợp lệ không
-          if (customer && customer.KH_Ten && customer.KH_DiaChi) {
-            // Tìm phần tử HTML để chèn dữ liệu
-            const nameElement = document.querySelector(".payment-item__title");
-            const addressElement = document.querySelector(
-              ".payment-item__desc"
-            );
-
-            // Cập nhật nội dung cho tên và địa chỉ
-            nameElement.textContent = customer.KH_Ten;
-            addressElement.textContent = customer.KH_DiaChi;
-          } else {
-            console.error("Không tìm thấy thông tin khách hàng.");
-          }
-        } catch (error) {
-          console.error("Lỗi khi gọi API:", error);
-        }
-      }
-
-      // Gọi hàm để load thông tin khách hàng khi trang được tải
-      loadPaymentInfo();
-      // =======Tạo đơn hàng
-      document
-        .querySelector(".cart-info__next-btn")
-        .addEventListener("click", async function (event) {
-          event.preventDefault(); // Ngăn không cho trang chuyển hướng ngay lập tức
-
-          // Kiểm tra phương thức thanh toán đã chọn
-          const selectedPaymentMethod = document.querySelector(
-            'input[name="payment-method"]:checked'
-          );
-
-          if (!selectedPaymentMethod) {
-            alert("Vui lòng chọn phương thức thanh toán.");
-            return;
-          }
-
-          const paymentMethod = selectedPaymentMethod.value; // Lấy giá trị của phương thức thanh toán (e.g., "cod", "transfer")
-
-          // Lấy username từ localStorage
-          const username = localStorage.getItem("username"); // Ví dụ: "dat0311"
-
-          if (!username) {
-            alert("Không có thông tin username trong localStorage.");
-            return;
-          }
-
-          // Fetch thông tin userId (KH_Ma) từ server dựa trên username
-          let userId;
-          try {
-            const userResponse = await fetch(`/api/v1/customer/${username}`);
-
-            // Kiểm tra nếu phản hồi không thành công (không phải mã 200)
-            if (!userResponse.ok) {
-              throw new Error(`Lỗi server: ${userResponse.status}`);
-            }
-
-            const userData = await userResponse.json();
-            userId = userData.KH_Ma; // Lấy mã khách hàng (userId) từ kết quả trả về
-          } catch (error) {
-            console.error("Lỗi khi lấy thông tin người dùng:", error);
-            alert("Không thể lấy thông tin người dùng. Vui lòng kiểm tra lại.");
-            return;
-          }
-
-          // Lấy danh sách sản phẩm từ localStorage
-          const productIds = JSON.parse(localStorage.getItem("productIds")); // {"12100605":10, "33700007":10}
-
-          if (!productIds) {
-            alert("Không có sản phẩm nào trong giỏ hàng.");
-            return;
-          }
-
-          const items = [];
-          let total = 0;
-
-          // Hàm lấy giá của sản phẩm từ server
-          async function fetchProductPrice(productId) {
-            const response = await fetch(`/api/v1/product/id/${productId}`);
-
-            // Kiểm tra nếu phản hồi không thành công (không phải mã 200)
-            if (!response.ok) {
-              throw new Error(
-                `Lỗi server khi lấy giá sản phẩm: ${response.status}`
-              );
-            }
-
-            const product = await response.json();
-            return product.SP_DonGia;
-          }
-
-          // Tính tổng giá trị đơn hàng và chuẩn bị dữ liệu
-          for (let productId in productIds) {
-            const quantity = productIds[productId];
-            const price = await fetchProductPrice(productId);
-
-            items.push({
-              productId: productId,
-              price: price,
-              quantity: quantity,
-            });
-
-            total += price * quantity; // Cộng dồn tổng giá trị đơn hàng
-          }
-
-          // Thêm phí ship vào tổng giá trị đơn hàng
-          const shippingFee = 10; // Phí ship cố định là 10
-          total += shippingFee; // Cộng thêm phí ship vào tổng giá trị đơn hàng
-
-          // Chuẩn bị dữ liệu để gửi đi
-          const orderData = {
-            userId: userId,
-            items: items,
-            total: total, // Gửi tổng giá trị bao gồm phí ship
-          };
-
-          // Gửi thông tin đơn hàng đến server
-          try {
-            const response = await fetch("/api/v1/order/create", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                 Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-              },
-              body: JSON.stringify(orderData),
-            });
-
-            if (!response.ok) {
-              throw new Error(
-                `Lỗi server khi tạo đơn hàng: ${response.status}`
-              );
-            }
-
-            const result = await response.json();
-
-            if (result.success) {
-              alert("Đơn hàng đã được tạo thành công!");
-
-              const orderId = result.orderId; // Lấy orderId từ phản hồi
-              console.log("Order ID:", orderId); // Kiểm tra orderId có phải là undefined không
-              // Chuyển hướng dựa trên phương thức thanh toán
-              if (paymentMethod === "transfer") {
-                window.location.href = `./qr.html?orderId=${orderId}`; // Chuyển sang trang QR với orderId
-                localStorage.removeItem("productIds");
-              } else {
-                window.location.href = "./orders.html"; // Chuyển sang trang orders nếu thanh toán COD
-                localStorage.removeItem("productIds");
-              }
-            } else {
-              alert("Lỗi khi tạo đơn hàng: " + result.message);
-            }
-          } catch (error) {
-            console.error("Lỗi kết nối với server:", error);
-            alert("Đã xảy ra lỗi khi tạo đơn hàng.");
-          }
-        });
+    } catch (error) {
+      console.error("Lỗi kết nối với server:", error);
+      alert("Đã xảy ra lỗi khi tạo đơn hàng.");
+    }
+  });
     </script>
   </body>
 </html>

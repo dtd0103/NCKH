@@ -167,7 +167,25 @@
                 <div class="cart-info__separate"></div>
 
                 <h2 class="cart-info__sub-heading">Chi tiết sản phẩm</h2>
-                <div class="cart-info__list"></div>
+                <div class="cart-info__list">
+                  <article class="cart-item">
+                    <a href="./product-detail.html">
+                      <img
+                        src="./assets/img/product/item-1.png"
+                        alt=""
+                        class="cart-item__thumb"
+                      />
+                    </a>
+                    <div class="cart-item__content">
+                      <a>
+                        <h3 class="cart-item__title">
+                          <a href="./product-detail.html"> </a>
+                        </h3>
+                        <p class="cart-item__price-wrap">$price</p>
+                      </a>
+                    </div>
+                  </article>
+                </div>
                 <div class="cart-info__bottom d-md-none">
                   <div class="row">
                     <div class="col-8 col-xxl-7">
@@ -224,7 +242,7 @@
     <script>
       load("#footer", "./templates/footer.html");
       async function loadCustomerInfo() {
-        const username = localStorage.getItem("username"); // Lấy username từ localStorage
+        const username = localStorage.getItem("username");
         if (!username) {
           console.error("Không tìm thấy username trong localStorage.");
           return;
@@ -258,32 +276,201 @@
       // Gọi hàm để load thông tin khách hàng khi trang được tải
       loadCustomerInfo();
 
-
-    //   ======kiểm tra giỏ hàng & đăng nhập===
-    document
+      //   ======kiểm tra giỏ hàng & đăng nhập===
+      document
         .querySelector(".cart-info__next-btn")
-        .addEventListener("click", function (event) {
+        .addEventListener("click", async function (event) {
           const authToken = localStorage.getItem("authToken");
-          const productIds = localStorage.getItem("productIds");
+          const username = localStorage.getItem("username");
 
-          if (!authToken) {
-            // Nếu không có authToken, ngăn chặn chuyển trang và chuyển hướng đến trang đăng nhập
-            event.preventDefault(); // Ngăn điều hướng mặc định
-            window.location.href = "./login.html"; // Điều hướng đến trang đăng nhập
-            alert("Bạn cần đăng nhập để thanh toán sản phẩm");
-            return;
-          }
-
-          // Kiểm tra xem giỏ hàng có sản phẩm nào không
-          if (!productIds || Object.keys(JSON.parse(productIds)).length === 0) {
-            // Nếu không có sản phẩm, hiển thị thông báo và ngăn chặn chuyển trang
+          if (!authToken || !username) {
+            // Nếu không có authToken hoặc username, ngăn chuyển trang và chuyển hướng đến trang đăng nhập
             event.preventDefault();
-            alert("Giỏ hàng của bạn chưa có sản phẩm nào.");
+            alert("Bạn cần đăng nhập để thanh toán sản phẩm.");
+            window.location.href = "./login.html"; // Điều hướng đến trang đăng nhập
             return;
           }
 
-          // Nếu có authToken và sản phẩm, tiếp tục chuyển trang (mặc định)
+          try {
+            // Lấy thông tin khách hàng
+            const customerResponse = await fetch(
+              `http://localhost:8081/api/v1/customer/${username}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${authToken}`, // Thêm token vào header
+                },
+              }
+            );
+
+            if (!customerResponse.ok) {
+              if (customerResponse.status === 401) {
+                throw new Error(
+                  "Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại."
+                );
+              }
+              throw new Error("Không thể lấy thông tin khách hàng.");
+            }
+
+            const customerData = await customerResponse.json();
+            const customerId = customerData.KH_Ma;
+
+            if (!customerId) {
+              event.preventDefault();
+              alert("Không tìm thấy thông tin khách hàng. Vui lòng thử lại.");
+              return;
+            }
+
+            // Kiểm tra trạng thái giỏ hàng
+            const cartResponse = await fetch(
+              `http://localhost:8081/api/v1/cart/${customerId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${authToken}`,
+                },
+              }
+            );
+
+            if (!cartResponse.ok) {
+              if (cartResponse.status === 401) {
+                throw new Error(
+                  "Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại."
+                );
+              }
+              throw new Error("Không thể kiểm tra trạng thái giỏ hàng.");
+            }
+
+            const cartData = await cartResponse.json();
+
+            if (!cartData.success || !cartData.data.items.length) {
+              // Nếu giỏ hàng rỗng, hiển thị thông báo và chuyển hướng về trang chủ
+              event.preventDefault();
+              alert("Giỏ hàng của bạn chưa có sản phẩm nào.");
+              window.location.href = "./index.html"; // Điều hướng đến trang chủ
+              return;
+            }
+
+            // Nếu có sản phẩm trong giỏ hàng, cho phép tiếp tục chuyển trang
+          } catch (error) {
+            console.error(
+              "Lỗi khi kiểm tra trạng thái giỏ hàng:",
+              error.message
+            );
+            event.preventDefault();
+            alert("Đã xảy ra lỗi khi kiểm tra giỏ hàng. Vui lòng thử lại.");
+            window.location.href = "./index.html"; // Chuyển hướng về trang chủ nếu có lỗi
+          }
         });
+      async function renderCartItems() {
+        const authToken = localStorage.getItem("authToken");
+        const username = localStorage.getItem("username");
+
+        if (!authToken || !username) {
+          console.log("Người dùng chưa đăng nhập hoặc thiếu token.");
+          return;
+        }
+
+        try {
+          // Lấy thông tin khách hàng
+          const customerResponse = await fetch(
+            `http://localhost:8081/api/v1/customer/${username}`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          if (!customerResponse.ok) {
+            throw new Error("Không thể lấy thông tin khách hàng.");
+          }
+
+          const customerData = await customerResponse.json();
+          const customerId = customerData.KH_Ma;
+
+          // Lấy thông tin giỏ hàng
+          const cartResponse = await fetch(
+            `http://localhost:8081/api/v1/cart/${customerId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          if (!cartResponse.ok) {
+            throw new Error("Không thể lấy thông tin giỏ hàng.");
+          }
+
+          const cartData = await cartResponse.json();
+
+          // Kiểm tra giỏ hàng rỗng
+          if (!cartData.success || !cartData.data.items.length) {
+            document.querySelector(".cart-info__list").innerHTML =
+              "<p>Giỏ hàng của bạn đang trống!</p>";
+            // Cập nhật giá về 0
+            document.querySelector(".cart-info__subtotal").textContent =
+              "$0.00";
+            document.querySelector(".cart-info__total").textContent = "$10.00";
+            return;
+          }
+
+          const cartList = document.querySelector(".cart-info__list");
+          cartList.innerHTML = ""; // Xóa nội dung cũ nếu có
+
+          let subtotal = 0; // Biến để tính tổng giá tạm tính
+
+          // Hiển thị sản phẩm
+          cartData.data.items.forEach((item) => {
+            const itemTotalPrice = item.DonGia * item.SoLuong;
+            subtotal += itemTotalPrice;
+
+            const productHtml = `
+      <article class="cart-item">
+        <a href="./product-detail.html?id=${item.SP_Ma}">
+          <img
+            src="http://localhost:8081/images/products/${item.SP_HinhAnh}"
+            alt="${item.SP_Ten}"
+            class="cart-item__thumb"
+          />
+        </a>
+        <div class="cart-item__content">
+          <a href="./product-detail.html?id=${item.SP_Ma}">
+          <h3 class="cart-item__title">${item.SP_Ten}</h3>
+          <p class="cart-item__price-wrap">$${item.DonGia.toFixed(2)} x ${
+              item.SoLuong
+            } = $${itemTotalPrice.toFixed(2)}</p>
+          </a>
+        </div>
+      </article>`;
+
+            cartList.insertAdjacentHTML("beforeend", productHtml);
+          });
+
+          // Tính tổng cộng (subtotal + shipping fee)
+          const shippingFee = 10.0;
+          const total = subtotal + shippingFee;
+
+          // Cập nhật giá tạm tính và tổng cộng
+          document.querySelector(
+            ".cart-info__subtotal"
+          ).textContent = `$${subtotal.toFixed(2)}`;
+          document.querySelector(
+            ".cart-info__total"
+          ).textContent = `$${total.toFixed(2)}`;
+        } catch (err) {
+          console.error(
+            "Lỗi khi hiển thị sản phẩm trong giỏ hàng:",
+            err.message
+          );
+          document.querySelector(".cart-info__list").innerHTML =
+            "<p>Đã xảy ra lỗi khi tải sản phẩm. Vui lòng thử lại sau!</p>";
+        }
+      }
+
+      // Gọi hàm để hiển thị sản phẩm khi trang load
+      document.addEventListener("DOMContentLoaded", function () {
+        renderCartItems();
+      });
     </script>
   </body>
 </html>

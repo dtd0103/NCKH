@@ -31,5 +31,7 @@ productRouter.delete(
     productController.deleteProduct
 );
 productRouter.post("/product/view", productController.productView);
+productRouter.get("/product/:userId", productController.getViewedProducts);
+productRouter.post("/product/ids", productController.getProductsByIds);
 
 export default productRouter;

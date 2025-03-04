@@ -51,6 +51,30 @@ const getProductById = async function (req, res) {
     }
 };
 
+const getProductsByIds = async (req, res) => {
+    try {
+        const { productIds } = req.body;
+
+        if (!Array.isArray(productIds) || productIds.length === 0) {
+            return res
+                .status(400)
+                .json({ message: "Danh sách ID không hợp lệ" });
+        }
+
+        const products = await Product.getByIds(productIds);
+
+        res.json({
+            products: products,
+        });
+    } catch (error) {
+        console.error("Lỗi khi lấy sản phẩm:", error);
+        res.status(500).json({
+            message: "Có lỗi xảy ra",
+            error: error.message,
+        });
+    }
+};
+
 const createProduct = async function (req, res) {
     try {
         if (!req.file) {
@@ -194,13 +218,44 @@ const productView = async function (req, res) {
     }
 };
 
+const getViewedProducts = async function (req, res) {
+    const { userId } = req.params;
+
+    if (!userId) {
+        return res.status(400).json({ message: "UserId is required" });
+    }
+
+    try {
+        const key = `viewedProducts:${userId}`;
+
+        // Lấy danh sách ID sản phẩm đã xem từ Redis
+        const productIds = await redisClient.lRange(key, 0, -1);
+
+        if (productIds.length === 0) {
+            return res.json({
+                message: "Không có sản phẩm nào.",
+                productIds: [],
+            });
+        }
+
+        res.json({
+            message: `Danh sách ID sản phẩm đã xem của user ${userId}.`,
+            productIds: productIds, // Chỉ trả về danh sách ID
+        });
+    } catch (err) {
+        res.status(500).json({ message: "Có lỗi xảy ra.", error: err.message });
+    }
+};
+
 export default {
     getAllProduct,
     getProduct,
     getProductById,
+    getProductsByIds,
     getProductByCategoryId,
     createProduct,
     updateProduct,
     deleteProduct,
     productView,
+    getViewedProducts,
 };

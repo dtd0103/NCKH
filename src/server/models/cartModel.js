@@ -173,6 +173,7 @@ class Cart {
                     resolve(results);
                 }
             );
+            
         });
     }
 

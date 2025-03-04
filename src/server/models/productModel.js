@@ -27,6 +27,29 @@ class Product {
         });
     }
 
+    static getByIds(ids) {
+        return new Promise((resolve, reject) => {
+            if (!Array.isArray(ids) || ids.length === 0) {
+                return reject(new Error("Danh sách ID không hợp lệ"));
+            }
+
+            const placeholders = ids.map(() => "?").join(", ");
+            const query = `
+                SELECT * FROM san_pham s
+                JOIN danh_muc d ON d.DM_Ma = s.DM_Ma
+                JOIN thuong_hieu t ON s.TH_Ma = t.TH_Ma
+                WHERE SP_Ma IN (${placeholders})
+            `;
+
+            connection.query(query, ids, (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(results);
+            });
+        });
+    }
+
     static getByCategory(categoryId) {
         return new Promise((resolve, reject) => {
             connection.query(
