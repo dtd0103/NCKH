@@ -89,8 +89,8 @@
       color: red;
     }
     .order-details {
-      line-height: 1.6; /* Tăng khoảng cách dòng */
-      margin-bottom: 5px; /* Thêm khoảng cách dưới mỗi dòng */
+      line-height: 1.6; 
+      margin-bottom: 5px; 
     }
   </style>
   <body>
@@ -101,19 +101,19 @@
     </script>
     <div class="container home">
       <h1>Danh sách đơn hàng đã đặt</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Mã đơn hàng</th>
-            <th>Ngày đặt</th>
-            <th>Trạng thái</th>
-            <th>Tổng tiền</th>
-            <th>Ngày giao</th>
-            <th>Chi tiết</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <table>
+          <thead>
+            <tr>
+              <th><a>Mã đơn hàng</a></th>
+              <th>Ngày đặt</th>
+              <th>Trạng thái</th>
+              <th>Tổng tiền</th>
+              <th>Ngày giao</th>
+              <th>Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
     </div>
     <!-- Footer -->
     <footer id="footer" class="footer"></footer>
@@ -122,28 +122,28 @@
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        const renderOrders = async () => {
-          try {
+    const renderOrders = async () => {
+        try {
             const username = localStorage.getItem("username");
             if (!username) {
-              console.error("Username not found in localStorage");
-              return;
+                console.error("Username not found in localStorage");
+                return;
             }
 
             const customerResponse = await fetch(
-              `http://localhost:8081/api/v1/customer/${username}`
+                `http://localhost:8081/api/v1/customer/${username}`
             );
             if (!customerResponse.ok) {
-              throw new Error("Failed to fetch customer information");
+                throw new Error("Failed to fetch customer information");
             }
             const customerData = await customerResponse.json();
             const customerId = customerData.KH_Ma;
 
             const ordersResponse = await fetch(
-              `http://localhost:8081/api/v1/orders/customer/${customerId}`
+                `http://localhost:8081/api/v1/orders/customer/${customerId}`
             );
             if (!ordersResponse.ok) {
-              throw new Error("Failed to fetch orders");
+                throw new Error("Failed to fetch orders");
             }
             const ordersData = await ordersResponse.json();
 
@@ -151,62 +151,65 @@
             tableBody.innerHTML = ""; // Xóa nội dung cũ
 
             for (const order of ordersData.data) {
-              const row = document.createElement("tr");
+                const row = document.createElement("tr");
 
-              const statusClass =
-                {
-                  "": "status-pending",
-                  "Chưa xác nhận": "status-pending",
-                  "Đã xác nhận": "status-accepted",
-                  "Vận chuyển": "status-shipping",
-                  "Hoàn thành": "status-completed",
-                  "Đã hủy": "status-canceled",
-                }[order.TrangThai] || "";
+                const statusClass =
+                    {
+                        "": "status-pending",
+                        "Chưa xác nhận": "status-pending",
+                        "Đã xác nhận": "status-accepted",
+                        "Vận chuyển": "status-shipping",
+                        "Hoàn thành": "status-completed",
+                        "Đã hủy": "status-canceled",
+                    }[order.TrangThai] || "";
 
-              // Fetch chi tiết đơn hàng
-              const orderDetailsResponse = await fetch(
-                `http://localhost:8081/api/v1/order/${order.DH_Ma}/details`
-              );
-              const orderDetailsData = await orderDetailsResponse.json();
+                // Fetch chi tiết đơn hàng
+                const orderDetailsResponse = await fetch(
+                    `http://localhost:8081/api/v1/order/${order.DH_Ma}/details`
+                );
+                const orderDetailsData = await orderDetailsResponse.json();
 
-              // Fetch thông tin từng sản phẩm
-              const productDetails = await Promise.all(
-                orderDetailsData.data.map(async (item) => {
-                  const productResponse = await fetch(
-                    `http://localhost:8081/api/v1/product/id/${item.SP_Ma}`
-                  );
-                  const productData = await productResponse.json();
-                  return `${productData.SP_Ten}: $${productData.SP_DonGia.toFixed(2)} x ${item.SoLuong}`;
+                // Fetch thông tin từng sản phẩm
+                const productDetails = await Promise.all(
+                    orderDetailsData.data.map(async (item) => {
+                        const productResponse = await fetch(
+                            `http://localhost:8081/api/v1/product/id/${item.SP_Ma}`
+                        );
+                        const productData = await productResponse.json();
+                        return `${productData.SP_Ten}: $${productData.SP_DonGia.toFixed(2)} x ${item.SoLuong}`;
+                    })
+                );
 
-                })
-              );
+                // Bỏ số 0 ở đầu mã đơn hàng
+                const orderId = parseInt(order.DH_Ma, 10);
 
-              row.innerHTML = `
-                    <td>#${order.DH_Ma.toString().padStart(6, "0")}</td>
+                row.innerHTML = `
+                    <td><a href="http://localhost:8081/qr.html?orderId=${orderId}" class="order-link">#${orderId}</a></td>
                     <td>${new Date(order.NgayTao).toLocaleDateString()}</td>
                     <td class="${statusClass}">${
-                order.TrangThai || "Chưa xác nhận"
-              }</td>
+                    order.TrangThai || "Chưa xác nhận"
+                }</td>
                     <td>$${order.TongTien.toFixed(2)}</td>
                     <td>${
-                      order.NgayGiao
+                    order.NgayGiao
                         ? new Date(order.NgayGiao).toLocaleDateString()
                         : "-"
-                    }</td>
+                }</td>
                     <td>
                       ${productDetails
                         .map((detail) => `<div class="order-details">${detail}</div>`)
                         .join("")}
                     </td>`;
-              tableBody.appendChild(row);
+                tableBody.appendChild(row);
             }
-          } catch (error) {
+        } catch (error) {
             console.error("Error loading orders:", error);
-          }
-        };
+        }
+    };
 
-        await renderOrders();
-      });
+    await renderOrders();
+});
+
     </script>
     <script src="./assets/js/product.js"></script>
     <script src="./assets/js/search.js"></script>

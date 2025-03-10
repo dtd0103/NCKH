@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Update username in HTML
         const usernameElement = document.getElementById("customerUsername");
-        usernameElement.textContent = `@ ${customer.KH_TaiKhoan}`;
+        usernameElement.textContent = "@"+customer.KH_TaiKhoan;
     } catch (err) {
         console.error("Error fetching customer data:", err);
     }
