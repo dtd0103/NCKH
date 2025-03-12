@@ -68,7 +68,6 @@ const orderCreate = async function (req, res) {
   }
 };
 
-
 const orderUpdate = async function (req, res) {
     try {
         const updatedOrder = await Order.update(req.body);
