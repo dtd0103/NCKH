@@ -201,7 +201,7 @@ const productView = async function (req, res) {
 
             // Giới hạn danh sách tối đa 6 sản phẩm
             const productCount = await redisClient.lLen(key);
-            if (productCount > 6) {
+            if (productCount > 10) {
                 await redisClient.lPop(key); // Xóa sản phẩm cũ nhất
             }
         }

@@ -8,7 +8,7 @@ const orderRouter = express.Router();
 orderRouter.get("/orders", orderController.getAllOrder);
 orderRouter.get("/order/:id", orderController.getOrder);
 orderRouter.post("/order/create", authenticateJWT, orderController.orderCreate);
-orderRouter.put("/order", authenticateAdminJWT, orderController.orderUpdate);
+orderRouter.put("/order", orderController.orderUpdate);
 orderRouter.delete(
     "/order/:id",
     authenticateAdminJWT,
