@@ -117,10 +117,6 @@ class Order {
                 updateFields.push("NgayGiao = ?");
                 values.push(data.deliverDate);
             }
-            if (data.total) {
-                updateFields.push("TongTien = ?");
-                values.push(data.total);
-            }
 
             if (updateFields.length === 0) {
                 reject(new Error("Không có trường nào cần cập nhật."));
@@ -193,7 +189,7 @@ class Order {
                                                     (resolve, reject) => {
                                                         const updateProductQuery = `
                       UPDATE san_pham
-                      SET SoLuong = SoLuong - ?
+                      SET SP_SoLuong = SP_SoLuong - ?
                       WHERE SP_Ma = ?;
                     `;
                                                         connection.query(
