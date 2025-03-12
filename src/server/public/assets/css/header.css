@@ -211,7 +211,8 @@
 }
 
 .app-header .main-header .bot-header {
-  margin: 40px 0;
+  margin-top:40px;
+  margin-bottom: 30px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -2443,9 +2444,12 @@
 }
 
 .logo-header {
-    max-width: 170px; 
-    height: auto;
+  max-width: 140px; 
+  height: auto;
+  display: block;
+  margin: auto;
 }
+
 .app-header .main-header .bot-header .botheader .sns-icon-box .sns-icon-right-content h4 {
     margin-top: 4px;
     margin-bottom: 4px;

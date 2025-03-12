@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const username = localStorage.getItem("username");
   if (!username) {
     alert("Vui lòng đăng nhập!");
+    window.location.href = "./login.html";
     return;
   }
 
