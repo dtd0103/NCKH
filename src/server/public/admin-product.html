@@ -59,10 +59,151 @@
             </div>
         </aside>
         <!------END OF ASIDE------>
+<main>
+    <h1>Quản lý sản phẩm</h1>
+    <form id="addProductForm">
+        <input type="text" id="productName" placeholder="Tên sản phẩm" required />
+        <input type="file" id="productImage" accept="image/*" required />
+        <input type="number" id="productQuantity" placeholder="Số lượng" required />
+        <input type="number" id="productPrice" placeholder="Đơn giá" required />
+        <textarea id="productInfo" placeholder="Thông tin sản phẩm" required></textarea>
 
+        <!-- Chọn danh mục -->
+        <select id="categoryId" required>
+            <option value="">-- Chọn danh mục --</option>
+        </select>
 
+        <!-- Chọn thương hiệu -->
+        <select id="brandId" required>
+            <option value="">-- Chọn thương hiệu --</option>
+        </select>
 
+        <button type="submit">Thêm sản phẩm</button>
+    </form>
 
+    <script>
+async function fetchCategories() {
+    try {
+        const response = await fetch('http://localhost:8081/api/v1/categories');
+        const data = await response.json();
+        console.log("Categories Data:", data); // Kiểm tra dữ liệu
+        renderCategoryOptions(data);
+    } catch (error) {
+        console.error("Lỗi khi lấy danh mục:", error);
+    }
+}
+
+async function fetchBrands() {
+    try {
+        const response = await fetch('http://localhost:8081/api/v1/brands');
+        const data = await response.json();
+        console.log("Brands Data:", data); // Kiểm tra dữ liệu
+        renderBrandOptions(data);
+    } catch (error) {
+        console.error("Lỗi khi lấy thương hiệu:", error);
+    }
+}
+
+function renderCategoryOptions(categories) {
+    let categorySelect = document.getElementById('categoryId');
+    if (!categorySelect) {
+        console.error("Lỗi: Không tìm thấy phần tử #categoryId");
+        return;
+    }
+    categorySelect.innerHTML = '<option value="">Chọn danh mục</option>';
+    categories.forEach(category => {
+        let option = document.createElement('option');
+        option.value = category.categoryID || category.DM_Ma; // Kiểm tra key hợp lệ
+        option.textContent = category.categoryName || category.DM_Ten; 
+        categorySelect.appendChild(option);
+    });
+}
+
+function renderBrandOptions(brands) {
+    let brandSelect = document.getElementById('brandId');
+    if (!brandSelect) {
+        console.error("Lỗi: Không tìm thấy phần tử #brandId");
+        return;
+    }
+    brandSelect.innerHTML = '<option value="">Chọn thương hiệu</option>';
+    brands.forEach(brand => {
+        let option = document.createElement('option');
+        option.value = brand.brandID || brand.TH_Ma;
+        option.textContent = brand.brandName || brand.TH_Ten;
+        brandSelect.appendChild(option);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchCategories();
+    fetchBrands();
+});
+
+    </script>
+
+    <!-- Form chỉnh sửa sản phẩm -->
+    <div id="editProductOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <h3>Chỉnh sửa sản phẩm</h3>
+            <form id="editProductForm">
+                <label for="editProductName">Tên sản phẩm:</label>
+                <input type="text" id="editProductName" required />
+
+                <label for="editProductImage">Hình ảnh:</label>
+                <input type="file" id="editProductImage" accept="image/*" />
+
+                <label for="editProductQuantity">Số lượng:</label>
+                <input type="number" id="editProductQuantity" required />
+
+                <label for="editProductPrice">Đơn giá:</label>
+                <input type="number" id="editProductPrice" required />
+
+                <label for="editProductInfo">Thông tin sản phẩm:</label>
+                <textarea id="editProductInfo" required></textarea>
+
+                <!-- Chọn danh mục -->
+                <label for="editCategoryId">Danh mục:</label>
+                <select id="editCategoryId" required>
+                    <option value="">-- Chọn danh mục --</option>
+                </select>
+
+                <!-- Chọn thương hiệu -->
+                <label for="editBrandId">Thương hiệu:</label>
+                <select id="editBrandId" required>
+                    <option value="">-- Chọn thương hiệu --</option>
+                </select>
+
+                <button type="submit">Cập nhật</button>
+                <button type="button" id="closeEditOverlay">Đóng</button>
+            </form>
+        </div>
+    </div>
+
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Tên sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thông tin</th>
+                <th>Mã danh mục</th>
+                <th>Mã thương hiệu</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dữ liệu sẽ được thêm ở đây -->
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button id="prevPage" class="pagination-btn">Trước</button>
+        <span id="pageNumbers" class="page-numbers"></span>
+        <button id="nextPage" class="pagination-btn">Sau</button>
+    </div>
+</main>
         <!---------------END OF MAIN---------------->
         <div class="right">
             <div class="top">

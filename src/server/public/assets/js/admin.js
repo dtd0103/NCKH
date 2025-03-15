@@ -88,7 +88,7 @@ async function fetchRecentUpdates() {
 
       // Gọi API lấy tên khách hàng theo từng KH_Ma
       await Promise.all(customerIds.map(async (customerId) => {
-          const customerResponse = await fetch(`http://localhost:8081/api/v1/customer/${customerId}`, {
+          const customerResponse = await fetch(`http://localhost:8081/api/v1/customer/id/${customerId}`, {
               method: "GET",
               headers: {
                   "Authorization": `Bearer ${token}`,

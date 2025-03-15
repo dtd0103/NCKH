@@ -923,6 +923,194 @@ button.delete {
     /* Khoảng cách giữa các nút */
 }
 
+/* ================ PRODUCTS ============== */
+/* Cải thiện giao diện của tiêu đề và form */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+}
+
+form input,
+form textarea,
+form button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--color-info-light);
+    border-radius: var(--border-radius-2);
+    font-size: 1rem;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+}
+
+form button {
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: var(--color-primary-variant);
+}
+
+/* Bảng sản phẩm */
+#productTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+#productTable th,
+#productTable td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid var(--color-info-light);
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+#productTable th {
+    background-color: var(--color-primary-variant);
+    color: var(--color-white);
+    font-weight: bold;
+}
+
+#productTable tr:nth-child(even) {
+    background-color: var(--color-info-light);
+}
+
+#productTable tr:hover {
+    background-color: var(--color-light);
+}
+
+/* Hình ảnh trong bảng sản phẩm */
+#productTable td img {
+    display: block;
+    max-width: 100%;
+    /* Đảm bảo ảnh không vượt quá ô */
+    height: 120px;
+    /* Điều chỉnh chiều cao */
+    object-fit: contain;
+    margin: 0 auto;
+}
+#productTable td img {
+    display: block;
+    max-width: 120%;
+    max-height: 120px;
+    /* Điều chỉnh chiều cao tối đa */
+    object-fit: contain;
+    margin: 0 auto;
+}
+/* Hiệu ứng hover trên hàng */
+#productTable tr:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Tùy chỉnh giao diện của dropdown select */
+select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--color-info-light);
+    border-radius: var(--border-radius-2);
+    font-size: 1rem;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    appearance: none;
+    /* Loại bỏ kiểu mặc định trên trình duyệt */
+    cursor: pointer;
+}
+
+/* Hiệu ứng hover */
+select:hover {
+    border-color: var(--color-primary);
+}
+
+/* Khi chọn */
+select:focus {
+    border-color: var(--color-primary-variant);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Định dạng option */
+select option {
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: var(--color-dark);
+    background: var(--color-white);
+}
+
+/* Tạo biểu tượng dropdown */
+select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'><path fill='%23000000' d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
+}
+
+/* Đảm bảo khoảng cách hợp lý giữa các nút hành động */
+button.edit,
+button.delete {
+    margin: 0 5px;
+}
+
+/* Overlay chỉnh sửa sản phẩm */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-content {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--border-radius-2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+/* Phân trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination-btn {
+    background-color: var(--color-primary-variant);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-btn:hover {
+    color: var(--color-primary-variant);
+}
+
+.page-numbers {
+    font-size: 16px;
+}
+
 /* ================ RECENT UPDATES ============== */
 .right .recent-updates {
     margin-top: 1rem;

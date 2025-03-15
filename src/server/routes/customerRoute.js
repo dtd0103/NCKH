@@ -8,7 +8,7 @@ customerRouter.get("/customer", customerController.getAllCustomer);
 customerRouter.post("/customer/register", customerController.customerRegister);
 customerRouter.post("/customer/login", customerController.customerLogin);
 customerRouter.post("/customer/logout", customerController.customerLogout);
-customerRouter.get("/customer/:userId", customerController.getCustomerById);
+customerRouter.get("/customer/id/:userId", customerController.getCustomerById);
 customerRouter.get("/customer/:username", customerController.getCustomer);
 customerRouter.put(
     "/customer",
