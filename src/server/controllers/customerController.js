@@ -24,6 +24,17 @@ const getCustomer = async function (req, res) {
         res.status(500).send("Lỗi trong quá trình lấy thông tin khách hàng.");
     }
 };
+const getCustomerById = async function (req, res) {
+    try {
+        const employee = await Customer.getById(
+            req.params.userId
+        );
+        res.status(200).json(employee);
+    } catch (err) {
+        console.error("Lỗi truy vấn: " + err.message);
+        res.status(500).send("Lỗi trong quá trình lấy thông tin khách hàng.");
+    }
+};
 
 const customerRegister = async function (req, res) {
     try {
@@ -172,6 +183,7 @@ const deleteCustomer = async function (req, res) {
 export default {
     getAllCustomer,
     getCustomer,
+    getCustomerById,
     customerRegister,
     customerLogin,
     customerLogout,

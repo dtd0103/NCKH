@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="./assets/css/admin-style.css">
+    
 </head>
 <body>
     <div class="container">
@@ -61,9 +62,7 @@
         <!------END OF ASIDE------>
         <main>
             <h1>Dashboard</h1>
-            <div class="date">
-                <input type="date">
-            </div>
+
 
             <div class="insights">
                 <div class="sales">
@@ -71,40 +70,46 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Tổng doanh thu</h3>
-                            <h1>$25</h1>
+                            <h1 id="totalRevenue">$0</h1>
                         </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>81%</p>
-                            </div>
-                        </div>
+                        
                     </div>
-                    <small class="text-muted">24h trước</small>
+                    
                 </div>
                 <!----------END OF SALES---------->
                 
 
-                <div class="income">
-                    <span class="material-icons-sharp">stacked_line_chart</span>
+                <div class="income customer">
+                    <span class="material-icons-sharp">group</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Tổng thu nhập</h3>
-                            <h1>$10</h1>
-                        </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>44%</p>
-                            </div>
+                            <h3>Khách hàng</h3>
+                            <h1 id="totalCustomers">0</h1>
                         </div>
                     </div>
-                    <small class="text-muted">Last 24 Hours</small>
                 </div>
+                
+                <div class="income">
+                    <span class="material-icons-sharp">shopping_cart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Đơn hàng</h3>
+                            <h1 id="totalOrders">0</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="income product">
+                    <span class="material-icons-sharp">inventory_2</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Sản phẩm</h3>
+                            <h1 id="totalProducts">0</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                
                 <!----------END OF INCOME---------->
             </div>
             <!------END OF INSIGHTS------>
@@ -135,89 +140,14 @@
             <div class="recent-updates">
                 <h2>Recent Updates</h2>
                 <div class="updates">
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="./assets/icons/logo.svg">
-                        </div>
-                        <div class="message">
-                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
-                            <small class="text-muted">2 minutes ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="./assets/icons/logo.svg">
-                        </div>
-                        <div class="message">
-                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
-                            <small class="text-muted">2 minutes ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="./assets/icons/logo.svg">
-                        </div>
-                        <div class="message">
-                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
-                            <small class="text-muted">2 minutes ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="./assets/icons/logo.svg">
-                        </div>
-                        <div class="message">
-                            <p><b>Hoang Giang Kieu</b> received his order of Night lion tech GPS drone.</p>
-                            <small class="text-muted">2 minutes ago</small>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         <!-------END OF RECENT UPDATES-------->
 
-        <div class="sales-analytics">
-            <h2>Sale Analytics</h2>
-            <div class="item online">
-                <div class="icon">
-                    <span class="material-icons-sharp">shopping_cart</span>
-                </div>
-                <div class="right">
-                    <div class="info">
-                        <h3>ONLINE ORDERS</h3>
-                        <small class="text-muted">Last 24 Hours</small>
-                    </div>
-                    <h5 class="success">+39%</h5>
-                    <h3>3849</h3>
-                </div>
-            </div>
-            <div class="item offline">
-                <div class="icon">
-                    <span class="material-icons-sharp">local_mall</span>
-                </div>
-                <div class="right">
-                    <div class="info">
-                        <h3>OFFLINE ORDERS</h3>
-                        <small class="text-muted">Last 24 Hours</small>
-                    </div>
-                    <h5 class="danger">-17%</h5>
-                    <h3>1100</h3>
-                </div>
-            </div>
-            <div class="item customers">
-                <div class="icon">
-                    <span class="material-icons-sharp">person</span>
-                </div>
-                <div class="right">
-                    <div class="info">
-                        <h3>NEW CUSTOMERS</h3>
-                        <small class="text-muted">Last 24 Hours</small>
-                    </div>
-                    <h5 class="success">+25%</h5>
-                    <h3>849</h3>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <script src="./assets/js/admin.js"></script>
+    <script src="./assets/js/admin-main.js"></script>
 </body>
 </html>

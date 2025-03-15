@@ -58,12 +58,14 @@ class Category {
 
     static update(data, id) {
         console.log(data);
+       
+
         return new Promise((resolve, reject) => {
             const query =
                 "UPDATE danh_muc SET DM_Ten = ?, DM_HinhAnh = ? WHERE DM_Ma = ?";
             connection.query(
                 query,
-                [data.name, data.image, id],
+                [data.DM_Ten, data.image, id],
                 (err, results) => {
                     if (err) {
                         return reject(err);

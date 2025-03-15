@@ -24,6 +24,21 @@ const getBrand = async function (req, res) {
     }
 };
 
+const getBrandById = async function (req, res) {
+    try {
+        
+        const brand = await Brand.getById(req.params.brandId);
+        if (brand) {
+            res.json(brand);
+        } else {
+            res.status(404).send("Danh mục không tồn tại.");
+        }
+    } catch (err) {
+        console.error("Lỗi truy vấn: " + err.message);
+        res.status(500).send("Lỗi trong quá trình lấy thông tin thương hiệu.");
+    }
+};
+
 const createBrand = async function (req, res) {
     try {
         // Kiểm tra xem hình ảnh có được tải lên không
@@ -57,7 +72,7 @@ const updateBrand = async function (req, res) {
                 .json({ message: "Thương hiệu không tồn tại" });
         }
 
-        let imagePath = existingCategory.TH_HinhAnh; // Mặc định giữ ảnh cũ
+        let imagePath = existingBrand.TH_HinhAnh; // Mặc định giữ ảnh cũ
         if (req.file) {
             imagePath = `${req.file.filename}`; // Sử dụng ảnh mới nếu có
         }
@@ -91,6 +106,7 @@ const deleteBrand = async function (req, res) {
 export default {
     getAllBrand,
     getBrand,
+    getBrandById,
     createBrand,
     updateBrand,
     deleteBrand,

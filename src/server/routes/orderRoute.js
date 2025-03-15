@@ -5,7 +5,7 @@ import authenticateAdminJWT from "../services/adminAuth.js";
 
 const orderRouter = express.Router();
 
-orderRouter.get("/orders", orderController.getAllOrder);
+orderRouter.get("/orders", authenticateAdminJWT, orderController.getAllOrder);
 orderRouter.get("/order/:id", orderController.getOrder);
 orderRouter.post("/order/create", authenticateJWT, orderController.orderCreate);
 orderRouter.put("/order", orderController.orderUpdate);

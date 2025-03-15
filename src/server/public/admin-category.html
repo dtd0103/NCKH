@@ -80,6 +80,56 @@
             <!-- Dữ liệu từ backend sẽ được chèn vào đây -->
         </tbody>
     </table>
+    <!-- Modal chỉnh sửa danh mục -->
+<div id="editCategoryOverlay" style="display: none;">
+    <div class="modal">
+      <h2>Chỉnh sửa danh mục</h2>
+      <form id="editCategoryForm">
+        <label for="editCategoryName">Tên danh mục:</label>
+        <input type="text" id="editCategoryName" required>
+  
+        <label for="editCategoryImage">Hình ảnh:</label>
+        <input type="file" name="image" id="editCategoryImage" accept="image/*">
+  
+        <button type="submit">Lưu thay đổi</button>
+        <button type="button" id="closeEditCategoryOverlay">Hủy</button>
+      </form>
+    </div>
+  </div>
+  
+  <style>
+    #editCategoryOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .modal {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      text-align: center;
+    }
+  
+    .modal input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+  
+    .modal button {
+      padding: 10px 15px;
+      margin-top: 10px;
+    }
+  </style>
+  
 
 <div class="pagination">
   <button id="prevPage" class="pagination-btn">Trước</button>

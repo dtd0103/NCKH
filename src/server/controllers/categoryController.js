@@ -10,6 +10,20 @@ const getAllCategory = async function (req, res) {
     }
 };
 
+const getCategoryById = async function (req, res) {
+    try {
+        const category = await Category.getById(req.params.categoryId);
+        if (category) {
+            res.json(category);
+        } else {
+            res.status(404).send("Danh mục không tồn tại.");
+        }
+    } catch (err) {
+        console.error("Lỗi truy vấn: " + err.message);
+        res.status(500).send("Lỗi trong quá trình lấy thông tin danh mục.");
+    }
+};
+
 const getCategory = async function (req, res) {
     try {
         const category = await Category.get(req.params.name);
@@ -57,6 +71,7 @@ const updateCategory = async function (req, res) {
     try {
         // console.log("Body:", req.body); // Kiểm tra body
         // console.log("File:", req.file); // Kiểm tra file
+        console.log("File:", req.file);
 
         const existingCategory = await Category.getById(req.params.id);
         if (!existingCategory) {
@@ -101,6 +116,7 @@ const deleteCategory = async function (req, res) {
 
 export default {
     getAllCategory,
+    getCategoryById,
     getCategory,
     createCategory,
     updateCategory,

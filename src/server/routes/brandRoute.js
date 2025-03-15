@@ -7,6 +7,7 @@ import { uploadBrand } from "../services/imgUpload.js";
 const brandRouter = express.Router();
 
 brandRouter.get("/brands", brandController.getAllBrand);
+brandRouter.get("/brand/:brandId", brandController.getBrandById);
 brandRouter.get("/brand/:name", brandController.getBrand);
 brandRouter.post(
     "/brand",

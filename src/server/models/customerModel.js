@@ -12,6 +12,17 @@ class Customer {
         });
     }
 
+    static getById(id) {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT * FROM khach_hang WHERE KH_Ma = ?",[id], (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(results[0]);
+            });
+        });
+    }
+
     static createCustomerAccount(data) {
         return new Promise((resolve, reject) => {
             connection.query(

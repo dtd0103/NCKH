@@ -7,7 +7,9 @@ import { uploadCategory } from "../services/imgUpload.js";
 const categoryRouter = express.Router();
 
 categoryRouter.get("/categories", categoryController.getAllCategory);
+categoryRouter.get("/category/:categoryId", categoryController.getCategoryById);
 categoryRouter.get("/category/:name", categoryController.getCategory);
+
 categoryRouter.post(
     "/category",
     authenticateAdminJWT,

@@ -279,6 +279,14 @@ main .insights > div.income span {
     background: var(--color-success);
 }
 
+main .insights > div.customer span {
+    background: var(--color-danger);
+}
+
+main .insights > div.product span {
+    background: var(--color-warning);
+}
+
 
 main .insights .middle {
     display: flex;

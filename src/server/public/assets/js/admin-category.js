@@ -112,64 +112,118 @@ addCategoryForm.addEventListener("submit", async (event) => {
   }
 });
 
-// 🛠 Chỉnh sửa danh mục
 async function editCategory(categoryId) {
   try {
-    const response = await fetch(
-      `http://localhost:8081/api/v1/categories/${categoryId}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
+      // 🔹 Lấy thông tin danh mục hiện tại
+      const response = await fetch(`http://localhost:8081/api/v1/category/${categoryId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!response.ok) {
+          throw new Error("Không thể tải thông tin danh mục.");
       }
-    );
 
-    if (!response.ok) {
-      throw new Error("Không thể tải thông tin danh mục.");
-    }
+      const category = await response.json();
+      document.getElementById("editCategoryName").value = category.DM_Ten;
+      document.getElementById("editCategoryOverlay").style.display = "flex";
 
-    const category = await response.json();
+      // 🔹 Xử lý khi nhấn "Lưu thay đổi"
+      document.getElementById("editCategoryForm").onsubmit = async (event) => {
+          event.preventDefault();
 
-    document.getElementById("editCategoryName").value = category.DM_Ten;
-    document.getElementById("editCategoryOverlay").style.display = "flex";
+          const formData = new FormData();
+          formData.append("DM_Ten", document.getElementById("editCategoryName").value);
 
-    document.getElementById("editCategoryForm").onsubmit = async (event) => {
-      event.preventDefault();
+          const imageInput = document.getElementById("editCategoryImage");
+          if (imageInput.files.length > 0) {
+              formData.append("image", imageInput.files[0]); // Chỉ thêm file nếu có
+          }
 
-      const updatedCategory = {
-        name: document.getElementById("editCategoryName").value,
+          try {
+              const updateResponse = await fetch(`http://localhost:8081/api/v1/category/${categoryId}`, {
+                  method: "PUT",
+                  headers: { Authorization: `Bearer ${token}` }, // Không đặt Content-Type ở đây!
+                  body: formData, // Sử dụng FormData để gửi ảnh và dữ liệu
+              });
+
+              if (!updateResponse.ok) {
+                  const errorText = await updateResponse.text();
+                  throw new Error("Lỗi từ API: " + errorText);
+              }
+
+              alert("Cập nhật danh mục thành công!");
+              fetchCategories(); // Load lại danh sách danh mục
+              document.getElementById("editCategoryOverlay").style.display = "none"; // Ẩn modal
+          } catch (error) {
+              alert("Không thể cập nhật danh mục: " + error.message);
+          }
       };
 
-      try {
-        const updateResponse = await fetch(
-          `http://localhost:8081/api/v1/categories/${categoryId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedCategory),
-          }
-        );
-
-        if (!updateResponse.ok) {
-          throw new Error(await updateResponse.text());
-        }
-
-        alert("Cập nhật danh mục thành công!");
-        fetchCategories();
-        document.getElementById("editCategoryOverlay").style.display = "none";
-      } catch (error) {
-        alert("Không thể cập nhật danh mục: " + error.message);
-      }
-    };
-
-    document.getElementById("closeEditCategoryOverlay").onclick = () => {
-      document.getElementById("editCategoryOverlay").style.display = "none";
-    };
+      // 🔹 Xử lý khi nhấn "Hủy"
+      document.getElementById("closeEditCategoryOverlay").onclick = () => {
+          document.getElementById("editCategoryOverlay").style.display = "none";
+      };
   } catch (error) {
-    alert("Không thể tải thông tin danh mục.");
+      alert("Không thể tải thông tin danh mục: " + error.message);
   }
 }
+
+
+// 🛠 Chỉnh sửa danh mục
+// async function editCategory(categoryId) {
+//   try {
+//     const response = await fetch(`http://localhost:8081/api/v1/category/${categoryId}`, {
+//       headers: { Authorization: `Bearer ${token}` },
+//     });
+
+//     if (!response.ok) {
+//       throw new Error("Không thể tải thông tin danh mục.");
+//     }
+
+//     const category = await response.json();
+//     document.getElementById("editCategoryName").value = category.DM_Ten;
+//     document.getElementById("editCategoryOverlay").style.display = "flex";
+
+//     document.getElementById("editCategoryForm").onsubmit = async (event) => {
+//       event.preventDefault();
+
+//       const updatedCategory = {
+//         DM_Ten: document.getElementById("editCategoryName").value,
+//       };
+
+//       console.log("Dữ liệu gửi đi:", updatedCategory); // Kiểm tra dữ liệu trước khi gửi
+
+//       try {
+//         const updateResponse = await fetch(`http://localhost:8081/api/v1/category/${categoryId}`, {
+//           method: "PUT",
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//           },
+//           body: JSON.stringify(updatedCategory),
+//         });
+
+//         if (!updateResponse.ok) {
+//           const errorText = await updateResponse.text();
+//           throw new Error("Lỗi từ API: " + errorText);
+//         }
+
+//         alert("Cập nhật danh mục thành công!");
+//         fetchCategories();
+//         document.getElementById("editCategoryOverlay").style.display = "none";
+//       } catch (error) {
+//         alert("Không thể cập nhật danh mục: " + error.message);
+//       }
+//     };
+
+//     document.getElementById("closeEditCategoryOverlay").onclick = () => {
+//       document.getElementById("editCategoryOverlay").style.display = "none";
+//     };
+//   } catch (error) {
+//     alert("Không thể tải thông tin danh mục: " + error.message);
+//   }
+// }
+
 
 // 🗑 Xóa danh mục
 async function deleteCategory(categoryId) {

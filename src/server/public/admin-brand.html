@@ -9,6 +9,30 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="./assets/css/admin-style.css">
+    <style>
+        .overlay {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background: rgba(0, 0, 0, 0.5);
+             display: flex;
+             align-items: center;  /* Căn giữa theo chiều dọc */
+             justify-content: center; /* Căn giữa theo chiều ngang */
+             z-index: 1000;
+         }
+ 
+         .overlay-content {
+            top: 0;
+             background: white;
+             padding: 20px;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+             width: 400px;
+             position: relative;
+         }
+     </style>        
 </head>
 <body>
     <div class="container">
@@ -77,6 +101,7 @@
 
                 <label for="editBrandImage">Hình ảnh:</label>
                 <input type="file" id="editBrandImage" accept="image/*" />
+                
 
                 <button type="submit">Cập nhật</button>
                 <button type="button" id="closeEditOverlay">Đóng</button>

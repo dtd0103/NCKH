@@ -149,7 +149,7 @@ async function editBrand(brandId) {
     const brand = await response.json();
 
     document.getElementById("editBrandName").value = brand.TH_Ten;
-    document.getElementById("editBrandImagePreview").src = `/images/brands/${brand.TH_HinhAnh}`;
+   
 
     document.getElementById("editBrandOverlay").style.display = "flex";
 
